@@ -607,7 +607,9 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .feuille.monte .anim { animation: tombe 0.62s cubic-bezier(0.3, 1.45, 0.5, 1) both; animation-delay: var(--d, 0s); }
   .feuille.fini .anim { opacity: 1; animation: none; }
   @keyframes tombe { 0% { opacity: 0; transform: translateY(-260px) scale(0.9) } 40% { opacity: 1 } 100% { opacity: 1; transform: none } }
-  .fumee { position: absolute; left: 21%; bottom: 66%; width: 14%; height: 90%; overflow: visible; opacity: 0; transition: opacity 0.8s; }
+  .fumee { position: absolute; left: 21%; bottom: 98%; width: 14%; height: 75%; overflow: visible; opacity: 0; transition: opacity 0.8s;
+    /* la fumée naît au-dessus du pain et s'efface en douceur, sans jamais passer sur le burger */
+    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 65%, transparent 100%); mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 65%, transparent 100%); }
   .feuille.infos .fumee { opacity: 1; }
   .fumee path { fill: none; stroke: rgba(28, 28, 28, 0.16); stroke-width: 9; stroke-linecap: round; filter: blur(3px); stroke-dasharray: 60 240; animation: volute 2.4s linear infinite; }
   .fumee path:nth-child(2) { animation-delay: -0.8s; stroke: rgba(28, 28, 28, 0.11); }
@@ -1091,7 +1093,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       </div>
 
       <div class="photo-ouverture">
-        <div class="tirage"><img src="img/plat_3.jpg" alt="Un plat du jour du Double B, viande en sauce" width="900" height="1200"></div>
+        <div class="tirage"><img src="img/plat-accueil.jpg" alt="Un plat du jour du Double B : viande en sauce, carottes fanes et persil frais" width="724" height="1086"></div>
         <svg class="tampon" viewBox="0 0 132 132" aria-hidden="true">
           <circle cx="66" cy="66" r="64" fill="#F7B32F"/>
           <path id="cercle-texte" d="M66 66 m-47 0 a47 47 0 1 1 94 0 a47 47 0 1 1 -94 0" fill="none"/>
