@@ -1652,7 +1652,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   const cible = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
   if (calme || dejaVu || cible || location.hash === '#sansintro') {
     $('#intro').hidden = true; ouvrirSalle();
-    if (cible) { cible.scrollIntoView(); addEventListener('load', () => cible.scrollIntoView()); }
+    if (cible) { const aller = () => cible.scrollIntoView({ behavior: 'instant' }); aller(); addEventListener('load', aller); }
   }
   else jouerIntro();
 })();
