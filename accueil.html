@@ -1735,7 +1735,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     if (!racine) return;
     const total = parseInt(((racine.textContent || '').match(/(\d[\d\s.]*)\s*avis/) || [])[1]?.replace(/\D/g, '') || '0', 10);
     if (total) afficherNombre(Math.max(total, AVIS_CONNUS));
-    const nomCourt = (nom) => { const m = nom.trim().split(/\s+/); return m[0].charAt(0).toUpperCase() + m[0].slice(1).toLowerCase() + (m[1] ? ' ' + m[1].charAt(0).toUpperCase() + '.' : ''); };
+    const nomCourt = (nom) => { const m = nom.trim().split(/\s+/); if (m[0].length < 2) return 'Client du Double B'; return m[0].charAt(0).toUpperCase() + m[0].slice(1).toLowerCase() + (m[1] ? ' ' + m[1].charAt(0).toUpperCase() + '.' : ''); };
     const avis = [...racine.querySelectorAll('.ti-review-item')].map((it) => ({
       nom: it.querySelector('.ti-name')?.textContent || '',
       texte: (it.querySelector('.ti-review-content')?.textContent || '').trim(),
