@@ -1,8 +1,12 @@
 <script>
 (function () {
-  document.querySelectorAll('head link[rel="stylesheet"], head style').forEach(function (el) {
-    if (!/cookie/i.test((el.id || '') + ' ' + (el.href || ''))) el.remove();
-  });
+  function nettoyer() {
+    document.querySelectorAll('link[rel="stylesheet"], head style').forEach(function (el) {
+      if (!/cookie|fonts\.googleapis/i.test((el.id || '') + ' ' + (el.href || ''))) el.remove();
+    });
+  }
+  nettoyer();
+  document.addEventListener('DOMContentLoaded', nettoyer);
   document.documentElement.classList.add('site-double-b');
 })();
 </script>
