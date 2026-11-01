@@ -13,7 +13,7 @@
 <style>
   html.site-double-b { margin-top: 0 !important; }
   html.site-double-b body { margin: 0; }
-  #wpadminbar { display: none !important; }
+  #wpadminbar, .elementor-widget-shortcode { display: none !important; }
   [hidden] { display: none !important; }
   img { max-width: 100%; }
   .elementor, .elementor-section, .elementor-container, .elementor-column, .elementor-widget-wrap, .elementor-element, .elementor-widget-container { display: contents; }
@@ -854,16 +854,31 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .soiree .deco { position: absolute; right: -20px; bottom: -24px; width: 150px; opacity: 0.16; }
 
   /* ——— Galerie ——— */
-  .galerie { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 300px); gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; padding-bottom: 16px; scrollbar-width: thin; scrollbar-color: var(--jaune) transparent; }
-  .galerie, .onglets { touch-action: pan-x pan-y pinch-zoom; overscroll-behavior-x: contain; }
-  .galerie figure { margin: 0; scroll-snap-align: start; border-radius: 22px; overflow: hidden; aspect-ratio: 3 / 4; max-width: 100%; position: relative; }
-  .galerie figure:nth-child(even) { transform: translateY(26px); }
-  .galerie img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
-  .galerie figure:hover img { transform: scale(1.06); }
+  /* ——— Mosaïque des plats du jour : colonnes de photos qui montent en continu, à des vitesses différentes (comme la story) ——— */
+  .plats-du-jour .entete p { color: var(--doux-nuit); }
+  .mosaique { position: relative; height: clamp(560px, 78vh, 760px); overflow: hidden; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 14px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, #000 14%, #000 82%, transparent 100%); }
+  .mosaique-photos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(var(--cols, 2), minmax(0, 1fr)); gap: 14px; grid-column: 1 / -1; }
+  .mosaique-photos li { border-radius: 22px; overflow: hidden; aspect-ratio: 3 / 4; }
+  .mosaique-photos img, .tuile img { display: block; width: 100%; height: 100%; object-fit: cover; }
+  .colonne-defile { display: flex; flex-direction: column; gap: 14px; animation: monte var(--duree, 46s) linear infinite; will-change: transform; }
+  .colonne-defile.descend { animation-direction: reverse; }
+  .mosaique:hover .colonne-defile { animation-play-state: paused; }
+  .tuile { margin: 0; border-radius: 22px; overflow: hidden; box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 233, 184, 0.08); }
+  .tuile img { transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1); }
+  .tuile:hover img { transform: scale(1.06); }
+  @keyframes monte { from { transform: translateY(0) } to { transform: translateY(calc(-50% - 7px)) } }
+  @media (min-width: 701px) { .mosaique { --cols: 3; gap: 18px; } .colonne-defile { gap: 18px; } }
+  @media (min-width: 1081px) { .mosaique { --cols: 4; } }
+  .onglets { touch-action: pan-x pan-y pinch-zoom; overscroll-behavior-x: contain; }
 
   /* ——— Avis clients ——— */
   .actions-avis { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
   .merci-avis { margin: 14px 0 0; color: var(--doux-nuit); font-size: 14px; }
+  .chiffres-avis { display: flex; flex-wrap: wrap; align-items: center; gap: 22px 34px; }
+  .nombre-avis { display: grid; justify-items: start; padding-left: 34px; border-left: 1px solid var(--trait-nuit); }
+  .nombre-avis b { font: 800 72px/0.95 var(--f-titre); color: var(--neon-blanc); letter-spacing: -0.04em; font-variant-numeric: tabular-nums; text-shadow: 0 0 26px rgba(255, 233, 184, 0.35); }
+  .nombre-avis small { color: var(--doux-nuit); font-size: 14px; }
+  .nombre-avis small:first-child { color: var(--jaune); font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; font-size: 12px; }
   .note-google { display: flex; align-items: center; gap: 16px; }
   .note-google b { font: 800 72px/1 var(--f-titre); color: var(--jaune); letter-spacing: -0.04em; text-shadow: 0 0 30px rgba(247, 179, 47, 0.45); }
   .note-google small { display: block; color: var(--doux-nuit); font-size: 14px; }
@@ -1002,14 +1017,13 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .barre .bouton { padding: 10px 12px; }
     .sombre { padding-block: 100px 90px; }
     .nouveaute h2, .enseigne { font-size: clamp(44px, 13vw, 60px); }
-    .galerie { grid-auto-columns: 72%; }
-    .galerie figure:nth-child(even) { transform: none; }
-    .horaires-carte { padding: 26px 22px; }
+      .horaires-carte { padding: 26px 22px; }
     .horaires td span { display: block; margin: 0; }
     .soiree h3 { font-size: 28px; }
     .soirees { grid-template-columns: minmax(0, 1fr); }
     .avis-liste, .faq { grid-template-columns: minmax(0, 1fr); }
-    .note-google b { font-size: 56px; }
+    .note-google b, .nombre-avis b { font-size: 56px; }
+    .nombre-avis { padding-left: 22px; }
     .avis-carte blockquote { font-size: 19px; }
     .pied { padding-block: 120px 30px; }
     .actions-mobile { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
@@ -1279,24 +1293,27 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   </section>
 
 
-  <section class="sombre grain">
+  <section class="sombre grain plats-du-jour" id="plats">
     <div class="cadre">
-      <div class="entete revele" style="color:var(--texte-nuit)">
+      <div class="entete revele">
         <div class="gauche">
-          <span class="surtitre">Dans l'assiette</span>
-          <h2 style="font-size:clamp(36px,5.6vw,72px);font-weight:800;letter-spacing:-0.035em">Cuisiné ici, ce matin.</h2>
+          <span class="surtitre">Du lundi au vendredi · midi</span>
+          <h2>Nos plats du jour</h2>
         </div>
+        <p>Une recette différente chaque jour, cuisinée sur place avec des produits frais. Voici quelques-unes de nos assiettes.</p>
       </div>
-      <div class="galerie" tabindex="0" aria-label="Photos de plats">
-        <figure><img src="img/burger_7.jpg" alt="Burger au pain noir" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/plat_6.jpg" alt="Assiette avec un œuf au plat" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/burger_4.jpg" alt="Burger au poulet croustillant et pain au sésame" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/plat_2.jpg" alt="Assiette de nouilles et légumes" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/burger_12.jpg" alt="Burger aux carottes râpées" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/plat_1.jpg" alt="Petit potiron farci et purée" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/plat_5.jpg" alt="Plat mijoté en sauce" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/burger_16.jpg" alt="Wrap garni" loading="lazy" width="900" height="1200"></figure>
-        <figure><img src="img/plat_4.jpg" alt="Assiette de rouleaux et crudités" loading="lazy" width="900" height="1200"></figure>
+      <div class="mosaique" id="mosaique" aria-label="Photos de nos plats du jour">
+        <ul class="mosaique-photos">
+        <li><img src="img/plat-accueil.jpg" alt="Viande en sauce, carottes fanes et persil frais" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_2.jpg" alt="Assiette de nouilles et légumes" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_7.jpg" alt="Galettes croustillantes, pousses et coulis de tomate" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_1.jpg" alt="Petit potiron farci et purée" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_6.jpg" alt="Assiette avec un œuf au plat" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_8.jpg" alt="Pâtes farcies, petits pois, fromage frais et parmesan" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_5.jpg" alt="Plat mijoté en sauce" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_4.jpg" alt="Assiette de rouleaux et crudités" loading="lazy" width="900" height="1200"></li>
+        <li><img src="img/plat_3.jpg" alt="Viande en sauce et légumes" loading="lazy" width="900" height="1200"></li>
+        </ul>
       </div>
     </div>
   </section>
@@ -1347,19 +1364,26 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
           <span class="surtitre">Avis Google</span>
           <h2>Ce qu'en disent nos clients</h2>
         </div>
-        <div class="note-google">
-          <b>4,9</b>
-          <div><span class="etoiles" aria-label="4,9 sur 5">★★★★★</span><small>Plus de 100 avis sur Google</small></div>
+        <div class="chiffres-avis">
+          <div class="note-google">
+            <b id="avis-note">4,9</b>
+            <div><span class="etoiles" aria-label="4,9 sur 5">★★★★★</span><small>Note moyenne sur Google</small></div>
+          </div>
+          <div class="nombre-avis">
+            <small id="avis-prefixe">Près de</small>
+            <b id="avis-nombre" data-cible="200">200</b>
+            <small>avis clients sur Google</small>
+          </div>
         </div>
       </div>
       <div class="avis-liste" id="avis-liste">
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Rapport qualité prix excellent !</blockquote><figcaption>Avis Google</figcaption></figure>
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Merci à Claire pour son accueil et sa bonne humeur, les repas sont divins !</blockquote><figcaption>Avis Google</figcaption></figure>
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Prestation de très bonne qualité, je recommande vivement.</blockquote><figcaption>Avis Google</figcaption></figure>
+        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Plats appétissants, frites maison, tout est réuni pour passer un bon moment gourmand et savoureux. Je vous conseille Double B avec un grand ouiii !</blockquote><figcaption>Léonie N. · Avis Google</figcaption></figure>
+        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Nous étions 10, nous avons très bien mangé, c'était copieux, prix abordables, personnel gentil, souriant, aimable. Je vous recommande ce restaurant.</blockquote><figcaption>Corinne T. · Avis Google</figcaption></figure>
+        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Merci à Claire pour son accueil et sa bonne humeur, les repas sont divins !</blockquote><figcaption>Danielle B. · Avis Google</figcaption></figure>
       </div>
       <div class="actions-avis revele">
-        <a class="bouton plein" href="https://www.google.com/search?q=Double+B+Folschviller#lrd=0x479457bd9ca7c70b:0x5403c5f14f5490ec,3,,,," target="_blank" rel="noopener"><span aria-hidden="true">★</span> Laissez-nous un avis Google</a>
-        <a class="bouton contour" href="https://www.google.com/maps?cid=6053899964324810988" target="_blank" rel="noopener">Lire tous les avis</a>
+        <a class="bouton plein" href="https://search.google.com/local/writereview?placeid=ChIJC8ennL1XlEcR7JBUT_HFA1Q" target="_blank" rel="noopener"><span aria-hidden="true">★</span> Laissez-nous un avis Google</a>
+        <a class="bouton contour" href="https://search.google.com/local/reviews?placeid=ChIJC8ennL1XlEcR7JBUT_HFA1Q" target="_blank" rel="noopener">Lire tous les avis</a>
       </div>
       <p class="merci-avis">Vous avez aimé ? Un petit avis nous aide énormément. Merci !</p>
     </div>
@@ -1669,5 +1693,72 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     if (cible) { const aller = () => cible.scrollIntoView({ behavior: 'instant' }); aller(); addEventListener('load', aller); }
   }
   else jouerIntro();
+  // ——— Mosaïque des plats du jour : les photos sont réparties en colonnes, doublées pour boucler sans à-coup ———
+  (function mosaique() {
+    const boite = $('#mosaique'); if (!boite || calme) return;
+    const photos = [...boite.querySelectorAll('.mosaique-photos img')].map((img) => ({ src: img.getAttribute('src'), alt: img.alt }));
+    const formes = ['3 / 4', '4 / 5', '2 / 3', '1 / 1', '3 / 4', '5 / 7'];
+    let dejaCols = 0;
+    const construire = () => {
+      const cols = innerWidth > 1080 ? 4 : innerWidth > 700 ? 3 : 2;
+      if (cols === dejaCols) return; dejaCols = cols;
+      boite.innerHTML = '';
+      for (let c = 0; c < cols; c++) {
+        // Chaque colonne prend toutes les photos, décalées, pour ne jamais montrer deux fois la même côte à côte
+        const liste = photos.map((_, i) => photos[(i + c * 3) % photos.length]);
+        const tuiles = liste.map((p, i) => `<figure class="tuile" style="aspect-ratio:${formes[(i + c * 2) % formes.length]}"><img src="${p.src}" alt="${p.alt}" loading="lazy"></figure>`).join('');
+        const col = document.createElement('div');
+        col.className = 'colonne-defile' + (c % 2 ? ' descend' : '');
+        col.style.setProperty('--duree', [52, 64, 58, 70][c] + 's');
+        col.innerHTML = tuiles + tuiles.replace(/alt="[^"]*"/g, 'alt="" aria-hidden="true"');
+        boite.appendChild(col);
+      }
+    };
+    construire();
+    addEventListener('resize', construire);
+  })();
+
+  // ——— Avis Google en direct : lus dans l'extension Trustindex du site (widget caché), sinon on garde ceux écrits dans la page ———
+  // Nombre d'avis : arrondi pour rester juste quand il bouge (« Près de 200 », puis « Plus de 200 »…)
+  const AVIS_CONNUS = 199; // relevé sur Google le 1er novembre 2026
+  function afficherNombre(n) {
+    const palier = Math.ceil(n / 50) * 50, bas = Math.floor(n / 50) * 50;
+    const [prefixe, cible] = palier > n && palier - n <= 5 ? ['Près de', palier] : n === bas ? ['', n] : ['Plus de', bas];
+    $('#avis-prefixe').textContent = prefixe || 'Déjà';
+    const b = $('#avis-nombre'); b.dataset.cible = cible; b.textContent = cible;
+  }
+  afficherNombre(AVIS_CONNUS);
+  function avisEnDirect() {
+    const modele = document.getElementById('trustindex-google-widget-html');
+    const racine = modele ? (modele.content || modele) : document.querySelector('.ti-widget');
+    if (!racine) return;
+    const total = parseInt(((racine.textContent || '').match(/(\d[\d\s.]*)\s*avis/) || [])[1]?.replace(/\D/g, '') || '0', 10);
+    if (total) afficherNombre(Math.max(total, AVIS_CONNUS));
+    const nomCourt = (nom) => { const m = nom.trim().split(/\s+/); return m[0].charAt(0).toUpperCase() + m[0].slice(1).toLowerCase() + (m[1] ? ' ' + m[1].charAt(0).toUpperCase() + '.' : ''); };
+    const avis = [...racine.querySelectorAll('.ti-review-item')].map((it) => ({
+      nom: it.querySelector('.ti-name')?.textContent || '',
+      texte: (it.querySelector('.ti-review-content')?.textContent || '').trim(),
+      etoiles: it.querySelectorAll('.ti-stars .ti-star[data-imgurl$="f.svg"]').length,
+    })).filter((a) => a.etoiles === 5 && a.texte.length >= 25 && a.nom);
+    const vus = new Set(); const uniques = avis.filter((a) => !vus.has(a.texte) && vus.add(a.texte));
+    if (uniques.length < 3) return;
+    const coupe = (t) => t.length > 190 ? t.slice(0, 185).replace(/\s+\S*$/, '') + '…' : t;
+    const echappe = (t) => t.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+    $('#avis-liste').innerHTML = uniques.slice(0, 6).map((a) => `<figure class="avis-carte"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>${echappe(coupe(a.texte))}</blockquote><figcaption>${echappe(nomCourt(a.nom))} · Avis Google</figcaption></figure>`).join('');
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', avisEnDirect); else avisEnDirect();
+
+  // Le grand nombre d'avis compte jusqu'à sa valeur quand on arrive dessus
+  (function compteur() {
+    const b = $('#avis-nombre'); if (!b || calme || !('IntersectionObserver' in window)) return;
+    const io = new IntersectionObserver((e) => {
+      if (!e[0].isIntersecting) return; io.disconnect();
+      const cible = +b.dataset.cible, t0 = performance.now();
+      const pas = (t) => { const p = Math.min(1, (t - t0) / 1600); b.textContent = Math.round(cible * (1 - Math.pow(1 - p, 3))); if (p < 1) requestAnimationFrame(pas); };
+      requestAnimationFrame(pas);
+    }, { threshold: 0.6 });
+    io.observe(b);
+  })();
+
 })();
 </script>
