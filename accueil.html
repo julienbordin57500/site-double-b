@@ -791,6 +791,9 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .boissons { grid-column: 1 / -1; columns: 3 260px; column-gap: 48px; }
   .boissons section { break-inside: avoid; margin-bottom: 30px; }
   .boissons h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+  .allergenes { display: flex; gap: 12px; align-items: flex-start; margin: 34px 0 0; padding: 16px 18px; border-radius: 16px; border: 1px dashed var(--trait-creme); color: var(--doux-creme); font-size: 15px; line-height: 1.5; max-width: 720px; }
+  .allergenes b { color: var(--encre); font-weight: 700; }
+  .allergenes svg { flex: none; width: 22px; height: 22px; margin-top: 1px; fill: none; stroke: #C9851A; stroke-width: 2; stroke-linecap: round; }
   .boissons p.sous { font-size: 13px; color: var(--doux-creme); margin-bottom: 6px; }
   .boissons ul { list-style: none; margin: 0; padding: 0; }
   .boissons li { display: flex; gap: 10px; align-items: baseline; padding: 6px 0; border-bottom: 1px dotted rgba(28, 28, 28, 0.2); font-size: 15px; }
@@ -859,6 +862,8 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .galerie figure:hover img { transform: scale(1.06); }
 
   /* ——— Avis clients ——— */
+  .actions-avis { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 34px; }
+  .merci-avis { margin: 14px 0 0; color: var(--doux-nuit); font-size: 14px; }
   .note-google { display: flex; align-items: center; gap: 16px; }
   .note-google b { font: 800 72px/1 var(--f-titre); color: var(--jaune); letter-spacing: -0.04em; text-shadow: 0 0 30px rgba(247, 179, 47, 0.45); }
   .note-google small { display: block; color: var(--doux-nuit); font-size: 14px; }
@@ -1269,6 +1274,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
           </ul></section>
         </div>
       </div>
+      <p class="allergenes revele"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg><span><b>Allergies ou intolérances ?</b> La liste des allergènes de chaque plat est disponible sur demande : demandez-la au service, on vous renseigne avec plaisir.</span></p>
     </div>
   </section>
 
@@ -1351,7 +1357,11 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Merci à Claire pour son accueil et sa bonne humeur, les repas sont divins !</blockquote><figcaption>Avis Google</figcaption></figure>
         <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Prestation de très bonne qualité, je recommande vivement.</blockquote><figcaption>Avis Google</figcaption></figure>
       </div>
-      <a class="bouton contour" style="margin-top:34px" href="https://www.google.com/search?q=Double+B+Folschviller+avis" target="_blank" rel="noopener">Laisser un avis sur Google</a>
+      <div class="actions-avis revele">
+        <a class="bouton plein" href="https://www.google.com/search?q=Double+B+Folschviller#lrd=0x479457bd9ca7c70b:0x5403c5f14f5490ec,3,,,," target="_blank" rel="noopener"><span aria-hidden="true">★</span> Laissez-nous un avis Google</a>
+        <a class="bouton contour" href="https://www.google.com/maps?cid=6053899964324810988" target="_blank" rel="noopener">Lire tous les avis</a>
+      </div>
+      <p class="merci-avis">Vous avez aimé ? Un petit avis nous aide énormément. Merci !</p>
     </div>
   </section>
 
