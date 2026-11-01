@@ -715,18 +715,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .formule b { font: 800 40px/1 var(--f-titre); letter-spacing: -0.03em; }
   .formule b i { display: block; font: 600 13px/1.4 var(--f-texte); font-style: normal; letter-spacing: 0.02em; opacity: 0.75; }
   .formule p { font-size: 14px; opacity: 0.78; }
-  .jours { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
-  .jour { position: relative; display: flex; flex-direction: column; gap: 12px; padding: 22px 20px 20px; border-radius: 22px; background: rgba(255, 255, 255, 0.62); border: 1px solid rgba(255, 255, 255, 0.9);
     box-shadow: 0 14px 34px -22px rgba(120, 70, 0, 0.45); backdrop-filter: blur(4px); transition: transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.35s; }
-  .jour:hover { transform: translateY(-4px); box-shadow: 0 22px 40px -22px rgba(120, 70, 0, 0.6); }
-  .jour h3 { font-size: 27px; font-weight: 800; letter-spacing: -0.03em; background: linear-gradient(100deg, #F08A12, #F7B32F); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .jour p { font-size: 16.5px; line-height: 1.4; flex: 1; }
-  .jour .prix { font: 700 14px var(--f-texte); color: var(--doux-creme); }
-  .jour .pastille { display: none; }
-  .jour.aujourdhui { background: var(--encre); color: var(--texte-nuit); border-color: rgba(247, 179, 47, 0.6); box-shadow: 0 0 0 1px rgba(247, 179, 47, 0.25), 0 24px 60px -16px rgba(247, 179, 47, 0.65); transform: translateY(-6px); }
-  .jour.aujourdhui h3 { background: none; color: var(--jaune); -webkit-text-fill-color: var(--jaune); text-shadow: 0 0 16px rgba(247, 179, 47, 0.6); }
-  .jour.aujourdhui .prix { color: var(--jaune-clair); }
-  .jour.aujourdhui .pastille { display: inline-block; position: absolute; top: -11px; left: 18px; font: 700 11px var(--f-texte); letter-spacing: 0.12em; text-transform: uppercase; color: var(--encre); background: var(--jaune); border-radius: 99px; padding: 4px 10px; }
 
   /* ——— Nouveauté ——— */
   .sombre { padding-block: 150px 130px; background: var(--nuit); }
@@ -769,6 +758,142 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .onglets button { font: 600 15px var(--f-texte); border: 0; background: transparent; color: var(--doux-creme); padding: 10px 18px; border-radius: 99px; cursor: pointer; transition: background 0.25s, color 0.25s; }
   .onglets button[aria-selected="true"] { background: var(--encre); color: var(--creme); }
   .rubrique[hidden] { display: none !important; }
+
+  /* ——— Plats de la semaine : des bons de cuisine pincés sur une tringle en inox, chacun sa couleur, halos derrière ——— */
+  .rail-semaine { position: relative; margin-top: 8px; }
+  .rail-semaine::before { content: ""; position: absolute; inset: -40px -6% -20px; pointer-events: none; z-index: 0; filter: blur(26px); animation: halo 9s ease-in-out infinite;
+    background: radial-gradient(circle at 8% 62%, rgba(240, 138, 18, 0.42), transparent 26%), radial-gradient(circle at 30% 34%, rgba(229, 72, 59, 0.3), transparent 24%),
+      radial-gradient(circle at 52% 70%, rgba(78, 159, 61, 0.28), transparent 26%), radial-gradient(circle at 73% 36%, rgba(30, 154, 168, 0.28), transparent 25%),
+      radial-gradient(circle at 93% 64%, rgba(217, 65, 140, 0.34), transparent 26%); }
+  .tringle { position: relative; z-index: 3; height: 12px; border-radius: 99px; background: linear-gradient(#FFFFFF, #B9BEC3 40%, #6E747A 60%, #D4D8DB); box-shadow: 0 8px 14px -6px rgba(0, 0, 0, 0.45); }
+  .tringle::before, .tringle::after { content: ""; position: absolute; top: -8px; width: 10px; height: 28px; border-radius: 4px; background: linear-gradient(90deg, #8D9398, #E3E6E8, #7C8288); }
+  .tringle::before { left: 2%; } .tringle::after { right: 2%; }
+  .jours { position: relative; z-index: 2; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 18px; margin-top: -6px; padding: 0 4px 30px; }
+  .jour { position: relative; padding-top: 16px; transform-origin: 50% 0; transform: rotate(var(--r, 0deg)); transition: transform 0.6s cubic-bezier(0.3, 1.5, 0.5, 1);
+    filter: drop-shadow(0 16px 18px rgba(110, 60, 0, 0.26)) drop-shadow(0 0 20px color-mix(in srgb, var(--c) 34%, transparent)); }
+  .jour:nth-child(1) { --r: -1.8deg; } .jour:nth-child(2) { --r: 1.2deg; } .jour:nth-child(3) { --r: -0.8deg; } .jour:nth-child(4) { --r: 1.6deg; } .jour:nth-child(5) { --r: -1.2deg; }
+  .jour:hover { transform: rotate(0deg) translateY(5px); }
+  .jour::before { content: ""; position: absolute; z-index: 2; top: 2px; left: 50%; width: 36px; height: 30px; margin-left: -18px; border-radius: 5px 5px 9px 9px;
+    background: linear-gradient(#F4F5F6, #9AA0A5 55%, #C9CDD0); box-shadow: inset 0 -4px 0 rgba(0, 0, 0, 0.22), 0 3px 6px rgba(0, 0, 0, 0.25); }
+  .ticket { position: relative; height: 100%; display: flex; flex-direction: column; gap: 10px; padding: 26px 18px 30px; border-top: 7px solid var(--c);
+    background: repeating-linear-gradient(transparent 0 27px, rgba(28, 28, 28, 0.045) 27px 28px), linear-gradient(#FFFFFF, #FFF8EC);
+    -webkit-mask: conic-gradient(from 135deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 9px repeat-x, linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat;
+    mask: conic-gradient(from 135deg at bottom, #0000, #000 1deg 89deg, #0000 90deg) bottom / 16px 9px repeat-x, linear-gradient(#000 0 0) top / 100% calc(100% - 9px) no-repeat; }
+  .ticket-haut { display: flex; justify-content: space-between; padding-bottom: 8px; border-bottom: 1px dashed rgba(28, 28, 28, 0.25); font: 700 11px var(--f-texte); letter-spacing: 0.14em; text-transform: uppercase; color: rgba(28, 28, 28, 0.45); }
+  .jour h3 { font-size: 31px; font-weight: 800; letter-spacing: -0.035em; color: var(--c); text-shadow: 0 0 22px color-mix(in srgb, var(--c) 45%, transparent); }
+  .jour p { flex: 1; font-size: 16px; line-height: 1.42; color: var(--encre); }
+  .ticket-bas { display: flex; justify-content: space-between; align-items: center; gap: 8px; padding-top: 10px; border-top: 1px dashed rgba(28, 28, 28, 0.25); }
+  .jour .prix { font: 800 21px var(--f-titre); color: var(--encre); font-variant-numeric: tabular-nums; }
+  .cachet { font: 800 10px var(--f-texte); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c); border: 1.5px solid var(--c); border-radius: 6px; padding: 3px 6px; transform: rotate(-7deg); opacity: 0.85; }
+  .jour .pastille { display: none; }
+  .jour.aujourdhui { z-index: 3; animation: balance-bon 4.2s ease-in-out infinite; filter: drop-shadow(0 24px 26px rgba(110, 60, 0, 0.32)) drop-shadow(0 0 30px var(--c)); }
+  .jour.aujourdhui .ticket { background: repeating-linear-gradient(transparent 0 27px, rgba(28, 28, 28, 0.045) 27px 28px), linear-gradient(#FFFFFF, color-mix(in srgb, var(--c) 16%, #FFF8EC)); }
+  .jour.aujourdhui .ticket-haut span:last-child { visibility: hidden; }
+  .jour.aujourdhui .pastille { display: block; position: absolute; top: 17px; right: 8px; font: 800 12px var(--f-titre); letter-spacing: 0.14em; text-transform: uppercase; color: var(--rouge); border: 2.5px solid var(--rouge); border-radius: 7px; padding: 4px 8px; transform: rotate(9deg); background: rgba(255, 255, 255, 0.55); mix-blend-mode: multiply; animation: tamponne 0.5s 0.6s cubic-bezier(0.3, 1.6, 0.5, 1) both; }
+  @keyframes balance-bon { 0%, 100% { transform: rotate(-1.4deg); } 50% { transform: rotate(1.4deg); } }
+  @keyframes tamponne { from { opacity: 0; transform: rotate(9deg) scale(2.2); } }
+  @media (max-width: 900px) {
+    .tringle { margin-inline: -16px; border-radius: 0; }
+    .tringle::before, .tringle::after { display: none; }
+    .jours { display: flex; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 14px; margin-inline: -16px; padding: 0 16px 34px; touch-action: pan-x pan-y pinch-zoom; overscroll-behavior-x: contain; }
+    .jours::-webkit-scrollbar { display: none; }
+    .jour { flex: 0 0 min(76%, 300px); scroll-snap-align: center; }
+  }
+
+  /* ——— La carte : un livre à feuilleter (couverture cuir, pages qui tournent en 3D, marque-pages de couleur) ——— */
+  .onglets button { position: relative; }
+  .onglets button::before { content: ""; display: inline-block; width: 8px; height: 8px; margin-right: 8px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); vertical-align: 1px; }
+  .onglets button[aria-selected="true"] { background: var(--c); color: var(--encre); box-shadow: 0 6px 18px -6px var(--c); }
+  .onglets button[aria-selected="true"]::before { background: var(--encre); box-shadow: none; }
+  .livre { position: relative; max-width: 1060px; margin: 8px auto 0; }
+  .livre::before { content: ""; position: absolute; inset: 6% -8% 10%; pointer-events: none; filter: blur(40px); border-radius: 50%;
+    background: radial-gradient(circle at 20% 40%, rgba(247, 179, 47, 0.45), transparent 45%), radial-gradient(circle at 80% 60%, color-mix(in srgb, var(--c-livre, #F7B32F) 40%, transparent), transparent 45%); transition: background 0.8s; }
+  .livre-pages { position: relative; perspective: 2600px; border-radius: 8px 18px 18px 8px;
+    box-shadow: 5px 5px 0 -1px #F3EADB, 10px 10px 0 -2px #E8DDCA, 15px 15px 0 -3px #DCCFB9, 0 50px 90px -40px rgba(70, 35, 0, 0.55); }
+  .livre .page-carte { position: relative; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px; align-content: start; padding: 34px 52px 30px 60px; border-radius: 8px 18px 18px 8px;
+    background: linear-gradient(90deg, rgba(110, 70, 10, 0.16), rgba(110, 70, 10, 0) 4.5%), radial-gradient(ellipse 55% 34% at 92% 0%, color-mix(in srgb, var(--c) 26%, transparent), transparent 70%), linear-gradient(#FFFCF5, #FBF4E7);
+    transform-origin: left center; transform-style: preserve-3d; animation: none; }
+  .page-carte:not(.active):not(.tourne):not(.revient) { position: absolute; inset: 0 0 auto 0; visibility: hidden; }
+  .page-carte.tourne, .page-carte.revient { position: absolute; inset: 0 0 auto 0; z-index: 4; }
+  .page-carte.tourne { animation: feuillette 0.95s cubic-bezier(0.5, 0.05, 0.25, 1) both; }
+  .page-carte.revient { animation: feuillette 0.95s cubic-bezier(0.5, 0.05, 0.25, 1) reverse both; }
+  @keyframes feuillette { 0% { transform: rotateY(0deg); box-shadow: 0 0 0 rgba(0, 0, 0, 0); } 50% { box-shadow: -30px 0 50px rgba(60, 30, 0, 0.35); } 100% { transform: rotateY(-180deg); box-shadow: 0 0 0 rgba(0, 0, 0, 0); } }
+  .dos { position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(270deg, rgba(110, 70, 10, 0.18), transparent 8%), linear-gradient(#F6EDDD, #EFE3CE); transform: rotateY(180deg) translateZ(1px); -webkit-backface-visibility: hidden; backface-visibility: hidden; pointer-events: none; }
+  .tete-page { grid-column: 1 / -1; display: flex; justify-content: space-between; gap: 12px; padding-bottom: 10px; border-bottom: 3px double rgba(28, 28, 28, 0.18); font: 700 11px var(--f-texte); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(28, 28, 28, 0.45); }
+  .tete-page span:last-child { color: color-mix(in srgb, var(--c) 75%, #1C1C1C); }
+  .titre-page { grid-column: 1 / -1; justify-self: start; margin: 26px 0 10px; font: 800 clamp(34px, 5vw, 54px)/1 var(--f-titre); letter-spacing: -0.035em; position: relative; }
+  .titre-page::after { content: ""; position: absolute; left: -2%; right: -4%; bottom: 0.08em; height: 0.36em; z-index: -1; border-radius: 4px; background: var(--c); opacity: 0.55; transform: rotate(-1.2deg); box-shadow: 0 0 24px var(--c); }
+  .pied-page { grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center; margin-top: 26px; padding-top: 12px; border-top: 1px solid rgba(28, 28, 28, 0.1); font: 700 13px var(--f-titre); color: rgba(28, 28, 28, 0.45); }
+  .pied-page span:first-child::before { content: "— "; } .pied-page span:first-child::after { content: " —"; }
+  .pied-page .suite { color: color-mix(in srgb, var(--c) 70%, #1C1C1C); }
+  .livre .couverture { min-height: 560px; display: grid; grid-template-columns: minmax(0, 1fr); place-content: center; justify-items: center; gap: 18px; padding: 50px 30px; text-align: center; color: var(--texte-nuit);
+    background: radial-gradient(ellipse 70% 50% at 30% 15%, rgba(255, 255, 255, 0.09), transparent 60%), repeating-radial-gradient(circle at 40% 40%, rgba(255, 255, 255, 0.015) 0 2px, transparent 2px 5px), linear-gradient(135deg, #2A2523, #141211); }
+  .couverture::before { content: ""; position: absolute; inset: 14px; border: 2px dashed rgba(247, 179, 47, 0.45); border-radius: 6px 12px 12px 6px; pointer-events: none; }
+  .couverture::after { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 26px; border-radius: 8px 0 0 8px; background: linear-gradient(90deg, rgba(0, 0, 0, 0.55), rgba(255, 255, 255, 0.06) 60%, transparent); pointer-events: none; }
+  .couverture .dos { background: linear-gradient(135deg, #24201E, #121010); }
+  .couv-plaque { width: min(78%, 420px); padding: 26px 30px; border-radius: 16px; background: linear-gradient(#FBF6EC, #EFE4D0); box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.18), 0 0 0 3px rgba(247, 179, 47, 0.55), 0 0 40px rgba(247, 179, 47, 0.25); }
+  .couv-plaque .logo { display: block; width: 100%; height: auto; }
+  .couv-titre { font: 800 clamp(44px, 7vw, 76px)/1 var(--f-titre); letter-spacing: -0.03em; color: var(--jaune); text-shadow: 0 0 18px rgba(247, 179, 47, 0.55), 0 0 50px rgba(247, 179, 47, 0.3); }
+  .couv-sous { max-width: 30em; font-size: 14px; letter-spacing: 0.06em; color: var(--doux-nuit); }
+  .couv-ouvrir { margin-top: 8px; font: 700 16px var(--f-texte); color: var(--encre); background: var(--jaune); border: 0; border-radius: 99px; padding: 14px 26px; cursor: pointer; box-shadow: 0 10px 30px -8px rgba(247, 179, 47, 0.8); animation: invite 4s ease-in-out infinite; }
+  .livre-coin { position: absolute; z-index: 5; right: 0; bottom: 0; width: 64px; height: 64px; border: 0; padding: 0; cursor: pointer; border-radius: 0 0 18px 0; transform-origin: 100% 100%;
+    background: linear-gradient(135deg, transparent 50%, #E7D9C1 50%, #F7EEDF 72%, #E9DCC6); box-shadow: -4px -4px 10px -4px rgba(60, 30, 0, 0.35); animation: coin 3.6s ease-in-out infinite; }
+  .livre-coin:hover { animation: none; transform: scale(1.35); }
+  .livre.fin .livre-coin, .livre.ferme .livre-coin { display: none; }
+  @keyframes coin { 0%, 70%, 100% { transform: scale(1); } 80% { transform: scale(1.4); } }
+
+  /* ——— Livre : tout pour qu'on comprenne tout de suite qu'il se feuillette ——— */
+  .visuellement-cache { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  .livre .couverture { cursor: pointer; }
+  .livre.entrouvre .couverture { animation: entrouvre 1.6s cubic-bezier(0.4, 0, 0.2, 1) 2; }
+  @keyframes entrouvre { 0%, 100% { transform: rotateY(0deg); } 40% { transform: rotateY(-22deg); box-shadow: -18px 0 40px rgba(60, 30, 0, 0.35); } }
+  .couv-sommaire { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; max-width: 34em; }
+  .couv-sommaire button { font: 600 13px var(--f-texte); color: var(--texte-nuit); background: rgba(255, 255, 255, 0.06); border: 1px solid rgba(255, 255, 255, 0.16); border-radius: 99px; padding: 7px 12px; cursor: pointer; transition: background 0.2s, border-color 0.2s; }
+  .couv-sommaire button::before { content: ""; display: inline-block; width: 7px; height: 7px; margin-right: 7px; border-radius: 50%; background: var(--c); box-shadow: 0 0 8px var(--c); vertical-align: 1px; }
+  .couv-sommaire button:hover { background: rgba(255, 255, 255, 0.14); border-color: var(--c); }
+  .couv-astuce { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(237, 230, 218, 0.45); }
+  .pied-page { gap: 10px; }
+  .pied-page button { font: 700 14px var(--f-texte); border-radius: 99px; cursor: pointer; transition: transform 0.2s, background 0.2s; }
+  .pp-prec { border: 1.5px solid var(--trait-creme); background: transparent; color: var(--doux-creme); padding: 9px 14px; }
+  .pp-suiv { border: 0; background: var(--c); color: var(--encre); padding: 12px 18px; box-shadow: 0 8px 20px -8px var(--c); }
+  .pp-suiv:hover { transform: translateX(3px); }
+  .pied-page .num::before { content: "— "; } .pied-page .num::after { content: " —"; }
+  .livre-nav { position: sticky; z-index: 6; bottom: max(18px, env(safe-area-inset-bottom, 0px)); width: max-content; max-width: 100%; margin: 26px auto 0; display: flex; align-items: center; gap: 10px; padding: 6px; border-radius: 99px;
+    background: rgba(28, 28, 28, 0.88); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px); box-shadow: 0 14px 34px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 233, 184, 0.12); }
+  .livre-nav button { display: inline-flex; align-items: center; gap: 8px; font: 700 14px var(--f-texte); border: 0; border-radius: 99px; padding: 10px 14px; cursor: pointer; background: transparent; color: var(--texte-nuit); }
+  .livre-nav button b { font-weight: 700; max-width: 9.5em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .livre-nav .ln-suiv { background: var(--c-livre, var(--jaune)); color: var(--encre); }
+  .livre-nav button:disabled { opacity: 0.3; cursor: default; }
+  .livre-nav .ln-prec:disabled b { display: none; }
+  .ln-points { display: flex; gap: 6px; padding-inline: 2px; }
+  .ln-points i { width: 7px; height: 7px; border-radius: 50%; background: rgba(237, 230, 218, 0.25); transition: background 0.3s, width 0.3s; }
+  .ln-points i.ici { width: 20px; border-radius: 99px; background: var(--c-livre, var(--jaune)); }
+  body.lecture-carte .flottant-mois { opacity: 0; pointer-events: none; }
+  .flottant-mois { transition: opacity 0.3s; }
+  /* Démonstration du geste : la page se soulève un peu, une main glisse */
+  .livre.apercu .page-carte.active:not(.couverture) { animation: apercu 1.5s cubic-bezier(0.4, 0, 0.2, 1) 2 0.3s; }
+  @keyframes apercu { 0%, 100% { transform: rotateY(0deg); } 45% { transform: rotateY(-16deg); box-shadow: -16px 0 30px rgba(60, 30, 0, 0.3); } }
+  .livre-astuce { position: absolute; z-index: 7; left: 50%; top: 150px; transform: translateX(-50%); display: flex; align-items: center; gap: 12px; padding: 12px 18px 12px 14px; border-radius: 99px; pointer-events: none;
+    background: rgba(28, 28, 28, 0.9); color: var(--neon-blanc); font: 700 14px var(--f-texte); white-space: nowrap; box-shadow: 0 16px 40px -12px rgba(0, 0, 0, 0.6); opacity: 0; transition: opacity 0.4s; }
+  .livre.apercu .livre-astuce { opacity: 1; }
+  .livre-astuce .main { width: 26px; height: 26px; flex: none; animation: glisse 1.5s ease-in-out infinite;
+    background: no-repeat center / contain url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23F7B32F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M18 11V6a2 2 0 0 0-4 0v5M14 10V4a2 2 0 0 0-4 0v6M10 10.5V6a2 2 0 0 0-4 0v8'/%3E%3Cpath d='M18 8a2 2 0 1 1 4 0v6a8 8 0 0 1-8 8h-2c-2.8 0-4.5-.86-5.99-2.34l-3.6-3.6a2 2 0 0 1 2.83-2.82L7 15'/%3E%3C/svg%3E"); }
+  @keyframes glisse { 0% { transform: translateX(14px); } 60% { transform: translateX(-14px); opacity: 1; } 61%, 100% { opacity: 0; transform: translateX(14px); } }
+  .txt-souris { display: none; }
+  @media (hover: hover) and (pointer: fine) { .txt-doigt { display: none; } .txt-souris { display: inline; } }
+  @media (max-width: 900px) {
+    .livre-nav { bottom: calc(86px + env(safe-area-inset-bottom, 0px)); }
+    .livre-nav button b { max-width: 6.5em; }
+    .pied-page { flex-wrap: wrap; }
+    .pied-page .pp-suiv { order: -1; flex: 1 1 100%; justify-content: center; padding: 14px; font-size: 15px; }
+    .livre-astuce { top: 120px; font-size: 13px; }
+  }
+  @media (max-width: 900px) {
+    .livre .page-carte { grid-template-columns: minmax(0, 1fr); padding: 24px 20px 22px 28px; }
+    .livre .couverture { min-height: 500px; padding: 40px 22px; }
+    .livre-pages { box-shadow: 3px 3px 0 -1px #F3EADB, 6px 6px 0 -2px #E8DDCA, 9px 9px 0 -3px #DCCFB9, 0 40px 70px -36px rgba(70, 35, 0, 0.55); }
+    .livre-coin { width: 52px; height: 52px; }
+  }
   .rubrique { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 64px; animation: apparait 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
   @keyframes apparait { from { opacity: 0; transform: translateY(14px) } }
   .plat { transition: background 0.25s, padding 0.25s; }
@@ -962,7 +1087,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   /* Téléphone et tablette */
   @media (max-width: 1080px) {
     .soirees { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-    .jours { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
   }
   @media (max-width: 900px) {
     .barre nav { display: none; }
@@ -1001,11 +1125,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .formule.vedette { grid-column: 1 / -1; }
     .formule { padding: 18px; }
     .formule b { font-size: 32px; }
-    .jours { grid-template-columns: minmax(0, 1fr); gap: 10px; }
-    .jour { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 4px 12px; padding: 16px 18px; }
-    .jour h3 { font-size: 22px; }
-    .jour p { grid-column: 1 / -1; grid-row: 2; }
-    .jour.aujourdhui { transform: none; margin-block: 8px; }
     .ingredients { grid-template-columns: minmax(0, 1fr); }
     .onglets { display: flex; overflow-x: auto; max-width: 100%; scrollbar-width: none; }
     .onglets button { flex: none; }
@@ -1172,12 +1291,45 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <div class="formule"><small>Plat du jour</small><b class="prix"><i>à partir de</i>11,50 €</b><p>Du lundi au vendredi midi</p></div>
         <div class="formule"><small>Dessert du jour</small><b class="prix"><i>&nbsp;</i>5,50 €</b><p>Fait maison ou sélectionné avec soin</p></div>
       </div>
-      <div class="jours revele" id="jours">
-        <div class="jour" data-jour="1"><span class="pastille">Aujourd'hui</span><h3>Lundi</h3><p>Tortilla de patatas, coulis de tomates et salade de saison</p><span class="prix">11,50 €</span></div>
-        <div class="jour" data-jour="2"><span class="pastille">Aujourd'hui</span><h3>Mardi</h3><p>Sauté de porc façon marengo, polenta moelleuse et butternut</p><span class="prix">14,00 €</span></div>
-        <div class="jour" data-jour="3"><span class="pastille">Aujourd'hui</span><h3>Mercredi</h3><p>Wrap poulet à la mexicaine et salade</p><span class="prix">11,50 €</span></div>
-        <div class="jour" data-jour="4"><span class="pastille">Aujourd'hui</span><h3>Jeudi</h3><p>Bouchée à la reine, frites maison</p><span class="prix">14,90 €</span></div>
-        <div class="jour" data-jour="5"><span class="pastille">Aujourd'hui</span><h3>Vendredi</h3><p>Croque-monsieur aux légumes, emmental et mozzarella</p><span class="prix">11,50 €</span></div>
+      <div class="rail-semaine revele">
+        <div class="tringle" aria-hidden="true"></div>
+        <div class="jours" id="jours">
+        <div class="jour" data-jour="1" style="--c:#F08A12"><div class="ticket">
+          <span class="pastille">Aujourd'hui</span>
+          <div class="ticket-haut"><span>Bon n° 01</span><span>Midi</span></div>
+          <h3>Lundi</h3>
+          <p>Tortilla de patatas, coulis de tomates et salade de saison</p>
+          <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
+        </div></div>
+        <div class="jour" data-jour="2" style="--c:#E5483B"><div class="ticket">
+          <span class="pastille">Aujourd'hui</span>
+          <div class="ticket-haut"><span>Bon n° 02</span><span>Midi</span></div>
+          <h3>Mardi</h3>
+          <p>Sauté de porc façon marengo, polenta moelleuse et butternut</p>
+          <div class="ticket-bas"><span class="prix">14,00 €</span><span class="cachet">Fait maison</span></div>
+        </div></div>
+        <div class="jour" data-jour="3" style="--c:#4E9F3D"><div class="ticket">
+          <span class="pastille">Aujourd'hui</span>
+          <div class="ticket-haut"><span>Bon n° 03</span><span>Midi</span></div>
+          <h3>Mercredi</h3>
+          <p>Wrap poulet à la mexicaine et salade</p>
+          <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
+        </div></div>
+        <div class="jour" data-jour="4" style="--c:#1E9AA8"><div class="ticket">
+          <span class="pastille">Aujourd'hui</span>
+          <div class="ticket-haut"><span>Bon n° 04</span><span>Midi</span></div>
+          <h3>Jeudi</h3>
+          <p>Bouchée à la reine, frites maison</p>
+          <div class="ticket-bas"><span class="prix">14,90 €</span><span class="cachet">Fait maison</span></div>
+        </div></div>
+        <div class="jour" data-jour="5" style="--c:#D9418C"><div class="ticket">
+          <span class="pastille">Aujourd'hui</span>
+          <div class="ticket-haut"><span>Bon n° 05</span><span>Midi</span></div>
+          <h3>Vendredi</h3>
+          <p>Croque-monsieur aux légumes, emmental et mozzarella</p>
+          <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
+        </div></div>
+        </div>
       </div>
     </div>
   </section>
@@ -1205,15 +1357,28 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
           <h2>Notre carte</h2>
         </div>
         <div class="onglets" role="tablist" aria-label="Rubriques de la carte">
-          <button type="button" role="tab" id="t-burgers" aria-controls="r-burgers" aria-selected="true">Burgers</button>
-          <button type="button" role="tab" id="t-plats" aria-controls="r-plats" aria-selected="false">Plats</button>
-          <button type="button" role="tab" id="t-accomp" aria-controls="r-accomp" aria-selected="false">Accompagnements</button>
-          <button type="button" role="tab" id="t-desserts" aria-controls="r-desserts" aria-selected="false">Desserts</button>
-          <button type="button" role="tab" id="t-boissons" aria-controls="r-boissons" aria-selected="false">Boissons</button>
+          <button type="button" role="tab" id="t-burgers" style="--c:#F7B32F" aria-controls="r-burgers" aria-selected="true">Burgers</button>
+          <button type="button" role="tab" id="t-plats" style="--c:#F08A12" aria-controls="r-plats" aria-selected="false">Plats</button>
+          <button type="button" role="tab" id="t-accomp" style="--c:#4E9F3D" aria-controls="r-accomp" aria-selected="false">Accompagnements</button>
+          <button type="button" role="tab" id="t-desserts" style="--c:#D9418C" aria-controls="r-desserts" aria-selected="false">Desserts</button>
+          <button type="button" role="tab" id="t-boissons" style="--c:#1E9AA8" aria-controls="r-boissons" aria-selected="false">Boissons</button>
         </div>
       </div>
 
-      <div class="rubrique" id="r-burgers" role="tabpanel" aria-labelledby="t-burgers">
+      <div class="livre" id="livre" aria-roledescription="carte à feuilleter">
+        <div class="livre-pages" id="livre-pages">
+      <div class="page-carte couverture active" id="r-couverture">
+        <div class="dos" aria-hidden="true"></div>
+        <div class="couv-plaque"><svg class="logo" viewBox="205 578 1660 682" role="img" aria-label="Double B"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></div>
+        <p class="couv-titre">La carte</p>
+        <nav class="couv-sommaire" aria-label="Sommaire de la carte"><button type="button" data-aller="1" style="--c:#F7B32F">Burgers</button><button type="button" data-aller="2" style="--c:#F08A12">Plats</button><button type="button" data-aller="3" style="--c:#4E9F3D">Accompagnements</button><button type="button" data-aller="4" style="--c:#D9418C">Desserts</button><button type="button" data-aller="5" style="--c:#1E9AA8">Boissons</button></nav>
+        <button type="button" class="couv-ouvrir" id="livre-ouvrir">Ouvrir la carte <span aria-hidden="true">→</span></button>
+        <p class="couv-astuce">Touchez la couverture pour l'ouvrir</p>
+      </div>
+      <div class="rubrique page-carte" id="r-burgers" style="--c:#F7B32F" role="tabpanel" aria-labelledby="t-burgers">
+        <div class="dos" aria-hidden="true"></div>
+        <header class="tete-page"><span>Double B · La carte</span><span>Burgers</span></header>
+        <h3 class="titre-page">Nos burgers</h3>
         <div class="bandeau-menu"><span>Chaque burger existe en menu, avec ses frites maison</span><b>prix menu = 2e prix</b></div>
         <article class="plat"><div class="ligne"><h3>Le Bœuf</h3><i class="points"></i><span class="prix">14,50 €</span><span class="menu">Menu 17,20 €</span></div><p>Steak de bœuf façon bouchère 180 g, crème de cheddar, salade iceberg, tomates, sauce maison burger aux cornichons.</p></article>
         <article class="plat"><div class="ligne"><h3>Le Poulet<span class="tag vert">Halal</span></h3><i class="points"></i><span class="prix">13,20 €</span><span class="menu">Menu 15,90 €</span></div><p>Poulet crispy pané au panko, cheddar, pickles d'oignons rouges, tomates, salade iceberg, sauce maison yaourt aux herbes.</p></article>
@@ -1222,8 +1387,12 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <article class="plat"><div class="ligne"><h3>Le Smash</h3><i class="points"></i><span class="prix">8,50 €</span><span class="menu">Menu 11,20 €</span></div><p>Steak smashé 100 g, oignons rouges caramélisés, cornichons, sauce maison paprika fumé. Servi dans un potato bun.</p><span class="note">Existe en version double : + 2 €</span></article>
         <article class="plat"><div class="ligne"><h3>Le Burger du mois</h3><i class="points"></i><span class="prix">au tableau</span></div><p>Affiché sur le tableau dans le restaurant, ou à demander au service.</p></article>
         <div class="info-carte"><span><b>Le pain :</b> bun brioché d'un artisan local, ou demi-baguette tradition.</span><span><b>Sauces :</b> ketchup, mayonnaise, barbecue, andalouse. Sauces maison (0,90 €) : truffe, curry, spicy.</span></div>
+        <footer class="pied-page"><button type="button" class="pp-prec" data-aller="0">← Couverture</button><span class="num">1</span><button type="button" class="pp-suiv" data-aller="2">Page suivante : Plats <span aria-hidden="true">→</span></button></footer>
       </div>
-      <div class="rubrique" id="r-plats" role="tabpanel" aria-labelledby="t-plats" hidden>
+      <div class="rubrique page-carte" id="r-plats" style="--c:#F08A12" role="tabpanel" aria-labelledby="t-plats">
+        <div class="dos" aria-hidden="true"></div>
+        <header class="tete-page"><span>Double B · La carte</span><span>Plats</span></header>
+        <h3 class="titre-page">Nos plats</h3>
         <article class="plat"><div class="ligne"><h3>Saucisses blanches curry</h3><i class="points"></i><span class="prix">12,00 €</span></div><p>Saucisses blanches poêlées, sauce curry tomatée et douce, frites maison.</p></article>
         <article class="plat"><div class="ligne"><h3>Escalope de porc panée façon viennoise</h3><i class="points"></i><span class="prix">12,70 €</span></div><p>Une escalope croustillante et dorée, frites maison et salade verte.</p><span class="note">Sauce crème champignon : + 1,90 €</span></article>
         <article class="plat"><div class="ligne"><h3>Salade du moment</h3><i class="points"></i><span class="prix">13,00 €</span></div><p>Affichée sur le tableau dans le restaurant, ou à demander au service.</p></article>
@@ -1231,18 +1400,30 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <article class="plat"><div class="ligne"><h3>Notre poutine</h3><i class="points"></i><span class="prix">13,00 €</span></div><p>Frites maison nappées d'une sauce gravy maison, fromage fondant, effiloché de bœuf.</p></article>
         <article class="plat"><div class="ligne"><h3>Frites vosgiennes</h3><i class="points"></i><span class="prix">9,70 €</span></div><p>Frites maison nappées d'une sauce crème onctueuse, petits lardons et champignons de Paris poêlés.</p></article>
         <article class="plat"><div class="ligne"><h3>Menu enfant</h3><i class="points"></i><span class="prix">7,50 €</span></div><p>Burger steak smashé, sauce au choix, petite frite maison et dessert.</p></article>
+        <footer class="pied-page"><button type="button" class="pp-prec" data-aller="1">← Burgers</button><span class="num">2</span><button type="button" class="pp-suiv" data-aller="3">Page suivante : Accompagnements <span aria-hidden="true">→</span></button></footer>
       </div>
-      <div class="rubrique" id="r-accomp" role="tabpanel" aria-labelledby="t-accomp" hidden>
+      <div class="rubrique page-carte" id="r-accomp" style="--c:#4E9F3D" role="tabpanel" aria-labelledby="t-accomp">
+        <div class="dos" aria-hidden="true"></div>
+        <header class="tete-page"><span>Double B · La carte</span><span>Accompagnements</span></header>
+        <h3 class="titre-page">Nos accompagnements</h3>
         <article class="plat"><div class="ligne"><h3>Pop-corn de poulet coréen<span class="tag rouge">New</span></h3><i class="points"></i><span class="prix">4,50 €</span></div><p>Bouchées de poulet marinées aux saveurs coréennes, panées et enrobées d'une sauce épicée. Parfait avec un burger, ou à partager.</p><span class="note">100 g : 4,50 € · 200 g : 7,50 € · légèrement épicé</span></article>
         <article class="plat"><div class="ligne"><h3>Portion frites maison</h3><i class="points"></i><span class="prix">3,50 €</span></div><p>Pommes de terre fraîches, coupées et cuites sur place, avec des épices douces.</p></article>
         <article class="plat"><div class="ligne"><h3>Frites cheddar</h3><i class="points"></i><span class="prix">4,50 €</span></div><p>Frites maison nappées d'une crème de cheddar onctueuse et d'oignons frits croustillants.</p></article>
         <article class="plat"><div class="ligne"><h3>Salade croquante</h3><i class="points"></i><span class="prix">2,00 €</span></div><p>Salade verte, carottes râpées et tomates, pour une touche fraîche.</p></article>
+        <footer class="pied-page"><button type="button" class="pp-prec" data-aller="2">← Plats</button><span class="num">3</span><button type="button" class="pp-suiv" data-aller="4">Page suivante : Desserts <span aria-hidden="true">→</span></button></footer>
       </div>
-      <div class="rubrique" id="r-desserts" role="tabpanel" aria-labelledby="t-desserts" hidden>
+      <div class="rubrique page-carte" id="r-desserts" style="--c:#D9418C" role="tabpanel" aria-labelledby="t-desserts">
+        <div class="dos" aria-hidden="true"></div>
+        <header class="tete-page"><span>Double B · La carte</span><span>Desserts</span></header>
+        <h3 class="titre-page">Nos desserts</h3>
         <article class="plat"><div class="ligne"><h3>Nos desserts</h3><i class="points"></i><span class="prix">5,50 €</span></div><p>Desserts du jour, préparés sur place ou sélectionnés avec soin.</p></article>
         <article class="plat"><div class="ligne"><h3>Nos glaces</h3><i class="points"></i><span class="prix">2,00 € la boule</span></div><p>Vanille, chocolat, pistache, fraise, citron, framboise.</p></article>
+        <footer class="pied-page"><button type="button" class="pp-prec" data-aller="3">← Accompagnements</button><span class="num">4</span><button type="button" class="pp-suiv" data-aller="5">Page suivante : Boissons <span aria-hidden="true">→</span></button></footer>
       </div>
-      <div class="rubrique" id="r-boissons" role="tabpanel" aria-labelledby="t-boissons" hidden>
+      <div class="rubrique page-carte" id="r-boissons" style="--c:#1E9AA8" role="tabpanel" aria-labelledby="t-boissons">
+        <div class="dos" aria-hidden="true"></div>
+        <header class="tete-page"><span>Double B · La carte</span><span>Boissons</span></header>
+        <h3 class="titre-page">Nos boissons</h3>
         <div class="boissons">
           <section><h3>Boissons sans alcool</h3><ul>
             <li><span>Coca-Cola, zéro ou cherry</span><span class="cl">33 cl</span><span class="prix">3,00 €</span></li>
@@ -1288,6 +1469,17 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
             <li><span>Get 27</span><span class="cl">4 cl</span><span class="prix">4,00 €</span></li>
           </ul></section>
         </div>
+        <footer class="pied-page"><button type="button" class="pp-prec" data-aller="4">← Desserts</button><span class="num">5</span><button type="button" class="pp-suiv" data-aller="1">Revenir aux burgers <span aria-hidden="true">↺</span></button></footer>
+      </div>
+          <button type="button" class="livre-coin" id="livre-coin" aria-label="Page suivante"></button>
+        </div>
+        <div class="livre-nav" id="livre-nav">
+          <button type="button" id="livre-prec" class="ln-prec" aria-label="Page précédente"><span aria-hidden="true">←</span><b id="ln-prec-nom"></b></button>
+          <div class="ln-points" id="ln-points" aria-hidden="true"></div>
+          <span id="livre-compteur" class="visuellement-cache" aria-live="polite">Couverture</span>
+          <button type="button" id="livre-suiv" class="ln-suiv"><b id="ln-suiv-nom">Ouvrir la carte</b><span aria-hidden="true">→</span></button>
+        </div>
+        <div class="livre-astuce" id="livre-astuce" aria-hidden="true"><span class="main"></span><span class="txt-doigt">Glissez la page pour la tourner</span><span class="txt-souris">Cliquez sur « Page suivante » ou sur le coin de la page</span></div>
       </div>
       <p class="allergenes revele"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg><span><b>Allergies ou intolérances ?</b> La liste des allergènes de chaque plat est disponible sur demande : demandez-la au service, on vous renseigne avec plaisir.</span></p>
     </div>
@@ -1633,11 +1825,83 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   const aujourdhui = new Date().getDay();
   document.querySelectorAll(`.jour[data-jour="${aujourdhui}"], #horaires tr[data-jour="${aujourdhui}"]`).forEach((el) => el.classList.add('aujourdhui'));
 
-  // ——— Onglets de la carte ———
-  const onglets = document.querySelectorAll('.onglets [role="tab"]');
-  onglets.forEach((b) => b.addEventListener('click', () => {
-    onglets.forEach((o) => { const actif = o === b; o.setAttribute('aria-selected', actif); $('#' + o.getAttribute('aria-controls')).hidden = !actif; });
-  }));
+  // Sur téléphone, les bons de la semaine défilent : on ouvre directement sur celui du jour
+  (function () {
+    const rangee = $('#jours'), auj = rangee && rangee.querySelector('.aujourdhui');
+    if (auj && rangee.scrollWidth > rangee.clientWidth) rangee.scrollLeft = auj.offsetLeft - (rangee.clientWidth - auj.offsetWidth) / 2;
+  })();
+
+  // ——— La carte : un livre qu'on feuillette (marque-pages, flèches, coin de page, glisser du doigt) ———
+  (function livre() {
+    const boite = $('#livre'); if (!boite) return;
+    const pages = [...boite.querySelectorAll('.page-carte')];
+    const onglets = [...document.querySelectorAll('.onglets [role="tab"]')];
+    const prec = $('#livre-prec'), suiv = $('#livre-suiv'), compteur = $('#livre-compteur');
+    const NOMS = ['Couverture', 'Burgers', 'Plats', 'Accompagnements', 'Desserts', 'Boissons'];
+    const points = $('#ln-points'); points.innerHTML = pages.slice(1).map(() => '<i></i>').join('');
+    let dejaTourne = false;
+    try { dejaTourne = localStorage.getItem('doubleb-carte-feuilletee') === '1'; } catch (e) {}
+    const DUREE = calme ? 0 : 950;
+    let ici = 0, occupe = false;
+    function etat() {
+      pages.forEach((p, i) => p.classList.toggle('active', i === ici));
+      onglets.forEach((o) => o.setAttribute('aria-selected', o.getAttribute('aria-controls') === pages[ici].id));
+      compteur.textContent = ici === 0 ? 'Couverture' : `Page ${ici} sur ${pages.length - 1}`;
+      prec.disabled = ici === 0; suiv.disabled = ici === pages.length - 1;
+      $('#ln-suiv-nom').textContent = ici === 0 ? 'Ouvrir la carte' : ici === pages.length - 1 ? 'Fin' : NOMS[ici + 1];
+      $('#ln-prec-nom').textContent = ici > 0 ? NOMS[ici - 1] : '';
+      suiv.setAttribute('aria-label', ici === 0 ? 'Ouvrir la carte' : `Page suivante : ${NOMS[ici + 1] || ''}`);
+      [...points.children].forEach((p, i) => p.classList.toggle('ici', i === ici - 1));
+      boite.classList.toggle('ferme', ici === 0); boite.classList.toggle('fin', ici === pages.length - 1);
+      boite.style.setProperty('--c-livre', getComputedStyle(pages[ici]).getPropertyValue('--c') || '#F7B32F');
+    }
+    function cadrer() {
+      const r = boite.getBoundingClientRect();
+      if (r.top < 70) scrollTo({ top: scrollY + r.top - 90, behavior: calme ? 'auto' : 'smooth' });
+    }
+    function aller(k) {
+      if (occupe || k === ici || k < 0 || k >= pages.length) return;
+      if (ici > 0 && k !== ici) { boite.classList.remove('apercu'); dejaTourne = true; try { localStorage.setItem('doubleb-carte-feuilletee', '1'); } catch (e) {} }
+      const montrerGeste = ici === 0 && !dejaTourne && !calme;
+      const depart = pages[ici], arrivee = pages[k], avance = k > ici;
+      if (!DUREE) { ici = k; etat(); cadrer(); return; }
+      occupe = true; cadrer();
+      if (avance) {
+        // La page du dessus se soulève et tourne vers la gauche ; la suivante est déjà dessous
+        depart.classList.add('tourne'); ici = k; etat();
+        setTimeout(() => {
+          depart.classList.remove('tourne'); occupe = false;
+          // Première ouverture : on montre une fois que les pages se tournent
+          if (montrerGeste) { boite.classList.add('apercu'); setTimeout(() => boite.classList.remove('apercu'), 5200); }
+        }, DUREE);
+      } else {
+        // Retour : la page précédente revient de la gauche se reposer par-dessus
+        arrivee.classList.add('revient');
+        setTimeout(() => { arrivee.classList.remove('revient'); ici = k; etat(); occupe = false; }, DUREE);
+      }
+    }
+    onglets.forEach((o) => o.addEventListener('click', () => aller(pages.findIndex((p) => p.id === o.getAttribute('aria-controls')))));
+    prec.addEventListener('click', () => aller(ici - 1));
+    suiv.addEventListener('click', () => aller(ici + 1));
+    $('#livre-ouvrir').addEventListener('click', (e) => { e.stopPropagation(); aller(1); });
+    pages[0].addEventListener('click', (e) => { if (!e.target.closest('[data-aller]')) aller(1); });
+    boite.querySelectorAll('[data-aller]').forEach((b) => b.addEventListener('click', (e) => { e.stopPropagation(); aller(+b.dataset.aller); }));
+    // La couverture s'entrouvre quand on arrive dessus, pour montrer que c'est un livre ; la bulle « Burger du mois » s'efface pendant la lecture
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((e) => { if (e[0].isIntersecting && ici === 0 && !calme) { boite.classList.remove('entrouvre'); void boite.offsetWidth; boite.classList.add('entrouvre'); } }, { threshold: 0.55 }).observe(pages[0]);
+      new IntersectionObserver((e) => document.body.classList.toggle('lecture-carte', e[0].isIntersecting), { threshold: 0.15 }).observe(boite);
+    }
+    $('#livre-coin').addEventListener('click', () => aller(ici + 1));
+    boite.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') aller(ici + 1); if (e.key === 'ArrowLeft') aller(ici - 1); });
+    let x0 = null, y0 = 0;
+    boite.addEventListener('touchstart', (e) => { x0 = e.touches[0].clientX; y0 = e.touches[0].clientY; }, { passive: true });
+    boite.addEventListener('touchend', (e) => {
+      if (x0 === null) return;
+      const dx = e.changedTouches[0].clientX - x0, dy = e.changedTouches[0].clientY - y0; x0 = null;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.4) aller(ici + (dx < 0 ? 1 : -1));
+    });
+    etat();
+  })();
 
   // ——— Teaser : le texte apparaît codé, puis se décode quand on arrive devant ———
   const SIGNES = '█▓▒░#%&@$*?<>/=+ABCDEFGHJKLMNPRSTUVXYZ0123456789';
