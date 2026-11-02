@@ -934,6 +934,11 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .enseigne { font: 800 clamp(44px, 6vw, 80px)/0.95 var(--f-titre); letter-spacing: -0.03em; color: #3A3633; transition: color 0.1s, text-shadow 0.1s; }
   .enseigne.allume { color: var(--neon-mois-clair, #FFF3C4); text-shadow: 0 0 2px #fff, 0 0 10px var(--neon-mois, #F7B32F), 0 0 26px var(--neon-mois, #F7B32F), 0 0 60px color-mix(in srgb, var(--neon-mois, #F7B32F) 50%, transparent); animation: gresille 2.6s steps(1) 1; }
   .mois { padding-block: 130px 140px; }
+  /* Teinte du mois (novembre : brun bretzel + rose) */
+  .mois[style*="--brun-mois"] { background: radial-gradient(ellipse 70% 60% at 85% 45%, color-mix(in srgb, var(--brun-mois) 34%, transparent), transparent 70%), radial-gradient(ellipse 50% 50% at 5% 90%, color-mix(in srgb, var(--neon-mois) 12%, transparent), transparent 70%), var(--nuit); }
+  .mois[style*="--brun-mois"] .composition li::before { background: var(--brun-mois); box-shadow: 0 0 0 2px color-mix(in srgb, var(--neon-mois) 55%, transparent), 0 0 12px var(--brun-mois); }
+  .mois[style*="--brun-mois"] .sceau { background: linear-gradient(135deg, #8A4519, var(--brun-mois)); box-shadow: 0 0 0 2px var(--neon-mois), 0 0 30px color-mix(in srgb, var(--neon-mois) 55%, transparent); }
+  .mois[style*="--brun-mois"] .visuel img { object-position: 50% 70%; box-shadow: 0 0 0 1px color-mix(in srgb, var(--brun-mois) 60%, transparent), 0 0 90px -10px color-mix(in srgb, var(--brun-mois) 70%, transparent), 30px 30px 90px -30px color-mix(in srgb, var(--neon-mois) 45%, transparent); }
   .surtitre-mois { color: var(--neon-mois, var(--jaune)); }
   .accroche-mois { font-size: 19px; color: var(--texte-nuit) !important; }
   .composition { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; border-top: 1px solid var(--trait-nuit); }
@@ -1261,24 +1266,23 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     </div>
   </div>
 
-  <section class="sombre mois grain" id="mois" style="--neon-mois: #FF4FA0; --neon-mois-clair: #FFE3F0">
+  <section class="sombre mois grain" id="mois" style="--neon-mois: #FF6FA8; --neon-mois-clair: #FFE6EF; --brun-mois: #B8662E">
     <div class="cadre">
       <div class="texte revele">
-        <span class="surtitre surtitre-mois">Le burger du mois · Octobre Rose</span>
+        <span class="surtitre surtitre-mois">Le burger du mois · Novembre</span>
         <p class="enseigne" id="enseigne">Burger<br>du mois</p>
-        <p class="accroche-mois">Pour Octobre Rose, une création généreuse, gourmande et toute en rose, avec une petite touche italienne.</p>
+        <p class="accroche-mois">Ce mois-ci, direction l'Alsace : une création généreuse et réconfortante, inspirée de nos voisins alsaciens. Parfaite pour la saison.</p>
         <ul class="composition">
-          <li><b>Bun rose</b></li>
-          <li><b>Tenders de poulet croustillants</b></li>
-          <li><b>Mozzarella fondante</b></li>
-          <li><b>Mortadelle italienne</b> aux pistaches de Bronte</li>
-          <li><b>Roquette</b></li>
-          <li><b>Sauce crémeuse rose</b> au parmesan</li>
+          <li><b>Pain bretzel</b></li>
+          <li><b>Salade croquante</b> de chou blanc et oignons</li>
+          <li><b>Cervelas</b> grillé</li>
+          <li><b>Emmental</b> fondant</li>
+          <li><b>Sauce crémeuse</b> à la moutarde</li>
         </ul>
-        <div class="pratique-mois"><span>Tout le mois</span><span>Sur place</span><span>En terrasse</span><span>À emporter</span></div>
+        <div class="pratique-mois"><span>Tout le mois de novembre</span><span>Sur place</span><span>En terrasse</span><span>À emporter</span></div>
         <div class="actions"><a class="bouton plein" href="tel:+33613100503">Réserver une table</a></div>
       </div>
-      <div class="visuel revele"><img src="img/burger-du-mois.jpg" alt="Le burger du mois Octobre Rose : bun rose, tenders de poulet, mozzarella et mortadelle" width="724" height="1086"><span class="sceau">Ce mois-ci</span></div>
+      <div class="visuel revele"><img src="img/burger-du-mois-novembre.jpg" alt="Le burger du mois de novembre : pain bretzel au sésame, cervelas grillé, emmental et salade de chou blanc" width="768" height="1024"><span class="sceau">Ce mois-ci</span></div>
     </div>
   </section>
 
