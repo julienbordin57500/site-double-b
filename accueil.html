@@ -1188,6 +1188,9 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
   }
+  /* Les feuilles crème qui suivent débordent de 40 px + le biais : on garde toujours de la place sous le texte des sections sombres */
+  .sombre:not(.ouverture) { padding-bottom: calc(var(--biais) + 150px); }
+  @media (max-width: 700px) { .sombre:not(.ouverture) { padding-bottom: calc(var(--biais) + 110px); } }
 </style>
 
 <!-- Logo en symbole : couleurs pilotées par --logo-encre et --logo-jaune -->
