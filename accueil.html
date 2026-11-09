@@ -1365,6 +1365,25 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       </div>
     </div>
   </section>
+  <script>
+  /* Plats de la semaine : lus dans semaine.json sur GitHub (julienbordin57500/site-double-b).
+     Si le fichier ne répond pas, les plats écrits ci-dessus restent affichés. */
+  (function () {
+    var url = 'https://raw.githubusercontent.com/julienbordin57500/site-double-b/main/semaine.json?v=' + Date.now();
+    fetch(url, { cache: 'no-store' }).then(function (r) { return r.ok ? r.json() : null; }).then(function (d) {
+      if (!d || !d.jours) return;
+      d.jours.forEach(function (j, i) {
+        var bon = document.querySelector('#jours .jour[data-jour="' + (i + 1) + '"]'); if (!bon || !j.plat) return;
+        var ferie = !!j.ferie;
+        bon.classList.toggle('ferie', ferie);
+        bon.querySelector('h3').textContent = j.jour || bon.querySelector('h3').textContent;
+        bon.querySelector('.ticket > p').textContent = j.plat;
+        bon.querySelector('.ticket-bas .prix').textContent = ferie ? 'Fermé' : (j.prix || '11,50 €');
+        bon.querySelector('.ticket-bas .cachet').textContent = ferie ? 'Férié' : 'Fait maison';
+      });
+    }).catch(function () {});
+  })();
+  </script>
 
   <section class="sombre nouveaute grain" id="bientot" data-fin="2026-11-18">
     <div class="cadre">

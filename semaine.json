@@ -1,0 +1,10 @@
+{
+  "semaine": "Du 9 au 13 novembre 2026",
+  "jours": [
+    { "jour": "Lundi",    "plat": "Dodine de pintadeau sauce suprême, risotto à la crème de légumes", "prix": "12,90 €" },
+    { "jour": "Mardi",    "plat": "Pomme de terre farcie façon raclette, salade frisée aux lardons", "prix": "11,50 €" },
+    { "jour": "Mercredi", "plat": "Jour férié (11 novembre) : le restaurant est fermé", "ferie": true },
+    { "jour": "Jeudi",    "plat": "Choucroute garnie, pommes de terre château", "prix": "14,50 €" },
+    { "jour": "Vendredi", "plat": "Phô aux légumes et œufs mollets", "prix": "11,50 €" }
+  ]
+}
