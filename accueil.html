@@ -802,6 +802,8 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .jour .prix { font: 800 21px var(--f-titre); color: var(--encre); font-variant-numeric: tabular-nums; }
   .cachet { font: 800 10px var(--f-texte); letter-spacing: 0.12em; text-transform: uppercase; color: var(--c); border: 1.5px solid var(--c); border-radius: 6px; padding: 3px 6px; transform: rotate(-7deg); opacity: 0.85; }
   .jour .pastille { display: none; }
+  .jour.ferie .ticket p { font-style: italic; color: color-mix(in srgb, var(--c) 70%, #1C1C1C); }
+  .jour.ferie .prix { opacity: 0.55; }
   .jour.aujourdhui { z-index: 3; animation: balance-bon 4.2s ease-in-out infinite; filter: drop-shadow(0 24px 26px rgba(110, 60, 0, 0.32)) drop-shadow(0 0 30px var(--c)); }
   .jour.aujourdhui .ticket { background: repeating-linear-gradient(transparent 0 27px, rgba(28, 28, 28, 0.045) 27px 28px), linear-gradient(#FFFFFF, color-mix(in srgb, var(--c) 16%, #FFF8EC)); }
   .jour.aujourdhui .ticket-haut span:last-child { visibility: hidden; }
@@ -1328,35 +1330,35 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
           <span class="pastille">Aujourd'hui</span>
           <div class="ticket-haut"><span>Bon n° 01</span><span>Midi</span></div>
           <h3>Lundi</h3>
-          <p>Rôti de dinde façon Orloff, frites maison et petits pois à la française</p>
-          <div class="ticket-bas"><span class="prix">13,90 €</span><span class="cachet">Fait maison</span></div>
+          <p>Dodine de pintadeau sauce suprême, risotto à la crème de légumes</p>
+          <div class="ticket-bas"><span class="prix">12,90 €</span><span class="cachet">Fait maison</span></div>
         </div></div>
         <div class="jour" data-jour="2" style="--c:#E5483B"><div class="ticket">
           <span class="pastille">Aujourd'hui</span>
           <div class="ticket-haut"><span>Bon n° 02</span><span>Midi</span></div>
           <h3>Mardi</h3>
-          <p>Gaufre au fromage et aux épinards, œufs au plat</p>
+          <p>Pomme de terre farcie façon raclette, salade frisée aux lardons</p>
           <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
         </div></div>
-        <div class="jour" data-jour="3" style="--c:#4E9F3D"><div class="ticket">
+        <div class="jour ferie" data-jour="3" style="--c:#4E9F3D"><div class="ticket">
           <span class="pastille">Aujourd'hui</span>
           <div class="ticket-haut"><span>Bon n° 03</span><span>Midi</span></div>
           <h3>Mercredi</h3>
-          <p>Choux farcis sauce tomate, purée de pommes de terre</p>
-          <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
+          <p>Jour férié (11 novembre) : le restaurant est fermé</p>
+          <div class="ticket-bas"><span class="prix">Fermé</span><span class="cachet">Férié</span></div>
         </div></div>
         <div class="jour" data-jour="4" style="--c:#1E9AA8"><div class="ticket">
           <span class="pastille">Aujourd'hui</span>
           <div class="ticket-haut"><span>Bon n° 04</span><span>Midi</span></div>
           <h3>Jeudi</h3>
-          <p>Couscous poulet et merguez</p>
+          <p>Choucroute garnie, pommes de terre château</p>
           <div class="ticket-bas"><span class="prix">14,50 €</span><span class="cachet">Fait maison</span></div>
         </div></div>
         <div class="jour" data-jour="5" style="--c:#D9418C"><div class="ticket">
           <span class="pastille">Aujourd'hui</span>
           <div class="ticket-haut"><span>Bon n° 05</span><span>Midi</span></div>
           <h3>Vendredi</h3>
-          <p>Velouté de châtaigne, tartine aux champignons et noisettes</p>
+          <p>Phô aux légumes et œufs mollets</p>
           <div class="ticket-bas"><span class="prix">11,50 €</span><span class="cachet">Fait maison</span></div>
         </div></div>
         </div>
@@ -1850,19 +1852,23 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   const HORAIRES = { 1: [[705, 840]], 2: [[705, 840], [1140, 1260]], 3: [[705, 840], [1140, 1260]], 4: [[705, 840], [1140, 1260]], 5: [[705, 840], [1140, 1260]] };
   const NOMS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
   const hm = (m) => `${Math.floor(m / 60)} h ${String(m % 60).padStart(2, '0')}`;
+  // Fermetures exceptionnelles (jours fériés, congés) : AAAA-MM-JJ
+  const FERMETURES = ['2026-11-11'];
+  const iso = (d) => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
+  const plagesDu = (d) => (FERMETURES.includes(iso(d)) ? [] : HORAIRES[d.getDay()] || []);
   function etatDuMoment() {
     const d = new Date(), j = d.getDay(), m = d.getHours() * 60 + d.getMinutes();
-    const ouvert = (HORAIRES[j] || []).find(([a, b]) => m >= a && m < b);
+    const ouvert = plagesDu(d).find(([a, b]) => m >= a && m < b);
     if (ouvert) return { ouvert: true, texte: `Ouvert · jusqu'à ${hm(ouvert[1])}` };
     for (let k = 0; k < 8; k++) {
-      const jj = (j + k) % 7, plage = (HORAIRES[jj] || []).find(([a]) => k > 0 || a > m);
+      const dk = new Date(d.getFullYear(), d.getMonth(), d.getDate() + k), jj = dk.getDay(), plage = plagesDu(dk).find(([a]) => k > 0 || a > m);
       if (plage) return { ouvert: false, texte: `Fermé · ouvre ${k === 0 ? (plage[0] >= 1140 ? 'ce soir' : 'ce midi') : k === 1 ? 'demain' : NOMS[jj]} à ${hm(plage[0])}` };
     }
     return { ouvert: false, texte: 'Fermé' };
   }
   const e = etatDuMoment();
   ['#etat', '#etat-2'].forEach((s) => { const el = $(s); el.classList.toggle('ferme', !e.ouvert); $('span', el).textContent = e.texte; });
-  const jourAuj = new Date().getDay(), plages = HORAIRES[jourAuj];
+  const jourAuj = new Date().getDay(), plages = plagesDu(new Date()).length ? plagesDu(new Date()) : null;
   $('#auj-jour').textContent = `Aujourd'hui, ${NOMS[jourAuj]}`;
   $('#auj-heures').textContent = plages ? plages.map(([a, b]) => `${hm(a)} – ${hm(b)}`).join(' · ') : 'Fermé aujourd\'hui';
   const aujourdhui = new Date().getDay();
