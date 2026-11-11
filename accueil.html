@@ -1106,6 +1106,65 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .liens a { text-decoration: none; }
   .liens a:hover { color: var(--jaune); }
 
+  /* ——— Demande de devis (privatisation, groupes, traiteur) : une feuille crème posée sur le mur sombre ——— */
+  .devis .cadre { display: grid; grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr); gap: 56px; align-items: start; }
+  .devis-texte { display: grid; gap: 22px; position: sticky; top: 110px; }
+  .devis h2 { font-size: clamp(40px, 5.6vw, 72px); font-weight: 800; letter-spacing: -0.035em; color: var(--neon-blanc); }
+  .devis h2 em { font-style: normal; color: var(--jaune); }
+  .devis-texte > p { color: var(--doux-nuit); max-width: 30em; }
+  .devis-points { list-style: none; margin: 6px 0 0; padding: 0; display: grid; gap: 14px; }
+  .devis-points li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 14px; align-items: start; }
+  .devis-points i { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: rgba(247, 179, 47, 0.14); color: var(--jaune); font: 800 15px var(--f-titre); font-style: normal; }
+  .devis-points b { display: block; font-family: var(--f-titre); font-size: 19px; color: var(--texte-nuit); }
+  .devis-points span { color: var(--doux-nuit); font-size: 15.5px; }
+  .devis-tel { color: var(--doux-nuit); font-size: 15.5px; }
+  .devis-tel a { color: var(--jaune-clair); font-weight: 700; text-decoration-color: var(--jaune); text-underline-offset: 4px; }
+  .devis-form { color-scheme: light; background: var(--creme); color: var(--encre); border-radius: 26px; padding: 34px; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 18px 16px; box-shadow: 0 0 0 1px rgba(247, 179, 47, 0.25), 0 50px 100px -40px rgba(0, 0, 0, 0.9); transform: rotate(0.4deg); }
+  .devis-form .champ { display: grid; gap: 7px; min-width: 0; }
+  .devis-form .large { grid-column: 1 / -1; }
+  .devis-form label, .devis-form legend { font: 700 13px var(--f-texte); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(28, 28, 28, 0.72); padding: 0; }
+  .devis-form label small { text-transform: none; letter-spacing: 0; font-weight: 500; color: var(--doux-creme); }
+  .devis-form input, .devis-form select, .devis-form textarea { width: 100%; min-width: 0; font: 500 16px var(--f-texte); color: var(--encre); background: #FFFDF8; border: 1.5px solid rgba(28, 28, 28, 0.2); border-radius: 14px; padding: 13px 14px; min-height: 50px; -webkit-appearance: none; appearance: none; transition: border-color 0.2s, box-shadow 0.2s; }
+  .devis-form select { padding-right: 40px; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5l5 5 5-5' fill='none' stroke='%231C1C1C' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 15px center; background-size: 12px 8px; }
+  .devis-form textarea { min-height: 120px; resize: vertical; line-height: 1.5; }
+  .devis-form input::placeholder, .devis-form textarea::placeholder { color: rgba(28, 28, 28, 0.42); }
+  .devis-form input:focus, .devis-form select:focus, .devis-form textarea:focus { outline: none; border-color: #B57A0C; box-shadow: 0 0 0 3px rgba(247, 179, 47, 0.45); }
+  .devis-form .faux { border-color: var(--rouge); box-shadow: 0 0 0 3px rgba(200, 50, 43, 0.18); }
+  .devis-form fieldset { border: 0; margin: 0; padding: 0; min-width: 0; display: grid; gap: 9px; }
+  .devis-choix { display: flex; flex-wrap: wrap; gap: 8px; }
+  .devis-choix label { position: relative; text-transform: none; letter-spacing: 0; font: 600 15px var(--f-texte); color: var(--encre); cursor: pointer; }
+  .devis-choix input { position: absolute; inset: 0; width: 100%; height: 100%; min-height: 0; opacity: 0; margin: 0; padding: 0; cursor: pointer; }
+  .devis-choix span { display: block; padding: 11px 16px; border-radius: 99px; border: 1.5px solid rgba(28, 28, 28, 0.2); background: #FFFDF8; transition: background 0.2s, border-color 0.2s, color 0.2s; }
+  .devis-choix input:checked + span { background: var(--encre); border-color: var(--encre); color: var(--jaune); }
+  .devis-choix input:focus-visible + span { box-shadow: 0 0 0 3px rgba(247, 179, 47, 0.6); }
+  .devis-piege { position: absolute !important; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .devis-bas { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 20px; margin-top: 4px; }
+  .devis-bas button { border: 0; cursor: pointer; background: var(--encre); color: var(--jaune); font-size: 16px; padding: 15px 26px; }
+  .devis-bas button:hover { transform: translateY(-2px); box-shadow: 0 10px 26px -10px rgba(28, 28, 28, 0.8); }
+  .devis-bas button[disabled] { opacity: 0.6; cursor: progress; transform: none; }
+  .devis-bas small { flex: 1 1 220px; color: var(--doux-creme); font-size: 13.5px; line-height: 1.45; }
+  .devis-etat { grid-column: 1 / -1; border-radius: 16px; padding: 14px 16px; font-size: 15.5px; background: rgba(200, 50, 43, 0.1); color: #8E211B; }
+  .devis-etat a { font-weight: 700; }
+  .devis-etat[hidden], .devis-merci[hidden] { display: none; }
+  .devis-merci { grid-column: 1 / -1; display: grid; gap: 14px; justify-items: start; padding: 20px 4px; }
+  .devis-merci h3 { font-size: clamp(30px, 4vw, 44px); font-weight: 800; letter-spacing: -0.03em; }
+  .devis-merci p { color: var(--doux-creme); max-width: 30em; }
+  .devis-merci button { border: 0; background: none; padding: 0; cursor: pointer; font: 700 15px var(--f-texte); color: var(--encre); text-decoration: underline; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  /* Tant que le formulaire est à l'écran, la pastille « Burger du mois » ne doit pas recouvrir le bouton d'envoi */
+  body.devis-visible .flottant-mois { opacity: 0 !important; visibility: hidden !important; pointer-events: none !important; }
+  .soiree a.quand { text-decoration: none; }
+  .soiree a.quand:hover { text-decoration: underline; text-underline-offset: 4px; }
+  .faq details p a { font-weight: 700; text-decoration-color: var(--jaune); text-decoration-thickness: 2px; text-underline-offset: 3px; }
+  @media (max-width: 900px) {
+    .devis .cadre { grid-template-columns: minmax(0, 1fr); gap: 34px; }
+    .devis-texte { position: static; }
+  }
+  @media (max-width: 700px) {
+    .devis h2 { font-size: clamp(36px, 10vw, 48px); }
+    .devis-form { grid-template-columns: minmax(0, 1fr); padding: 22px 18px; border-radius: 22px; transform: none; }
+    .devis-bas button { width: 100%; justify-content: center; }
+  }
+
   /* Apparition au défilement (navigateurs qui le gèrent ; sinon tout est déjà visible) */
   @supports (animation-timeline: view()) {
     .revele { animation: revele linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
@@ -1609,7 +1668,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
           <span class="date-soiree a-venir">Toute l'année</span>
           <h3>Privatisez le lieu</h3>
           <p>Anniversaire, repas d'équipe, fête de famille : un menu sur mesure, construit avec l'équipe en cuisine.</p>
-          <span class="quand">Sur demande · 06 13 10 05 03</span>
+          <a class="quand" href="#devis">Demander un devis →</a>
         </article>
       </div>
     </div>
@@ -1682,6 +1741,169 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     </div>
   </section>
 
+  <section class="sombre devis grain" id="devis">
+    <div class="cadre">
+      <div class="devis-texte revele">
+        <span class="surtitre">Privatisation · groupes · traiteur</span>
+        <h2>Votre évènement, <em>notre cuisine.</em></h2>
+        <p>Anniversaire, repas d'équipe, fête de famille ou repas d'association : dites-nous ce que vous préparez, on vous répond avec une proposition de menu et un prix par personne.</p>
+        <ul class="devis-points">
+          <li><i>1</i><div><b>Vous remplissez la demande</b><span>Deux minutes, sans engagement.</span></div></li>
+          <li><i>2</i><div><b>On vous rappelle</b><span>Pour parler du menu, du nombre de convives et de vos envies.</span></div></li>
+          <li><i>3</i><div><b>Vous recevez le devis</b><span>Un menu sur mesure, construit avec l'équipe en cuisine.</span></div></li>
+        </ul>
+        <p class="devis-tel">Plus simple de vive voix ? <a href="tel:+33613100503">06 13 10 05 03</a></p>
+      </div>
+
+      <form class="devis-form revele" id="devis-form" novalidate>
+        <fieldset class="large">
+          <legend>Votre projet</legend>
+          <div class="devis-choix">
+            <label><input type="radio" name="projet" value="Privatisation du restaurant" checked><span>Privatisation</span></label>
+            <label><input type="radio" name="projet" value="Repas de groupe"><span>Repas de groupe</span></label>
+            <label><input type="radio" name="projet" value="Traiteur / à emporter"><span>Traiteur / à emporter</span></label>
+            <label><input type="radio" name="projet" value="Autre"><span>Autre</span></label>
+          </div>
+        </fieldset>
+        <div class="champ">
+          <label for="devis-date">Date souhaitée</label>
+          <input type="date" id="devis-date" name="date" required>
+        </div>
+        <div class="champ">
+          <label for="devis-moment">Moment</label>
+          <select id="devis-moment" name="moment">
+            <option>Le soir</option>
+            <option>Le midi</option>
+            <option>Peu importe</option>
+          </select>
+        </div>
+        <div class="champ">
+          <label for="devis-personnes">Nombre de personnes</label>
+          <input type="number" id="devis-personnes" name="personnes" min="1" max="500" inputmode="numeric" placeholder="Ex. 25" required>
+        </div>
+        <div class="champ">
+          <label for="devis-budget">Budget par personne <small>(facultatif)</small></label>
+          <select id="devis-budget" name="budget">
+            <option value="">À définir ensemble</option>
+            <option>Moins de 20 €</option>
+            <option>20 à 30 €</option>
+            <option>30 à 45 €</option>
+            <option>Plus de 45 €</option>
+          </select>
+        </div>
+        <div class="champ large">
+          <label for="devis-nom">Votre nom</label>
+          <input type="text" id="devis-nom" name="nom" autocomplete="name" required>
+        </div>
+        <div class="champ">
+          <label for="devis-tel">Téléphone</label>
+          <input type="tel" id="devis-tel" name="telephone" autocomplete="tel" inputmode="tel" placeholder="06 …" required>
+        </div>
+        <div class="champ">
+          <label for="devis-mail">E-mail</label>
+          <input type="email" id="devis-mail" name="email" autocomplete="email" placeholder="vous@exemple.fr" required>
+        </div>
+        <div class="champ large">
+          <label for="devis-message">Votre demande <small>(facultatif)</small></label>
+          <textarea id="devis-message" name="message" placeholder="L'occasion, vos envies de menu, allergies, horaires…"></textarea>
+        </div>
+        <div class="devis-piege" aria-hidden="true"><label>Ne pas remplir <input type="text" name="_honey" tabindex="-1" autocomplete="off"></label></div>
+        <p class="devis-etat" id="devis-etat" role="alert" hidden></p>
+        <div class="devis-bas">
+          <button type="submit" class="bouton" id="devis-envoi">Envoyer ma demande <span aria-hidden="true">→</span></button>
+          <small>Gratuit et sans engagement. Vos coordonnées servent uniquement à vous répondre.</small>
+        </div>
+        <div class="devis-merci" id="devis-merci" role="status" tabindex="-1" hidden>
+          <span class="surtitre">C'est envoyé</span>
+          <h3>Merci, on vous rappelle vite.</h3>
+          <p>Votre demande est bien arrivée au Double B. On revient vers vous sous 48 h, par téléphone ou par e-mail. Pour une date très proche, appelez-nous au <a href="tel:+33613100503">06 13 10 05 03</a>.</p>
+          <button type="button" id="devis-encore">Faire une autre demande</button>
+        </div>
+      </form>
+    </div>
+  </section>
+  <script>
+  /* Demande de devis : envoyée par e-mail au restaurant via FormSubmit (formsubmit.co).
+     Pour changer l'adresse qui reçoit les demandes, modifier DEVIS_MAIL ci-dessous.
+     Si l'envoi échoue, le visiteur garde sa saisie et peut envoyer la même demande depuis sa messagerie. */
+  (function () {
+    var DEVIS_MAIL = 'doubleb57500@outlook.fr';
+    var form = document.getElementById('devis-form'); if (!form) return;
+    var etat = document.getElementById('devis-etat'), merci = document.getElementById('devis-merci'), bouton = document.getElementById('devis-envoi');
+    var date = document.getElementById('devis-date');
+    var auj = new Date(); auj.setMinutes(auj.getMinutes() - auj.getTimezoneOffset());
+    date.min = auj.toISOString().slice(0, 10);
+
+    function dateLisible(v) {
+      var p = v.split('-'); if (p.length !== 3) return v;
+      return new Date(+p[0], +p[1] - 1, +p[2]).toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    }
+    function lire() {
+      var f = new FormData(form), d = {};
+      f.forEach(function (v, k) { d[k] = String(v).trim(); });
+      return d;
+    }
+    function erreur(html) { etat.innerHTML = html; etat.hidden = false; }
+    function montrer(envoye) {
+      [].forEach.call(form.children, function (el) {
+        if (el === merci) el.hidden = !envoye;
+        else if (el === etat) el.hidden = true;
+        else if (!el.classList.contains('devis-piege')) el.style.display = envoye ? 'none' : '';
+      });
+    }
+
+    if ('IntersectionObserver' in window) new IntersectionObserver(function (v) { document.body.classList.toggle('devis-visible', v[0].isIntersecting); }).observe(form);
+
+    form.addEventListener('input', function (e) { if (e.target.classList) e.target.classList.remove('faux'); });
+    document.getElementById('devis-encore').addEventListener('click', function () { form.reset(); montrer(false); date.focus(); });
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      etat.hidden = true;
+      var premier = null;
+      [].forEach.call(form.querySelectorAll('[required]'), function (c) {
+        var ok = c.checkValidity();
+        c.classList.toggle('faux', !ok);
+        if (!ok && !premier) premier = c;
+      });
+      if (premier) { erreur('Il manque une information : vérifiez les champs entourés en rouge.'); premier.focus(); return; }
+
+      var d = lire();
+      if (d._honey) { montrer(true); return; }
+      var lignes = {
+        'Projet': d.projet,
+        'Date souhaitée': dateLisible(d.date) + ' (' + d.moment.toLowerCase() + ')',
+        'Nombre de personnes': d.personnes,
+        'Budget par personne': d.budget || 'À définir ensemble',
+        'Nom': d.nom,
+        'Téléphone': d.telephone,
+        'E-mail': d.email,
+        'Message': d.message || '(aucun)'
+      };
+      var sujet = 'Demande de devis : ' + d.projet + ', ' + d.personnes + ' pers., ' + dateLisible(d.date);
+      var corps = Object.keys(lignes).map(function (k) { return k + ' : ' + lignes[k]; }).join('\n');
+      var secours = 'mailto:' + DEVIS_MAIL + '?subject=' + encodeURIComponent(sujet) + '&body=' + encodeURIComponent(corps);
+
+      var envoi = { _subject: sujet, _template: 'table', _captcha: 'false', _replyto: d.email, email: d.email };
+      Object.keys(lignes).forEach(function (k) { if (k !== 'E-mail') envoi[k] = lignes[k]; });
+
+      bouton.disabled = true;
+      var texte = bouton.innerHTML; bouton.textContent = 'Envoi en cours…';
+      fetch('https://formsubmit.co/ajax/' + DEVIS_MAIL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify(envoi)
+      }).then(function (r) { return r.json().then(function (j) { return r.ok && String(j.success) === 'true'; }); })
+        .catch(function () { return false; })
+        .then(function (ok) {
+          bouton.disabled = false; bouton.innerHTML = texte;
+          if (ok) { montrer(true); merci.focus(); }
+          else erreur('L\'envoi n\'a pas abouti. Vos réponses sont conservées : réessayez, <a href="' + secours.replace(/"/g, '%22') + '">envoyez la demande depuis votre messagerie</a> ou appelez-nous au <a href="tel:+33613100503">06 13 10 05 03</a>.');
+        });
+    });
+  })();
+  </script>
+
   <section class="papier" id="faq">
     <div class="cadre">
       <div class="entete revele">
@@ -1702,7 +1924,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <details><summary>Le restaurant est-il accessible aux personnes à mobilité réduite ?</summary><p>Oui, l'établissement est accessible aux personnes à mobilité réduite.</p></details>
         <details><summary>Quels moyens de paiement acceptez-vous ?</summary><p>Espèces, carte bancaire (Visa, Mastercard, Maestro), sans contact, Apple Pay et Ticket Restaurant, en papier comme en carte.</p></details>
         <details><summary>Organisez-vous des soirées à thème ?</summary><p>Oui, le vendredi soir, sur réservation : cuisses de grenouille, paella, moules-frites… Les dates sont annoncées sur le site et sur nos réseaux.</p></details>
-        <details><summary>Peut-on privatiser le restaurant ?</summary><p>Oui, pour un anniversaire, un repas d'équipe ou une fête de famille, avec un menu sur mesure construit avec l'équipe en cuisine. Contactez-nous au 06 13 10 05 03.</p></details>
+        <details><summary>Peut-on privatiser le restaurant ?</summary><p>Oui, pour un anniversaire, un repas d'équipe ou une fête de famille, avec un menu sur mesure construit avec l'équipe en cuisine. <a href="#devis">Demandez un devis en ligne</a> ou contactez-nous au 06 13 10 05 03.</p></details>
         <details><summary>Comment vous contacter ou réserver ?</summary><p>Par téléphone au 06 13 10 05 03, ou par e-mail à doubleb57500@outlook.fr.</p></details>
       </div>
     </div>
@@ -1726,6 +1948,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   <a class="numero lumiere" href="tel:+33613100503">06 13 10 05 03</a>
   <p class="texte-seo">Double B est un restaurant à Folschviller, en Moselle, au 59 avenue Foch. Plat du jour fait maison du lundi au vendredi midi, burgers maison, frites fraîches coupées sur place, burger du mois et soirées à thème le vendredi. Sur place ou à emporter.</p>
   <div class="liens">
+    <a href="#devis">Demander un devis</a>
     <a href="#faq">Questions fréquentes</a>
     <a href="https://www.facebook.com/profile.php?id=100083662848039" target="_blank" rel="noopener">Facebook</a>
     <a href="https://www.instagram.com/double_b__57730/" target="_blank" rel="noopener">Instagram</a>
