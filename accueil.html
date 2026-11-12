@@ -1917,7 +1917,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         .catch(function () { return false; })
         .then(function (ok) {
           bouton.disabled = false; bouton.innerHTML = texte;
-          if (ok) { montrer(true); merci.focus(); }
+          if (ok) { montrer(true); merci.focus(); if (window.compterStat) window.compterStat('devis-envoye', 'Demande de devis envoyée'); }
           else erreur('L\'envoi n\'a pas abouti. Vos réponses sont conservées : réessayez, <a href="' + secours.replace(/"/g, '%22') + '">envoyez la demande depuis votre messagerie</a> ou appelez-nous au <a href="tel:+33613100503">06 13 10 05 03</a>.');
         });
     });
@@ -2360,4 +2360,23 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   })();
 
 })();
+</script>
+
+<!-- Statistiques de visites : GoatCounter (sans cookies), tableau sur https://doubleb57730.goatcounter.com -->
+<script data-goatcounter="https://doubleb57730.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  /* On compte aussi les gestes importants : appeler, itinéraire, avis Google, carte, devis envoyé */
+  (function () {
+    function compter(nom, titre) { try { if (window.goatcounter && window.goatcounter.count) window.goatcounter.count({ path: nom, title: titre, event: true }); } catch (e) {} }
+    window.compterStat = compter;
+    document.addEventListener('click', function (e) {
+      var a = e.target.closest && e.target.closest('a'); if (!a) return;
+      var h = a.getAttribute('href') || '';
+      if (h.indexOf('tel:') === 0) compter('clic-appeler', 'Clic sur Appeler');
+      else if (h.indexOf('google.com/maps') > -1) compter('clic-itineraire', 'Clic sur Itinéraire');
+      else if (h.indexOf('writereview') > -1) compter('clic-avis-google', 'Clic sur Laisser un avis Google');
+      else if (h === '#carte') compter('clic-voir-carte', 'Clic sur Voir la carte');
+      else if (h === '#devis') compter('clic-devis', 'Clic vers la demande de devis');
+    }, true);
+  })();
 </script>
