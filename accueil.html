@@ -681,21 +681,19 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .etiquette b { display: block; font-family: var(--f-titre); font-size: 30px; color: var(--jaune); line-height: 1.05; }
   .etiquette span { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--doux-nuit); }
 
-  /* ——— Tableau à palettes (comme les panneaux de gare), posé en biais comme la coupe du couteau ——— */
-  .bandeau { position: relative; z-index: 3; margin: -54px auto 0; width: max-content; max-width: calc(100% - 24px); transform: rotate(-2.2deg); display: flex; align-items: center; gap: 14px;
-    background: linear-gradient(#1D1B19, #121110); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(247, 179, 47, 0.28);
-    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.75), 0 0 40px -12px rgba(247, 179, 47, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
-  .bandeau::before, .bandeau::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #CFC6B8, #5B544C); }
-  .bandeau::before { left: 6px; } .bandeau::after { right: 6px; }
-  .palettes { display: flex; gap: 3px; }
-  .palette { position: relative; width: clamp(21px, 3.3vw, 40px); height: clamp(34px, 5vw, 58px); border-radius: 5px; display: grid; place-items: center; overflow: hidden;
-    background: linear-gradient(#2E2A27 0 49%, #0E0D0C 49% 51%, #25221F 51%); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.5);
-    font: 800 clamp(17px, 2.6vw, 34px)/1 var(--f-titre); color: var(--jaune); text-shadow: 0 0 10px rgba(247, 179, 47, 0.45); }
-  .palette.claque { animation: claque 0.09s ease-in; }
-  @keyframes claque { 0% { transform: scaleY(1) } 50% { transform: scaleY(0.15); filter: brightness(1.6) } 100% { transform: scaleY(1) } }
-  .bandeau .voyant { width: 8px; height: 8px; border-radius: 50%; background: var(--jaune); box-shadow: 0 0 10px var(--jaune); animation: clignote 1.6s ease-in-out infinite; flex: none; }
-  @keyframes clignote { 50% { opacity: 0.25 } }
-  @media (max-width: 420px) { .bandeau { padding: 11px 14px; gap: 9px; } .palettes { gap: 2px; } .bandeau .voyant { display: none; } }
+  /* ——— Enseigne néon suspendue, posée en biais comme la coupe du couteau ——— */
+  .bandeau { position: relative; z-index: 3; margin: -54px auto 0; width: min(440px, calc(100% - 40px)); transform: rotate(-2.2deg); text-align: center; padding: 18px 26px 15px;
+    background: #0D0C0B; border-radius: 16px; border: 1px solid rgba(255, 255, 255, 0.07); box-shadow: 0 24px 50px -18px rgba(0, 0, 0, 0.9), inset 0 0 30px rgba(0, 0, 0, 0.8); }
+  .bandeau::before, .bandeau::after { content: ""; position: absolute; top: -44px; width: 2px; height: 44px; background: linear-gradient(#555, #222); }
+  .bandeau::before { left: 40px; } .bandeau::after { right: 40px; }
+  .bandeau .vis { position: absolute; top: 8px; width: 6px; height: 6px; border-radius: 50%; background: #444; }
+  .bandeau .vis.g { left: 8px; } .bandeau .vis.d { right: 8px; }
+  .bandeau .halo-neon { position: absolute; inset: -30px; border-radius: 40px; background: radial-gradient(rgba(247, 179, 47, 0.22), transparent 70%); opacity: 0; transition: opacity 0.3s; pointer-events: none; }
+  .tube { position: relative; font: 800 clamp(30px, 3.4vw, 44px)/1.1 var(--f-titre); letter-spacing: -0.01em; color: #4A3F2C; white-space: nowrap; transition: color 0.08s, text-shadow 0.08s; }
+  .bandeau small { position: relative; display: block; margin-top: 4px; font: 600 11px var(--f-texte); letter-spacing: 0.25em; text-transform: uppercase; color: #6B5D43; transition: color 0.2s, text-shadow 0.2s; }
+  .bandeau.allumee .tube { color: #FFF3D1; text-shadow: 0 0 4px #FFE08A, 0 0 12px #F7B32F, 0 0 26px #F7B32F, 0 0 48px rgba(247, 179, 47, 0.7); }
+  .bandeau.allumee .halo-neon { opacity: 1; }
+  .bandeau.allumee small { color: #FFB8D4; text-shadow: 0 0 8px #FF6FA8; }
 
   /* ——— Feuille crème coupée en biais ——— */
   .papier { position: relative; background: var(--creme); color: var(--encre); padding-block: calc(var(--biais) + 90px) calc(var(--biais) + 90px); clip-path: polygon(0 var(--biais), 100% 0, 100% calc(100% - var(--biais)), 0 100%); margin-block: -40px; }
@@ -1366,9 +1364,10 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     </div>
   </section>
 
-  <div class="bandeau" aria-hidden="true">
-    <span class="voyant"></span>
-    <div class="palettes" id="palettes" data-mots="FAIT MAISON|PLAT DU JOUR|FRITES MAISON|SUR PLACE|À EMPORTER|BURGER DU MOIS"></div>
+  <div class="bandeau" id="enseigne" aria-hidden="true">
+    <i class="vis g"></i><i class="vis d"></i><span class="halo-neon"></span>
+    <div class="tube" id="tube" data-mots="Fait maison|Frites maison|Plat du jour|Sur place|À emporter">Fait maison</div>
+    <small>Le Double B · Folschviller</small>
   </div>
 
   <section class="sombre mois grain" id="mois" style="--neon-mois: #FF6FA8; --neon-mois-clair: #FFE6EF; --brun-mois: #B8662E">
@@ -2391,34 +2390,24 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     dessiner();
   })();
 
-  // Tableau à palettes : les lettres claquent une à une pour former le mot suivant
-  (function tableau() {
-    const zone = $('#palettes'); if (!zone) return;
-    const mots = zone.dataset.mots.split('|'), N = Math.max(...mots.map((m) => m.length));
-    const signes = 'ABCDEFGHIJKLMNOPRSTUVÉ0123456789';
-    zone.innerHTML = '<span class="palette"></span>'.repeat(N);
-    const cases = [...zone.children];
-    const centrer = (m) => { const g = Math.floor((N - m.length) / 2); return ' '.repeat(g) + m + ' '.repeat(N - m.length - g); };
-    let n = 0, visible = true;
-    const afficher = (mot) => {
-      const t = centrer(mot);
-      cases.forEach((c, i) => {
-        const cible = t[i] === ' ' ? '' : t[i];
-        if (calme) { c.textContent = cible; return; }
-        if (c.textContent === cible) return;
-        let tours = 3 + Math.floor(Math.random() * 4) + Math.floor(i / 3);
-        const tic = () => {
-          c.classList.remove('claque'); void c.offsetWidth; c.classList.add('claque');
-          if (--tours <= 0) { c.textContent = cible; return; }
-          c.textContent = signes[Math.floor(Math.random() * signes.length)];
-          setTimeout(tic, 70);
-        };
-        setTimeout(tic, i * 35);
-      });
-    };
-    afficher(mots[0]);
-    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(zone);
-    setInterval(() => { if (!visible || document.hidden) return; n = (n + 1) % mots.length; afficher(mots[n]); }, 3200);
+  // Enseigne néon : le mot grésille, s'allume, clignote un peu, s'éteint, puis le suivant s'allume
+  (function enseigne() {
+    const ens = $('#enseigne'), tube = $('#tube'); if (!ens || !tube) return;
+    const mots = tube.dataset.mots.split('|');
+    const allume = (on) => ens.classList.toggle('allumee', on);
+    if (calme) { allume(true); return; }
+    let visible = true;
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(ens);
+    (async () => {
+      for (let i = 0; ; i = (i + 1) % mots.length) {
+        while (!visible || document.hidden) await attendre(400);
+        tube.textContent = mots[i];
+        for (const d of [90, 60, 140, 50, 70]) { allume(true); await attendre(d); allume(false); await attendre(d * 0.8); }
+        allume(true);
+        for (let k = 0; k < 6; k++) { await attendre(400 + Math.random() * 300); if (Math.random() < 0.35) { allume(false); await attendre(45); allume(true); } }
+        await attendre(500); allume(false); await attendre(450);
+      }
+    })();
   })();
 
   // Le grand nombre d'avis compte jusqu'à sa valeur quand on arrive dessus
