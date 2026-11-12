@@ -681,12 +681,21 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .etiquette b { display: block; font-family: var(--f-titre); font-size: 30px; color: var(--jaune); line-height: 1.05; }
   .etiquette span { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--doux-nuit); }
 
-  /* ——— Bandeau néon qui défile, posé en biais comme la coupe du couteau ——— */
-  .bandeau { position: relative; z-index: 3; margin-top: -54px; transform: rotate(-2.2deg); background: var(--jaune); color: var(--encre); padding-block: 16px; overflow: hidden; box-shadow: 0 20px 50px -20px rgba(247, 179, 47, 0.6); }
-  .bandeau .piste { display: flex; width: max-content; animation: defile 32s linear infinite; }
-  .bandeau span { font: 800 clamp(20px, 2.6vw, 30px) var(--f-titre); letter-spacing: -0.01em; padding-inline: 22px; display: inline-flex; align-items: center; gap: 44px; white-space: nowrap; text-transform: uppercase; }
-  .bandeau span::after { content: ""; width: 14px; height: 14px; background: var(--encre); clip-path: polygon(50% 0, 62% 38%, 100% 50%, 62% 62%, 50% 100%, 38% 62%, 0 50%, 38% 38%); }
-  @keyframes defile { to { transform: translateX(-50%) } }
+  /* ——— Tableau à palettes (comme les panneaux de gare), posé en biais comme la coupe du couteau ——— */
+  .bandeau { position: relative; z-index: 3; margin: -54px auto 0; width: max-content; max-width: calc(100% - 24px); transform: rotate(-2.2deg); display: flex; align-items: center; gap: 14px;
+    background: linear-gradient(#1D1B19, #121110); padding: 14px 18px; border-radius: 14px; border: 1px solid rgba(247, 179, 47, 0.28);
+    box-shadow: 0 24px 50px -20px rgba(0, 0, 0, 0.75), 0 0 40px -12px rgba(247, 179, 47, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.06); }
+  .bandeau::before, .bandeau::after { content: ""; position: absolute; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #CFC6B8, #5B544C); }
+  .bandeau::before { left: 6px; } .bandeau::after { right: 6px; }
+  .palettes { display: flex; gap: 3px; }
+  .palette { position: relative; width: clamp(21px, 3.3vw, 40px); height: clamp(34px, 5vw, 58px); border-radius: 5px; display: grid; place-items: center; overflow: hidden;
+    background: linear-gradient(#2E2A27 0 49%, #0E0D0C 49% 51%, #25221F 51%); box-shadow: inset 0 -2px 0 rgba(0, 0, 0, 0.5), 0 2px 4px rgba(0, 0, 0, 0.5);
+    font: 800 clamp(17px, 2.6vw, 34px)/1 var(--f-titre); color: var(--jaune); text-shadow: 0 0 10px rgba(247, 179, 47, 0.45); }
+  .palette.claque { animation: claque 0.09s ease-in; }
+  @keyframes claque { 0% { transform: scaleY(1) } 50% { transform: scaleY(0.15); filter: brightness(1.6) } 100% { transform: scaleY(1) } }
+  .bandeau .voyant { width: 8px; height: 8px; border-radius: 50%; background: var(--jaune); box-shadow: 0 0 10px var(--jaune); animation: clignote 1.6s ease-in-out infinite; flex: none; }
+  @keyframes clignote { 50% { opacity: 0.25 } }
+  @media (max-width: 420px) { .bandeau { padding: 11px 14px; gap: 9px; } .palettes { gap: 2px; } .bandeau .voyant { display: none; } }
 
   /* ——— Feuille crème coupée en biais ——— */
   .papier { position: relative; background: var(--creme); color: var(--encre); padding-block: calc(var(--biais) + 90px) calc(var(--biais) + 90px); clip-path: polygon(0 var(--biais), 100% 0, 100% calc(100% - var(--biais)), 0 100%); margin-block: -40px; }
@@ -1047,7 +1056,12 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .note-google b { font: 800 72px/1 var(--f-titre); color: var(--jaune); letter-spacing: -0.04em; text-shadow: 0 0 30px rgba(247, 179, 47, 0.45); }
   .note-google small { display: block; color: var(--doux-nuit); font-size: 14px; }
   .etoiles { color: var(--jaune); letter-spacing: 0.12em; font-size: 20px; text-shadow: 0 0 12px rgba(247, 179, 47, 0.5); }
-  .avis-liste { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+  .avis-liste { display: flex; gap: 16px; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; overscroll-behavior-x: contain; padding-bottom: 2px; }
+  .avis-liste::-webkit-scrollbar { display: none; }
+  .avis-liste .avis-carte { flex: 0 0 min(86%, 380px); scroll-snap-align: start; }
+  .avis-points { display: flex; justify-content: center; gap: 8px; margin-top: 18px; }
+  .avis-points button { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 99px; background: rgba(255, 255, 255, 0.22); cursor: pointer; transition: width 0.3s, background 0.3s; }
+  .avis-points button.actif { width: 26px; background: var(--jaune); box-shadow: 0 0 10px rgba(247, 179, 47, 0.6); }
   .avis-carte { margin: 0; display: flex; flex-direction: column; gap: 16px; padding: 28px; border-radius: 24px; background: var(--nuit-3); border: 1px solid var(--trait-nuit); position: relative; }
   .avis-carte::before { content: "“"; position: absolute; right: 22px; top: 2px; font: 800 96px/1 var(--f-titre); color: rgba(247, 179, 47, 0.18); }
   .avis-carte blockquote { margin: 0; font: 600 21px/1.35 var(--f-titre); color: var(--neon-blanc); letter-spacing: -0.01em; flex: 1; }
@@ -1353,10 +1367,8 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   </section>
 
   <div class="bandeau" aria-hidden="true">
-    <div class="piste">
-      <span>Fait maison</span><span>Sur place</span><span>À emporter</span><span>Plat du jour</span><span>Burger du mois</span><span>Soirées à thème</span>
-      <span>Fait maison</span><span>Sur place</span><span>À emporter</span><span>Plat du jour</span><span>Burger du mois</span><span>Soirées à thème</span>
-    </div>
+    <span class="voyant"></span>
+    <div class="palettes" id="palettes" data-mots="FAIT MAISON|PLAT DU JOUR|FRITES MAISON|SUR PLACE|À EMPORTER|BURGER DU MOIS"></div>
   </div>
 
   <section class="sombre mois grain" id="mois" style="--neon-mois: #FF6FA8; --neon-mois-clair: #FFE6EF; --brun-mois: #B8662E">
@@ -1715,10 +1727,11 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         </div>
       </div>
       <div class="avis-liste" id="avis-liste">
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Plats appétissants, frites maison, tout est réuni pour passer un bon moment gourmand et savoureux. Je vous conseille Double B avec un grand ouiii !</blockquote><figcaption>Léonie N. · Avis Google</figcaption></figure>
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Nous étions 10, nous avons très bien mangé, c'était copieux, prix abordables, personnel gentil, souriant, aimable. Je vous recommande ce restaurant.</blockquote><figcaption>Corinne T. · Avis Google</figcaption></figure>
-        <figure class="avis-carte revele"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Merci à Claire pour son accueil et sa bonne humeur, les repas sont divins !</blockquote><figcaption>Danielle B. · Avis Google</figcaption></figure>
+        <figure class="avis-carte"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Plats appétissants, frites maison, tout est réuni pour passer un bon moment gourmand et savoureux. Je vous conseille Double B avec un grand ouiii !</blockquote><figcaption>Léonie N. · Avis Google</figcaption></figure>
+        <figure class="avis-carte"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Nous étions 10, nous avons très bien mangé, c'était copieux, prix abordables, personnel gentil, souriant, aimable. Je vous recommande ce restaurant.</blockquote><figcaption>Corinne T. · Avis Google</figcaption></figure>
+        <figure class="avis-carte"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>Merci à Claire pour son accueil et sa bonne humeur, les repas sont divins !</blockquote><figcaption>Danielle B. · Avis Google</figcaption></figure>
       </div>
+      <div class="avis-points" id="avis-points" aria-label="Choisir un avis"></div>
       <div class="actions-avis revele">
         <a class="bouton plein" href="https://search.google.com/local/writereview?placeid=ChIJC8ennL1XlEcR7JBUT_HFA1Q" target="_blank" rel="noopener"><span aria-hidden="true">★</span> Laissez-nous un avis Google</a>
         <a class="bouton contour" href="https://search.google.com/local/reviews?placeid=ChIJC8ennL1XlEcR7JBUT_HFA1Q" target="_blank" rel="noopener">Lire tous les avis</a>
@@ -2349,6 +2362,64 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     $('#avis-liste').innerHTML = uniques.slice(0, 6).map((a) => `<figure class="avis-carte"><span class="etoiles" aria-hidden="true">★★★★★</span><blockquote>${echappe(coupe(a.texte))}</blockquote><figcaption>${echappe(nomCourt(a.nom))} · Avis Google</figcaption></figure>`).join('');
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', avisEnDirect); else avisEnDirect();
+
+  // Les avis glissent de droite à gauche : des points en dessous, et ils avancent seuls tant qu'on n'y touche pas
+  (function avisDefile() {
+    const liste = $('#avis-liste'), points = $('#avis-points'); if (!liste || !points) return;
+    let touche = false, visible = false;
+    const cartes = () => [...liste.children];
+    const actuel = () => { const c = cartes(); let m = 0, d = 1e9; c.forEach((x, i) => { const e = Math.abs(x.offsetLeft - liste.offsetLeft - liste.scrollLeft); if (e < d) { d = e; m = i; } }); return m; };
+    const aller = (i) => { const c = cartes()[i]; if (c) liste.scrollTo({ left: c.offsetLeft - liste.offsetLeft, behavior: calme ? 'auto' : 'smooth' }); };
+    const dessiner = () => {
+      const n = cartes().length, fin = liste.scrollWidth - liste.clientWidth;
+      points.hidden = fin < 4;
+      points.innerHTML = cartes().map((_, i) => `<button type="button" aria-label="Avis ${i + 1}"></button>`).join('');
+      [...points.children].forEach((b, i) => b.addEventListener('click', () => { touche = true; aller(i); }));
+      maj();
+    };
+    const maj = () => { const fin = liste.scrollWidth - liste.clientWidth; const i = liste.scrollLeft >= fin - 4 ? cartes().length - 1 : actuel(); [...points.children].forEach((b, k) => b.classList.toggle('actif', k === i)); };
+    liste.addEventListener('scroll', () => requestAnimationFrame(maj), { passive: true });
+    ['pointerdown', 'touchstart', 'wheel'].forEach((ev) => liste.addEventListener(ev, () => { touche = true; }, { passive: true }));
+    new MutationObserver(dessiner).observe(liste, { childList: true });
+    addEventListener('resize', maj);
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }, { threshold: 0.5 }).observe(liste);
+    if (!calme) setInterval(() => {
+      if (touche || !visible || document.hidden) return;
+      const fin = liste.scrollWidth - liste.clientWidth; if (fin < 4) return;
+      if (liste.scrollLeft >= fin - 4) aller(0); else aller(actuel() + 1);
+    }, 5000);
+    dessiner();
+  })();
+
+  // Tableau à palettes : les lettres claquent une à une pour former le mot suivant
+  (function tableau() {
+    const zone = $('#palettes'); if (!zone) return;
+    const mots = zone.dataset.mots.split('|'), N = Math.max(...mots.map((m) => m.length));
+    const signes = 'ABCDEFGHIJKLMNOPRSTUVÉ0123456789';
+    zone.innerHTML = '<span class="palette"></span>'.repeat(N);
+    const cases = [...zone.children];
+    const centrer = (m) => { const g = Math.floor((N - m.length) / 2); return ' '.repeat(g) + m + ' '.repeat(N - m.length - g); };
+    let n = 0, visible = true;
+    const afficher = (mot) => {
+      const t = centrer(mot);
+      cases.forEach((c, i) => {
+        const cible = t[i] === ' ' ? '' : t[i];
+        if (calme) { c.textContent = cible; return; }
+        if (c.textContent === cible) return;
+        let tours = 3 + Math.floor(Math.random() * 4) + Math.floor(i / 3);
+        const tic = () => {
+          c.classList.remove('claque'); void c.offsetWidth; c.classList.add('claque');
+          if (--tours <= 0) { c.textContent = cible; return; }
+          c.textContent = signes[Math.floor(Math.random() * signes.length)];
+          setTimeout(tic, 70);
+        };
+        setTimeout(tic, i * 35);
+      });
+    };
+    afficher(mots[0]);
+    if ('IntersectionObserver' in window) new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(zone);
+    setInterval(() => { if (!visible || document.hidden) return; n = (n + 1) % mots.length; afficher(mots[n]); }, 3200);
+  })();
 
   // Le grand nombre d'avis compte jusqu'à sa valeur quand on arrive dessus
   (function compteur() {
