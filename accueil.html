@@ -2030,6 +2030,9 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       ouvrirSalle();
     };
     $('#passer').addEventListener('click', terminer);
+    // Sécurité : si le téléphone met l'animation en pause (onglet changé, appli Instagram…), l'intro se termine quand même
+    setTimeout(terminer, 7500);
+    document.addEventListener('visibilitychange', () => { if (document.hidden) terminer(); });
     await Promise.race([logoPret, attendre(1500)]);
     if (fini) return;
     await attendre(150); feuille.classList.add('monte');
@@ -2073,7 +2076,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     haut.animate([{ transform: 'none' }, { transform: `translate(-4%, -${H * 0.9}px) rotate(-5deg)` }], opts);
     const a = bas.animate([{ transform: 'none' }, { transform: `translate(4%, ${H * 0.9}px) rotate(4deg)` }], opts);
     await a.finished.catch(() => {});
-    fini = false; terminer();
+    terminer();
   }
 
   // ——— La salle s'allume : la lampe descend au bout de son fil, rebondit une fois, se balance et s'allume en douceur ———
