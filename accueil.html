@@ -745,6 +745,17 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .nouveaute-pratique { display: flex; flex-wrap: wrap; gap: 8px; }
   .nouveaute-pratique span { font-size: 14px; font-weight: 600; border: 1px solid rgba(247, 179, 47, 0.5); color: var(--jaune-clair); border-radius: 99px; padding: 6px 13px; }
   .nouveaute .date p { color: var(--doux-nuit); }
+  /* Décompte en direct jusqu'au dernier service du Korean Crispy */
+  .decompte { display: grid; gap: 10px; width: 100%; max-width: 380px; }
+  .decompte-titre { font: 700 13px var(--f-texte); letter-spacing: 0.14em; text-transform: uppercase; color: var(--jaune); }
+  .decompte-cases { display: flex; gap: 10px; }
+  .decompte-cases div { min-width: 70px; display: grid; justify-items: center; gap: 4px; padding: 12px 8px 10px; border-radius: 16px; background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(247, 179, 47, 0.35); box-shadow: inset 0 0 22px rgba(247, 179, 47, 0.08); }
+  .decompte-cases b { font: 800 34px/1 var(--f-titre); color: #FFF3C4; font-variant-numeric: tabular-nums; text-shadow: 0 0 2px #fff, 0 0 14px rgba(247, 179, 47, 0.85), 0 0 34px rgba(247, 179, 47, 0.4); }
+  .decompte-cases small { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--doux-nuit); }
+  .decompte.urgent .decompte-titre { color: #FF6B5E; }
+  .decompte.urgent .decompte-cases div { border-color: rgba(229, 72, 59, 0.6); animation: urgence 1.6s ease-in-out infinite; }
+  @keyframes urgence { 50% { box-shadow: inset 0 0 22px rgba(229, 72, 59, 0.2), 0 0 22px rgba(229, 72, 59, 0.35); } }
+  @media (max-width: 420px) { .decompte-cases { gap: 7px; } .decompte-cases div { min-width: 0; flex: 1; } .decompte-cases b { font-size: 28px; } }
   .nouveaute .date p b { color: var(--texte-nuit); }
   .teaser-texte { margin-top: 24px; font-size: 18px; color: var(--doux-nuit); max-width: 30em; }
   .indices { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 26px; }
@@ -1469,6 +1480,15 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <div class="date">
           <div class="calendrier" aria-hidden="true"><small>NOV</small><b>18</b><i>MER</i></div>
           <p><b>2 semaines seulement</b><br>Du 4 au mercredi 18 novembre, puis il s'en va.</p>
+        </div>
+        <div class="decompte" id="decompte" data-jusqua="2026-11-18T21:00:00" role="timer" aria-live="off">
+          <span class="decompte-titre">Il ne reste plus que</span>
+          <div class="decompte-cases">
+            <div><b data-u="j">–</b><small>jours</small></div>
+            <div><b data-u="h">–</b><small>heures</small></div>
+            <div><b data-u="m">–</b><small>min</small></div>
+            <div><b data-u="s">–</b><small>sec</small></div>
+          </div>
         </div>
       </div>
     </div>
@@ -2206,6 +2226,22 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   function textes(el) { const w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT); const n = []; while (w.nextNode()) if (w.currentNode.nodeValue.trim()) n.push(w.currentNode); return n; }
   const bientot = document.getElementById('bientot');
   if (bientot && new Date() > new Date(bientot.dataset.fin + 'T23:59:59')) bientot.hidden = true;
+  // Décompte : jours, heures, minutes, secondes jusqu'à la fermeture du dernier jour ; en rouge le dernier jour
+  (function decompte() {
+    const boite = document.getElementById('decompte'); if (!boite || (bientot && bientot.hidden)) return;
+    const fin = new Date(boite.dataset.jusqua).getTime(), cases = {};
+    boite.querySelectorAll('[data-u]').forEach((b) => { cases[b.dataset.u] = b; });
+    const deux = (n) => String(n).padStart(2, '0');
+    function tic() {
+      const reste = Math.max(0, fin - Date.now()), t = Math.floor(reste / 1000);
+      cases.j.textContent = Math.floor(t / 86400); cases.h.textContent = deux(Math.floor(t / 3600) % 24);
+      cases.m.textContent = deux(Math.floor(t / 60) % 60); cases.s.textContent = deux(t % 60);
+      boite.classList.toggle('urgent', reste < 86400000);
+      if (!reste) { boite.querySelector('.decompte-titre').textContent = 'C\'est terminé, merci à tous !'; return; }
+      setTimeout(tic, 1000 - (Date.now() % 1000));
+    }
+    tic();
+  })();
   const decodables = [...document.querySelectorAll('[data-decode]')].map((el) => ({ el, noeuds: textes(el).map((n) => ({ n, vrai: n.nodeValue })) }));
   if (!calme) decodables.forEach((d) => d.noeuds.forEach((x) => { x.n.nodeValue = coder(x.vrai); }));
   function decoder(d) {
