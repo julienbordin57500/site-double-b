@@ -1050,16 +1050,21 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .bc-form { grid-template-columns: minmax(0, 1fr); padding: 16px; }
   }
 
-  /* ——— 2. Plat du jour en haut de l'accueil (rempli par semaine.json) ——— */
-  .plat-auj { display: inline-grid; grid-template-columns: auto 1fr; align-items: center; gap: 4px 14px; max-width: 100%; margin: 4px 0 26px; padding: 12px 18px 12px 12px; text-decoration: none; text-align: left;
-    background: #FFFDF8; color: var(--encre); border-radius: 6px 6px 14px 14px; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9), 0 0 40px -10px color-mix(in srgb, var(--c, #F7B32F) 70%, transparent); transform: rotate(-1.2deg); border-top: 5px solid var(--c, #F7B32F); position: relative; transition: transform 0.25s; }
-  .plat-auj:hover { transform: rotate(0) translateY(-2px); }
-  .plat-auj::before { content: ""; position: absolute; left: 50%; top: -12px; width: 26px; height: 12px; margin-left: -13px; border-radius: 4px 4px 0 0; background: linear-gradient(#D7DBDE, #9AA1A6); }
-  .plat-auj .pa-pastille { grid-row: span 2; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: var(--c, #F7B32F); color: #fff; font: 800 11px/1 var(--f-titre); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; box-shadow: 0 0 18px color-mix(in srgb, var(--c, #F7B32F) 80%, transparent); }
-  .plat-auj small { font: 700 11px var(--f-texte); letter-spacing: 0.18em; text-transform: uppercase; color: var(--c, #B57A0C); }
-  .plat-auj b { font: 800 16px/1.2 var(--f-titre); }
-  .plat-auj b .pa-prix { white-space: nowrap; color: #B57A0C; }
-  .texte-ouverture .plat-auj + .chapeau { margin-top: 0; }
+  /* ——— 2. Plat du jour en haut de l'accueil : écrit dans la lumière de la lampe (rempli par semaine.json) ——— */
+  .plat-auj { display: block; margin: 26px 0 0; text-decoration: none; color: inherit; max-width: 34em; }
+  .plat-auj[hidden] { display: none; }
+  .plat-auj .pa-quand { display: inline-flex; align-items: center; gap: 10px; font: 700 12px var(--f-texte); letter-spacing: 0.28em; text-transform: uppercase; color: var(--jaune); }
+  .plat-auj .pa-quand i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, #F7B32F); box-shadow: 0 0 10px var(--c, #F7B32F); animation: clignote 1.6s ease-in-out infinite; }
+  .plat-auj .pa-plat { display: block; position: relative; width: fit-content; margin: 8px 0 0; font: 700 clamp(22px, 2.6vw, 32px)/1.15 var(--f-titre); letter-spacing: -0.015em; color: #FFF1D6;
+    text-shadow: 0 0 1px rgba(255, 255, 255, 0.6), 0 0 22px rgba(255, 210, 130, 0.45); }
+  .plat-auj .pa-trait { display: block; width: min(260px, 70%); height: 12px; margin-top: 4px; overflow: visible; }
+  .plat-auj .pa-trait path { fill: none; stroke: var(--jaune); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; filter: drop-shadow(0 0 6px rgba(247, 179, 47, 0.6)); }
+  .plat-auj.trace .pa-trait path { transition: stroke-dashoffset 1s 0.2s cubic-bezier(0.6, 0, 0.3, 1); stroke-dashoffset: 0; }
+  .plat-auj .pa-prix { display: block; margin-top: 6px; font: 600 15px var(--f-texte); color: var(--doux-nuit); }
+  .plat-auj .pa-prix b { color: var(--jaune); font-weight: 800; }
+  .plat-auj:hover .pa-plat { color: #fff; }
+  .texte-ouverture .plat-auj + .chapeau { margin-top: 20px; }
+  @media (max-width: 900px) { .plat-auj { margin-inline: auto; } .plat-auj .pa-plat, .plat-auj .pa-trait { margin-inline: auto; } }
 
   /* ——— 3. Menu plein écran sur téléphone ——— */
   .barre .ouvre-menu { display: none; }
@@ -1069,7 +1074,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   @keyframes menuOuvre { from { opacity: 0; } }
   .mt-in { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding: calc(16px + env(safe-area-inset-top, 0px)) var(--gouttiere-d) calc(20px + env(safe-area-inset-bottom, 0px)) var(--gouttiere-g); }
   .mt-haut { display: flex; justify-content: space-between; align-items: center; }
-  .mt-haut .logo { width: 110px; --logo-encre: #FFF6E6; --logo-jaune: #F7B32F; }
+  .mt-haut .macaron { width: 64px; }
   .mt-fermer { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--trait-nuit); background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
   .mt-liens { display: grid; align-content: center; gap: 4px; padding-block: 20px; }
   .mt-liens a { display: flex; align-items: baseline; gap: 12px; text-decoration: none; font: 800 clamp(28px, 8.4vw, 40px)/1.15 var(--f-titre); letter-spacing: -0.02em; color: #4A3F2C; padding: 4px 0; }
@@ -1094,22 +1099,25 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
   /* ——— 6. Vapeur au-dessus des plats de la mosaïque ——— */
   .tuile { position: relative; }
-  .vapeur-plat { position: absolute; left: 18%; right: 18%; top: 4%; height: 50%; pointer-events: none; mix-blend-mode: screen; }
-  .vapeur-plat::before, .vapeur-plat::after { content: ""; position: absolute; left: 10%; bottom: 0; width: 55%; height: 60%; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 68%); opacity: 0; animation: fumeePlat 5.5s ease-out infinite; }
-  .vapeur-plat::after { left: 38%; animation-delay: 2.6s; animation-duration: 6.2s; }
+  .vapeur-plat { position: absolute; left: 14%; right: 14%; top: 0; height: 60%; pointer-events: none; mix-blend-mode: screen; }
+  .vapeur-plat::before, .vapeur-plat::after { content: ""; position: absolute; left: 10%; bottom: 0; width: 55%; height: 60%; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.18) 45%, rgba(255, 255, 255, 0) 70%); opacity: 0; animation: fumeePlat 4.6s ease-out infinite; }
+  .vapeur-plat::after { left: 36%; animation-delay: 2.2s; animation-duration: 5.4s; }
   @keyframes fumeePlat { 0% { transform: translate(0, 30%) scale(0.6, 0.8); opacity: 0; } 25% { opacity: 0.9; } 100% { transform: translate(-12%, -80%) scale(1.3, 1.6); opacity: 0; } }
 
   /* ——— 7. Reflet de lame sur la coupe en biais des feuilles crème ——— */
   .papier > .lame { position: absolute; left: 0; right: 0; top: 0; height: calc(var(--biais) + 8px); z-index: 3; pointer-events: none; opacity: 0;
-    clip-path: polygon(0 var(--biais), 100% 0, 100% 4px, 0 calc(var(--biais) + 4px));
-    background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.95) 48%, #F7B32F 50%, rgba(255, 255, 255, 0.8) 52%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 150% 0; }
-  .papier > .lame.brille { animation: lame 1.2s cubic-bezier(0.5, 0, 0.3, 1) forwards; }
+    clip-path: polygon(0 var(--biais), 100% 0, 100% 9px, 0 calc(var(--biais) + 9px));
+    background: linear-gradient(100deg, transparent 36%, #E59A10 44%, #FFE9B0 48%, #FFFFFF 50%, #FFE9B0 52%, #E59A10 56%, transparent 64%) no-repeat; background-size: 250% 100%; background-position: 150% 0; }
+  .papier > .lame.brille { animation: lame 1.6s cubic-bezier(0.45, 0, 0.3, 1) forwards; }
   @keyframes lame { 0% { opacity: 1; background-position: 150% 0; } 85% { opacity: 1; } 100% { opacity: 0; background-position: -60% 0; } }
 
   /* ——— 8. Le macaron « Fait avec amour » (comme l'autocollant des emballages) ——— */
-  .macaron { display: block; --logo-encre: #1C1C1C; --logo-jaune: #1C1C1C; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)); animation: tourneMacaron 40s linear infinite; }
-  @keyframes tourneMacaron { to { rotate: 360deg; } }
-  .mois .visuel .macaron { position: absolute; left: -22px; bottom: -22px; width: 116px; z-index: 2; }
+  .macaron { display: block; --logo-encre: #1C1C1C; --logo-jaune: #1C1C1C; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)); transform: rotate(-12deg); }
+  .macaron.attend { opacity: 0; }
+  .macaron.pose { animation: tamponMacaron 0.6s cubic-bezier(0.3, 1.5, 0.5, 1) both; }
+  @keyframes tamponMacaron { 0% { opacity: 0; transform: rotate(-20deg) scale(1.7); } 55% { opacity: 1; transform: rotate(-11deg) scale(0.93); } 100% { opacity: 1; transform: rotate(-12deg) scale(1); } }
+  .mt-haut .macaron { transform: rotate(-10deg); }
+  .mois .visuel .macaron { position: absolute; left: -26px; bottom: -34px; width: 132px; z-index: 2; }
   .pied .macaron { position: absolute; right: max(5%, var(--gouttiere-d)); top: 54px; width: 104px; z-index: 2; }
   @media (max-width: 700px) {
     .barre .ouvre-menu { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--encre); background: transparent; color: var(--encre); cursor: pointer; padding: 0; flex: none; }
@@ -1117,8 +1125,8 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .barre .cadre { gap: 10px; }
     .barre .cadeau { margin-right: 0; }
     .plat-auj { margin-inline: auto; }
-    .mois .visuel .macaron { width: 92px; left: -6px; bottom: -16px; }
-    .pied .macaron { width: 78px; top: 30px; right: 12px; }
+    .mois .visuel .macaron { width: 112px; left: -8px; bottom: -30px; }
+    .pied .macaron { width: 92px; top: 34px; right: 12px; }
   }
 
   /* Bouton flottant vers le burger du mois */
@@ -1448,7 +1456,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 </header>
 <dialog id="menu-tel" aria-label="Menu">
   <div class="mt-in">
-    <div class="mt-haut"><svg class="logo" viewBox="205 578 1660 682" aria-hidden="true"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg><button type="button" class="mt-fermer" aria-label="Fermer le menu">×</button></div>
+    <div class="mt-haut"><svg class="macaron m-menu" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="99" fill="#F7B32F"/><circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/><path id="mh3" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/><text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath xlink:href="#mh3" href="#mh3" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text><text x="100" y="160" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#1C1C1C">★ ★ ★</text><svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></svg><button type="button" class="mt-fermer" aria-label="Fermer le menu">×</button></div>
     <nav class="mt-liens" aria-label="Menu principal">
       <a href="#mois" style="--i:0"><small>01</small>Burger du mois</a>
       <a href="#semaine" style="--i:1"><small>02</small>La semaine</a>
@@ -1466,15 +1474,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   </div>
 </dialog>
 
-<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="macaron-sym" viewBox="0 0 200 200">
-  <circle cx="100" cy="100" r="99" fill="#F7B32F"/>
-  <circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/>
-  <path id="mac-haut" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/>
-  <path id="mac-bas" d="M 30 104 A 70 70 0 0 0 170 104" fill="none"/>
-  <text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath href="#mac-haut" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text>
-  <text font-family="DM Sans, sans-serif" font-weight="700" font-size="11.5" letter-spacing="1.2" fill="#1C1C1C"><textPath href="#mac-bas" startOffset="50%" text-anchor="middle">★ doubleb-folschviller.fr ★</textPath></text>
-  <svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg>
-</symbol></svg>
 <main id="haut">
   <section class="ouverture grain">
     <div class="cadre">
@@ -1502,7 +1501,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
       <div class="texte-ouverture">
         <h1>Ici, on vient pour <em>bien manger.</em></h1>
-        <a class="plat-auj" id="plat-auj" href="#semaine" hidden><span class="pa-pastille"></span><small></small><b></b></a>
+        <a class="plat-auj" id="plat-auj" href="#semaine" hidden><span class="pa-quand"><i></i><span></span></span><span class="pa-plat"></span><svg class="pa-trait" viewBox="0 0 260 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 2, 120 11, 170 6 S 240 4, 257 7"/></svg><span class="pa-prix"></span></a>
         <p class="chapeau">Plat du jour, burgers et frites maison : tout est cuisiné sur place par notre chef. Sur place ou à emporter, au 59 avenue Foch.</p>
         <div class="actions">
           <a class="bouton plein" href="#carte">Voir la carte</a>
@@ -1551,7 +1550,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <div class="pratique-mois"><span>Tout le mois de novembre</span><span>Sur place</span><span>À emporter</span></div>
         <div class="actions"><a class="bouton plein" href="tel:+33613100503">Réserver une table</a></div>
       </div>
-      <div class="visuel revele"><svg class="macaron" viewBox="0 0 200 200" aria-hidden="true"><use href="#macaron-sym"/></svg><img src="img/burger-du-mois-novembre.jpg" alt="Le burger du mois de novembre : pain bretzel au sésame, cervelas grillé, emmental et salade de chou blanc" width="768" height="1024"><span class="sceau">Ce mois-ci</span></div>
+      <div class="visuel revele"><svg class="macaron m-mois" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="99" fill="#F7B32F"/><circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/><path id="mh1" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/><text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath xlink:href="#mh1" href="#mh1" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text><text x="100" y="160" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#1C1C1C">★ ★ ★</text><svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></svg><img src="img/burger-du-mois-novembre.jpg" alt="Le burger du mois de novembre : pain bretzel au sésame, cervelas grillé, emmental et salade de chou blanc" width="768" height="1024"><span class="sceau">Ce mois-ci</span></div>
     </div>
   </section>
 
@@ -1643,12 +1642,19 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       var j = d.jours[k]; if (!j || !j.plat || j.ferie) return;
       var e = document.getElementById('plat-auj'); if (!e) return;
       e.style.setProperty('--c', COUL[k]);
-      e.querySelector('.pa-pastille').textContent = NOMJ[k].slice(0, 3) + '.';
-      e.querySelector('small').textContent = quand;
-      e.querySelector('b').innerHTML = '';
-      e.querySelector('b').appendChild(document.createTextNode(j.plat + ' '));
-      var px = document.createElement('span'); px.className = 'pa-prix'; px.textContent = '· ' + (j.prix || '11,50 €'); e.querySelector('b').appendChild(px);
+      e.querySelector('.pa-quand > span').textContent = quand + ' · ' + NOMJ[k].toLowerCase();
+      e.querySelector('.pa-prix').innerHTML = '<b></b> · fait maison · quantité limitée';
+      e.querySelector('.pa-prix b').textContent = j.prix || '11,50 €';
       e.hidden = false;
+      // Le nom du plat se « décode » lettre à lettre, puis un trait de feutre jaune se dessine dessous
+      var cible = j.plat, zone = e.querySelector('.pa-plat');
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { zone.textContent = cible; e.classList.add('trace'); return; }
+      var signes = 'ABCDEFGHIJKLMNOPRSTUVabcdefghijklmnoprstuvéè', t = 0, total = 26;
+      (function tour() {
+        var n = Math.floor(cible.length * t / total);
+        zone.textContent = cible.slice(0, n) + cible.slice(n).replace(/[^\s]/g, function () { return signes[Math.floor(Math.random() * signes.length)]; });
+        if (++t <= total) setTimeout(tour, 45); else { zone.textContent = cible; e.classList.add('trace'); }
+      })();
     }).catch(function () {});
   })();
   </script>
@@ -2196,7 +2202,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
 <footer class="pied grain" id="pied">
   <div class="halo"></div>
-  <svg class="macaron" viewBox="0 0 200 200" aria-hidden="true"><use href="#macaron-sym"/></svg>
+  <svg class="macaron m-pied" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="99" fill="#F7B32F"/><circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/><path id="mh2" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/><text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath xlink:href="#mh2" href="#mh2" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text><text x="100" y="160" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#1C1C1C">★ ★ ★</text><svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></svg>
   <div class="caisson" id="neon-pied"><i class="vis"></i><i class="vis"></i><i class="vis"></i><i class="vis"></i><svg class="logo" viewBox="205 578 1660 682" role="img" aria-label="Double B"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></div>
   <div class="filet"></div>
   <p class="adresse lumiere">59 avenue Foch · Folschviller</p>
@@ -2549,8 +2555,14 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
   // ——— 7. Un reflet de lame file le long de la coupe en biais quand une feuille crème arrive ———
   if (!calme && 'IntersectionObserver' in window) {
-    const lames = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { $('.lame', en.target).classList.add('brille'); lames.unobserve(en.target); } }), { rootMargin: '0px 0px -25% 0px' });
+    const lames = new IntersectionObserver((es) => es.forEach((en) => { const l = $('.lame', en.target); if (en.isIntersecting) { l.classList.remove('brille'); void l.offsetWidth; l.classList.add('brille'); } }), { rootMargin: '0px 0px -30% 0px', threshold: 0 });
     document.querySelectorAll('.papier').forEach((sec) => { const l = document.createElement('span'); l.className = 'lame'; l.setAttribute('aria-hidden', 'true'); sec.prepend(l); lames.observe(sec); });
+  }
+
+  // ——— 8. Le macaron se pose comme un coup de tampon quand il arrive à l'écran ———
+  if (!calme && 'IntersectionObserver' in window) {
+    const tampons = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.remove('attend'); en.target.classList.add('pose'); tampons.unobserve(en.target); } }), { threshold: 0.6 });
+    document.querySelectorAll('.macaron.m-mois, .macaron.m-pied').forEach((m) => { m.classList.add('attend'); tampons.observe(m); });
   }
 
   // ——— Lancement ———
