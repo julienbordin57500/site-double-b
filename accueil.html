@@ -561,7 +561,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   /* Pas de glissement gauche-droite sur téléphone (Safari ignore overflow-x sur body seul) */
   html { scroll-behavior: smooth; scroll-padding-top: 84px; overflow-x: hidden; overflow-x: clip; overscroll-behavior-x: none; }
   body { margin: 0; background: var(--nuit); color: var(--texte-nuit); font-family: var(--f-texte); font-size: 17px; line-height: 1.55; overflow-x: hidden; overflow-x: clip; overscroll-behavior-x: none; touch-action: pan-y pinch-zoom; -webkit-font-smoothing: antialiased; }
-  body.intro-en-cours { overflow: hidden; }
   body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 90; background: #F6F1E8; }
   img { max-width: 100%; display: block; }
   a { color: inherit; }
@@ -586,39 +585,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     animation: gresille 2.6s steps(1) 1; }
   @keyframes gresille { 0% { opacity: 0.2 } 6% { opacity: 1 } 9% { opacity: 0.35 } 13% { opacity: 1 } 40% { opacity: 1 } 42% { opacity: 0.6 } 44% { opacity: 1 } }
 
-  /* ——— Intro : le logo se monte sur la feuille, la fumée monte, le couteau coupe la feuille ——— */
-  /* Sécurité : si le script ne tourne pas, l'intro s'efface d'elle-même après 7 s */
-  #intro { position: fixed; inset: 0; z-index: 100; pointer-events: auto; animation: secours 0s 7s forwards; }
-  @keyframes secours { to { visibility: hidden; pointer-events: none } }
-  #intro[hidden] { display: none !important; }
-  .feuille { position: absolute; inset: 0; background:
-      radial-gradient(ellipse 55% 45% at 100% 0%, rgba(247, 179, 47, 0.55), rgba(247, 179, 47, 0) 70%),
-      radial-gradient(ellipse 55% 45% at 0% 100%, rgba(247, 179, 47, 0.4), rgba(247, 179, 47, 0) 70%),
-      radial-gradient(ellipse at 50% 45%, #FBF8F2 0%, #F1ECE3 70%, #E9E2D6 100%);
-    display: grid; place-items: center; will-change: transform; }
-  .feuille .tel, .feuille .adr { position: absolute; left: 0; right: 0; text-align: center; font-weight: 700; letter-spacing: 0.32em; color: rgba(28, 28, 28, 0.7); font-size: clamp(11px, 1.2vw, 15px); opacity: 0; transition: opacity 0.6s; }
-  .feuille .tel { top: 9vh; }
-  .feuille .adr { bottom: 8vh; line-height: 1.9; }
-  .feuille .adr span { display: block; color: rgba(28, 28, 28, 0.45); }
-  .feuille.infos .tel, .feuille.infos .adr { opacity: 1; }
-  .feuille .scene { position: relative; width: min(78vw, 640px); }
-  .feuille .logo { width: 100%; }
-  .feuille .anim { transform-box: fill-box; transform-origin: 50% 100%; opacity: 0; }
-  .feuille.monte .anim { animation: tombe 0.62s cubic-bezier(0.3, 1.45, 0.5, 1) both; animation-delay: var(--d, 0s); }
-  .feuille.fini .anim { opacity: 1; animation: none; }
-  @keyframes tombe { 0% { opacity: 0; transform: translateY(-260px) scale(0.9) } 40% { opacity: 1 } 100% { opacity: 1; transform: none } }
-  .fumee { position: absolute; left: 21%; bottom: 98%; width: 14%; height: 75%; overflow: visible; opacity: 0; transition: opacity 0.8s;
-    /* la fumée naît au-dessus du pain et s'efface en douceur, sans jamais passer sur le burger */
-    -webkit-mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 65%, transparent 100%); mask-image: linear-gradient(to top, transparent 0%, #000 22%, #000 65%, transparent 100%); }
-  .feuille.infos .fumee { opacity: 1; }
-  .fumee path { fill: none; stroke: rgba(28, 28, 28, 0.16); stroke-width: 9; stroke-linecap: round; filter: blur(3px); stroke-dasharray: 60 240; animation: volute 2.4s linear infinite; }
-  .fumee path:nth-child(2) { animation-delay: -0.8s; stroke: rgba(28, 28, 28, 0.11); }
-  .fumee path:nth-child(3) { animation-delay: -1.6s; }
-  @keyframes volute { from { stroke-dashoffset: 300 } to { stroke-dashoffset: 0 } }
-  .ligne-coupe { position: absolute; left: 0; top: 0; height: 2px; background: rgba(28, 28, 28, 0.55); transform-origin: 0 50%; z-index: 4; box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6); }
-  .couteau { position: absolute; left: 0; top: 0; width: min(70vw, 620px); z-index: 5; filter: drop-shadow(0 18px 22px rgba(60, 30, 0, 0.35)); }
-  #passer { position: absolute; right: max(18px, env(safe-area-inset-right, 0px)); bottom: max(18px, env(safe-area-inset-bottom, 0px)); z-index: 6; font: 600 13px var(--f-texte); letter-spacing: 0.08em; color: rgba(28, 28, 28, 0.6); background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(28, 28, 28, 0.15); border-radius: 99px; padding: 9px 16px; cursor: pointer; backdrop-filter: blur(6px); }
-  #passer:hover { color: var(--encre); }
 
   /* ——— Barre du haut ——— */
   .barre { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50; background: rgba(246, 241, 232, 0.9); backdrop-filter: blur(14px) saturate(1.3); -webkit-backdrop-filter: blur(14px) saturate(1.3); border-bottom: 1px solid rgba(28, 28, 28, 0.08); box-shadow: 0 10px 30px -18px rgba(0, 0, 0, 0.6); }
@@ -640,10 +606,10 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   /* ——— Ouverture : le mur, la lampe et le néon ——— */
   .ouverture { position: relative; overflow: hidden; background: radial-gradient(ellipse 80% 70% at 30% 20%, #1D1A18 0%, #121110 60%, #0C0B0B 100%); padding-block: 40px 120px; }
   .ouverture .cadre { position: relative; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr); gap: 56px; align-items: center; }
-  .lampe { position: absolute; left: calc(var(--gouttiere-g) + 8%); top: 0; width: 520px; max-width: 90vw; pointer-events: none; z-index: 1; transform: translateY(-34%); transform-origin: 50% 0; will-change: transform; }
-  .lampe .cone { opacity: 0; mix-blend-mode: screen; will-change: opacity; }
+  .lampe { position: absolute; left: calc(var(--gouttiere-g) + 8%); top: 0; width: 520px; max-width: 90vw; pointer-events: none; z-index: 1; transform-origin: 50% 0; }
+  .lampe .cone { opacity: 1; mix-blend-mode: screen; }
   .lueur-mur { position: absolute; left: calc(var(--gouttiere-g) + 8% + 260px); top: 300px; width: 900px; height: 560px; translate: -50% 0; border-radius: 50%; pointer-events: none; z-index: 0;
-    background: radial-gradient(closest-side, rgba(255, 214, 140, 0.16), rgba(247, 179, 47, 0.05) 55%, transparent); opacity: 0; will-change: opacity; }
+    background: radial-gradient(closest-side, rgba(255, 214, 140, 0.16), rgba(247, 179, 47, 0.05) 55%, transparent); opacity: 1; }
   .texte-ouverture { position: relative; z-index: 2; padding-top: 230px; }
   .ouverture h1 { font-size: clamp(46px, 7.2vw, 96px); font-weight: 800; letter-spacing: -0.035em; line-height: 0.92; color: var(--neon-blanc); margin-top: 18px; }
   .ouverture h1 em { font-style: normal; color: var(--jaune); text-shadow: 0 0 1px #FFF, 0 0 14px rgba(247, 179, 47, 0.7), 0 0 40px rgba(247, 179, 47, 0.35); }
@@ -1051,20 +1017,16 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   }
 
   /* ——— 2. Plat du jour en haut de l'accueil : écrit dans la lumière de la lampe (rempli par semaine.json) ——— */
-  .plat-auj { display: block; margin: 26px 0 0; text-decoration: none; color: inherit; max-width: 34em; }
+  .plat-auj { display: block; margin: 22px 0 0; text-decoration: none; color: inherit; max-width: 34em; }
   .plat-auj[hidden] { display: none; }
   .plat-auj .pa-quand { display: inline-flex; align-items: center; gap: 10px; font: 700 12px var(--f-texte); letter-spacing: 0.28em; text-transform: uppercase; color: var(--jaune); }
   .plat-auj .pa-quand i { width: 8px; height: 8px; border-radius: 50%; background: var(--c, #F7B32F); box-shadow: 0 0 10px var(--c, #F7B32F); animation: clignote 1.6s ease-in-out infinite; }
   .plat-auj .pa-plat { display: block; position: relative; width: fit-content; margin: 8px 0 0; font: 700 clamp(22px, 2.6vw, 32px)/1.15 var(--f-titre); letter-spacing: -0.015em; color: #FFF1D6;
     text-shadow: 0 0 1px rgba(255, 255, 255, 0.6), 0 0 22px rgba(255, 210, 130, 0.45); }
-  .plat-auj .pa-trait { display: block; width: min(260px, 70%); height: 12px; margin-top: 4px; overflow: visible; }
-  .plat-auj .pa-trait path { fill: none; stroke: var(--jaune); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 300; stroke-dashoffset: 300; filter: drop-shadow(0 0 6px rgba(247, 179, 47, 0.6)); }
-  .plat-auj.trace .pa-trait path { transition: stroke-dashoffset 1s 0.2s cubic-bezier(0.6, 0, 0.3, 1); stroke-dashoffset: 0; }
-  .plat-auj .pa-prix { display: block; margin-top: 6px; font: 600 15px var(--f-texte); color: var(--doux-nuit); }
-  .plat-auj .pa-prix b { color: var(--jaune); font-weight: 800; }
+  .plat-auj .pa-prix { display: block; margin-top: 4px; font: 800 17px var(--f-texte); color: var(--jaune); }
   .plat-auj:hover .pa-plat { color: #fff; }
   .texte-ouverture .plat-auj + .chapeau { margin-top: 20px; }
-  @media (max-width: 900px) { .plat-auj { margin-inline: auto; } .plat-auj .pa-plat, .plat-auj .pa-trait { margin-inline: auto; } }
+  @media (max-width: 900px) { .plat-auj { margin-inline: auto; } .plat-auj .pa-plat { margin-inline: auto; } }
 
   /* ——— 3. Menu plein écran sur téléphone ——— */
   .barre .ouvre-menu { display: none; }
@@ -1090,9 +1052,8 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .mt-bas svg { width: 18px; height: 18px; }
 
   /* ——— 5. L'ambiance suit les horaires ——— */
-  .lampe .cone, .lueur-mur { transition: opacity 1.6s ease, filter 1.6s ease; }
-  body.fourneaux-eteints .lampe .cone { opacity: 0.16 !important; }
-  body.fourneaux-eteints .lueur-mur { opacity: 0.3 !important; }
+  body.fourneaux-eteints .lampe .cone { opacity: 0.16; }
+  body.fourneaux-eteints .lueur-mur { opacity: 0.3; }
   body.service-soir .lampe .cone { filter: saturate(1.6) hue-rotate(-8deg); }
   body.service-soir .lueur-mur { filter: saturate(1.8) brightness(1.25); }
   body.service-soir .ouverture h1 em { text-shadow: 0 0 34px rgba(247, 179, 47, 0.75); }
@@ -1118,7 +1079,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   @keyframes tamponMacaron { 0% { opacity: 0; transform: rotate(-20deg) scale(1.7); } 55% { opacity: 1; transform: rotate(-11deg) scale(0.93); } 100% { opacity: 1; transform: rotate(-12deg) scale(1); } }
   .mt-haut .macaron { transform: rotate(-10deg); }
   .mois .visuel .macaron { position: absolute; left: -26px; bottom: -34px; width: 132px; z-index: 2; }
-  .pied .macaron { position: absolute; right: max(5%, var(--gouttiere-d)); top: 54px; width: 104px; z-index: 2; }
   @media (max-width: 700px) {
     .barre .ouvre-menu { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--encre); background: transparent; color: var(--encre); cursor: pointer; padding: 0; flex: none; }
     .barre .ouvre-menu svg { width: 22px; height: 22px; }
@@ -1126,7 +1086,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .barre .cadeau { margin-right: 0; }
     .plat-auj { margin-inline: auto; }
     .mois .visuel .macaron { width: 112px; left: -8px; bottom: -30px; }
-    .pied .macaron { width: 92px; top: 34px; right: 12px; }
   }
 
   /* Bouton flottant vers le burger du mois */
@@ -1136,7 +1095,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .flottant-mois svg { width: 24px; height: 24px; }
   .flottant-mois:hover { transform: translateY(-3px) scale(1.03); }
   .flottant-mois.cache { opacity: 0; transform: translateY(20px) scale(0.9); pointer-events: none; }
-  body.intro-en-cours .flottant-mois { display: none; }
   @keyframes invite { 0%, 86%, 100% { rotate: 0deg } 89% { rotate: -5deg } 92% { rotate: 5deg } 95% { rotate: -3deg } }
   .mois .texte { display: grid; gap: 22px; }
   .mois .texte p { color: var(--doux-nuit); max-width: 30em; }
@@ -1409,7 +1367,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .mois { padding-block: 100px 110px; }
     .sceau { right: 10px; }
     .actions-mobile svg { width: 20px; height: 20px; }
-    body.intro-en-cours .actions-mobile { display: none; }
   }
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
@@ -1422,21 +1379,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 <!-- Logo en symbole : couleurs pilotées par --logo-encre et --logo-jaune -->
 <svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs id="defs-logo"></defs></svg>
 
-<div id="intro" aria-hidden="true">
-  <div class="feuille" id="feuille">
-    <div class="tel">06 13 10 05 03</div>
-    <div class="scene">
-      <svg class="fumee" viewBox="0 0 100 300" preserveAspectRatio="none">
-        <path d="M50 300 C20 250 80 210 50 160 C20 110 80 70 50 0"/>
-        <path d="M35 300 C5 240 65 200 35 150 C5 100 65 60 35 0"/>
-        <path d="M65 300 C35 250 95 200 65 150 C35 100 95 60 65 0"/>
-      </svg>
-      <div id="logo-intro"></div>
-    </div>
-    <div class="adr">59 Avenue Foch<span>57730 Folschviller</span></div>
-  </div>
-  <button id="passer" type="button">Passer l'intro</button>
-</div>
 
 <header class="barre">
   <div class="cadre">
@@ -1501,7 +1443,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
       <div class="texte-ouverture">
         <h1>Ici, on vient pour <em>bien manger.</em></h1>
-        <a class="plat-auj" id="plat-auj" href="#semaine" hidden><span class="pa-quand"><i></i><span></span></span><span class="pa-plat"></span><svg class="pa-trait" viewBox="0 0 260 12" preserveAspectRatio="none" aria-hidden="true"><path d="M3 8 C 60 2, 120 11, 170 6 S 240 4, 257 7"/></svg><span class="pa-prix"></span></a>
+        <a class="plat-auj" id="plat-auj" href="#semaine" hidden><span class="pa-quand"><i></i><span></span></span><span class="pa-plat"></span><span class="pa-prix"></span></a>
         <p class="chapeau">Plat du jour, burgers et frites maison : tout est cuisiné sur place par notre chef. Sur place ou à emporter, au 59 avenue Foch.</p>
         <div class="actions">
           <a class="bouton plein" href="#carte">Voir la carte</a>
@@ -1642,19 +1584,10 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       var j = d.jours[k]; if (!j || !j.plat || j.ferie) return;
       var e = document.getElementById('plat-auj'); if (!e) return;
       e.style.setProperty('--c', COUL[k]);
-      e.querySelector('.pa-quand > span').textContent = quand + ' · ' + NOMJ[k].toLowerCase();
-      e.querySelector('.pa-prix').innerHTML = '<b></b> · fait maison · quantité limitée';
-      e.querySelector('.pa-prix b').textContent = j.prix || '11,50 €';
+      e.querySelector('.pa-quand > span').textContent = quand;
+      e.querySelector('.pa-plat').textContent = j.plat;
+      e.querySelector('.pa-prix').textContent = j.prix || '11,50 €';
       e.hidden = false;
-      // Le nom du plat se « décode » lettre à lettre, puis un trait de feutre jaune se dessine dessous
-      var cible = j.plat, zone = e.querySelector('.pa-plat');
-      if (matchMedia('(prefers-reduced-motion: reduce)').matches) { zone.textContent = cible; e.classList.add('trace'); return; }
-      var signes = 'ABCDEFGHIJKLMNOPRSTUVabcdefghijklmnoprstuvéè', t = 0, total = 26;
-      (function tour() {
-        var n = Math.floor(cible.length * t / total);
-        zone.textContent = cible.slice(0, n) + cible.slice(n).replace(/[^\s]/g, function () { return signes[Math.floor(Math.random() * signes.length)]; });
-        if (++t <= total) setTimeout(tour, 45); else { zone.textContent = cible; e.classList.add('trace'); }
-      })();
     }).catch(function () {});
   })();
   </script>
@@ -2202,7 +2135,6 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
 <footer class="pied grain" id="pied">
   <div class="halo"></div>
-  <svg class="macaron m-pied" viewBox="0 0 200 200" aria-hidden="true"><circle cx="100" cy="100" r="99" fill="#F7B32F"/><circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/><path id="mh2" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/><text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath xlink:href="#mh2" href="#mh2" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text><text x="100" y="160" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="16" fill="#1C1C1C">★ ★ ★</text><svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></svg>
   <div class="caisson" id="neon-pied"><i class="vis"></i><i class="vis"></i><i class="vis"></i><i class="vis"></i><svg class="logo" viewBox="205 578 1660 682" role="img" aria-label="Double B"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></div>
   <div class="filet"></div>
   <p class="adresse lumiere">59 avenue Foch · Folschviller</p>
@@ -2225,7 +2157,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   const attendre = (ms) => new Promise((ok) => setTimeout(ok, ms));
   const calme = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // ——— Logo : chargé une fois, mis en symbole (couleurs en variables) et copié en entier pour l'intro ———
+  // ——— Logo : chargé une fois, mis en symbole (couleurs en variables) ———
   const logoPret = Promise.resolve(document.getElementById('logo-source').textContent).then((txt) => {
     const doc = new DOMParser().parseFromString(txt, 'image/svg+xml');
     const racine = doc.documentElement;
@@ -2236,124 +2168,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     sym.id = 'logo-sym'; sym.setAttribute('viewBox', '205 578 1660 682');
     sym.innerHTML = racine.innerHTML;
     $('#defs-logo').appendChild(sym);
-    // Copie complète pour l'intro : chaque pièce garde sa classe .anim pour tomber à son tour
-    const intro = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-    intro.setAttribute('viewBox', '205 578 1660 682'); intro.setAttribute('class', 'logo');
-    intro.innerHTML = racine.innerHTML;
-    const ordre = ['poele', 'pain_bas', 'steak', 'trait', 'pain_haut', 'd', 'o', 'u', 'b', 'l', 'e', 'B'];
-    intro.querySelectorAll('.anim').forEach((g) => { const k = ordre.indexOf(g.dataset.role); g.style.setProperty('--d', (k < 5 ? k * 0.12 : 0.55 + (k - 5) * 0.07) + 's'); });
-    $('#logo-intro').appendChild(intro);
   }).catch(() => {});
-
-  // ——— Couteau dessiné : lame acier, mitre, manche noir à trois rivets ———
-  const COUTEAU = `<svg class="couteau" viewBox="0 0 900 140" aria-hidden="true">
-    <defs>
-      <linearGradient id="g-lame" x1="0" y1="28" x2="0" y2="112" gradientUnits="userSpaceOnUse">
-        <stop offset="0" stop-color="#8A9097"/><stop offset="0.18" stop-color="#F5F7F9"/><stop offset="0.5" stop-color="#C3C8CD"/><stop offset="0.82" stop-color="#EEF1F3"/><stop offset="1" stop-color="#7D838A"/>
-      </linearGradient>
-      <linearGradient id="g-manche" x1="0" y1="38" x2="0" y2="102" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#3A3A3A"/><stop offset="0.4" stop-color="#151515"/><stop offset="1" stop-color="#050505"/></linearGradient>
-    </defs>
-    <rect x="0" y="40" width="252" height="60" rx="28" fill="url(#g-manche)"/>
-    <circle cx="62" cy="70" r="7" fill="#C9CDD1"/><circle cx="128" cy="70" r="7" fill="#C9CDD1"/><circle cx="194" cy="70" r="7" fill="#C9CDD1"/>
-    <rect x="246" y="32" width="26" height="76" rx="7" fill="url(#g-lame)"/>
-    <path d="M270 30 L812 30 Q872 34 900 46 Q858 98 690 110 L270 110 Z" fill="url(#g-lame)"/>
-    <path d="M272 106 L690 106 Q852 96 896 50" fill="none" stroke="#FFFFFF" stroke-opacity="0.85" stroke-width="2.5"/>
-  </svg>`;
-
-  // ——— L'intro : la feuille, le logo qui se monte, le couteau qui coupe ———
-  async function jouerIntro() {
-    const intro = $('#intro'), feuille = $('#feuille');
-    intro.hidden = false; document.body.classList.add('intro-en-cours');
-    let fini = false;
-    const terminer = () => {
-      if (fini) return; fini = true;
-      intro.hidden = true; document.body.classList.remove('intro-en-cours');
-      try { sessionStorage.setItem('doubleb-intro', '1'); localStorage.setItem('doubleb-intro-vue', String(Date.now())); } catch (e) {}
-      ouvrirSalle();
-    };
-    $('#passer').addEventListener('click', terminer);
-    // Sécurité : si le téléphone met l'animation en pause (onglet changé, appli Instagram…), l'intro se termine quand même
-    setTimeout(terminer, 7500);
-    document.addEventListener('visibilitychange', () => { if (document.hidden) terminer(); });
-    await Promise.race([logoPret, attendre(1500)]);
-    if (fini) return;
-    await attendre(150); feuille.classList.add('monte');
-    await attendre(1150); feuille.classList.add('infos');
-    await attendre(900); if (fini) return;
-
-    // Géométrie de la coupe : une droite qui monte vers la droite, passant par le centre de l'écran
-    const L = innerWidth, H = innerHeight, pente = -0.22, cx = L / 2, cy = H / 2;
-    const y = (x) => cy + pente * (x - cx);
-    const angle = Math.atan(pente) * 180 / Math.PI;
-    const longueur = Math.hypot(L, L * pente) + 200;
-    const ligne = document.createElement('div'); ligne.className = 'ligne-coupe';
-    ligne.style.cssText = `width:${longueur}px;transform:translate(-100px,${y(-100)}px) rotate(${angle}deg) scaleX(0)`;
-    intro.appendChild(ligne);
-    intro.insertAdjacentHTML('beforeend', COUTEAU);
-    const couteau = $('.couteau', intro), lc = couteau.getBoundingClientRect().width;
-    // La pointe (à droite du dessin) suit la droite de coupe
-    const pointeY = lc * (46 / 900);
-    const t0 = performance.now(), duree = 780;
-    await new Promise((ok) => {
-      (function pas(t) {
-        const p = Math.min((t - t0) / duree, 1), e = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
-        const xPointe = -200 + e * (L + lc + 400);
-        couteau.style.transform = `translate(${xPointe - lc}px, ${y(xPointe) - pointeY}px) rotate(${angle}deg)`;
-        couteau.style.transformOrigin = `100% ${pointeY}px`;
-        ligne.style.transform = `translate(-100px,${y(-100)}px) rotate(${angle}deg) scaleX(${Math.min(1, Math.max(0, (xPointe + 100) / longueur))})`;
-        if (p < 1 && !fini) requestAnimationFrame(pas); else ok();
-      })(t0);
-    });
-    if (fini) return;
-
-    // La feuille se sépare en deux moitiés qui s'envolent
-    const haut = feuille.cloneNode(true), bas = feuille.cloneNode(true);
-    [haut, bas].forEach((f) => { f.classList.remove('monte'); f.classList.add('fini'); f.querySelectorAll('[id]').forEach((n) => n.removeAttribute('id')); f.removeAttribute('id'); });
-    haut.style.clipPath = `polygon(0 0, ${L}px 0, ${L}px ${y(L)}px, 0 ${y(0)}px)`;
-    bas.style.clipPath = `polygon(0 ${y(0)}px, ${L}px ${y(L)}px, ${L}px ${H}px, 0 ${H}px)`;
-    intro.append(haut, bas); feuille.remove(); ligne.remove(); couteau.remove();
-    intro.style.pointerEvents = 'none';
-    ouvrirSalle();
-    const opts = { duration: 900, easing: 'cubic-bezier(0.55, 0, 0.75, 0.2)', fill: 'forwards' };
-    haut.animate([{ transform: 'none' }, { transform: `translate(-4%, -${H * 0.9}px) rotate(-5deg)` }], opts);
-    const a = bas.animate([{ transform: 'none' }, { transform: `translate(4%, ${H * 0.9}px) rotate(4deg)` }], opts);
-    await a.finished.catch(() => {});
-    terminer();
-  }
-
-  // ——— La salle s'allume : la lampe descend au bout de son fil, rebondit une fois, se balance et s'allume en douceur ———
-  let salleOuverte = false;
-  function ouvrirSalle() {
-    if (salleOuverte) return; salleOuverte = true;
-    const lampe = $('#lampe'), cone = $('.cone', lampe), lueur = $('#lueur-mur');
-    if (calme) { lampe.style.transform = 'none'; cone.style.opacity = 1; lueur.style.opacity = 1; return; }
-    const H = lampe.getBoundingClientRect().height, depart = -0.34 * H;
-    // Ressort amorti : une descente franche, un seul petit rebond, puis l'arrêt
-    const z = 0.42, w = 8.5, wd = w * Math.sqrt(1 - z * z);
-    const descente = (s) => depart * Math.exp(-z * w * s) * (Math.cos(wd * s) + (z * w / wd) * Math.sin(wd * s));
-    // Allumage : la lumière monte, hésite deux fois sans à-coup, puis respire très légèrement
-    const bosse = (s, c, l) => Math.exp(-Math.pow((s - c) / l, 2));
-    const lumiere = (s) => {
-      if (s <= 0) return 0;
-      const monte = 1 - Math.pow(1 - Math.min(s / 0.9, 1), 3);
-      const hesite = 1 - 0.55 * bosse(s, 0.22, 0.06) - 0.35 * bosse(s, 0.48, 0.07);
-      return Math.max(0, monte * hesite) * (1 - 0.05 * (1 - Math.cos(s * 1.1)) / 2);
-    };
-    let t0 = null, visible = true;
-    new IntersectionObserver(([e]) => { const avant = visible; visible = e.isIntersecting; if (visible && !avant) requestAnimationFrame(image); }).observe(lampe.closest('section'));
-    function image(maintenant) {
-      if (t0 === null) t0 = maintenant;
-      const s = (maintenant - t0) / 1000;
-      const y = descente(s);
-      // Balancier : l'élan de la chute s'amortit, puis une oscillation lente et à peine visible
-      const angle = 2.4 * Math.exp(-s / 1.4) * Math.sin(s * 3.6) + 0.55 * Math.sin(s * 0.9);
-      lampe.style.transform = `translateY(${y.toFixed(2)}px) rotate(${angle.toFixed(3)}deg)`;
-      const l = lumiere(s - 0.45);
-      cone.style.opacity = l.toFixed(3); lueur.style.opacity = l.toFixed(3);
-      if (visible) requestAnimationFrame(image);
-    }
-    requestAnimationFrame(image);
-  }
 
   // ——— Ouvert / fermé, et le jour du plat du jour ———
   const HORAIRES = { 1: [[705, 840]], 2: [[705, 840], [1140, 1260]], 3: [[705, 840], [1140, 1260]], 4: [[705, 840], [1140, 1260]], 5: [[705, 840], [1140, 1260]] };
@@ -2562,19 +2377,13 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   // ——— 8. Le macaron se pose comme un coup de tampon quand il arrive à l'écran ———
   if (!calme && 'IntersectionObserver' in window) {
     const tampons = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { en.target.classList.remove('attend'); en.target.classList.add('pose'); tampons.unobserve(en.target); } }), { threshold: 0.6 });
-    document.querySelectorAll('.macaron.m-mois, .macaron.m-pied').forEach((m) => { m.classList.add('attend'); tampons.observe(m); });
+    document.querySelectorAll('.macaron.m-mois').forEach((m) => { m.classList.add('attend'); tampons.observe(m); });
   }
 
-  // ——— Lancement ———
-  let dejaVu = false;
-  try { dejaVu = sessionStorage.getItem('doubleb-intro') === '1' || Date.now() - Number(localStorage.getItem('doubleb-intro-vue') || 0) < 7 * 864e5; } catch (err) {}
-  // Arrivée sur une section précise (ex. anciennes pages « carte » et « contact ») : pas d'intro, on y va directement
+  // ——— Arrivée sur une section précise (ex. anciennes pages « carte » et « contact ») : on y va directement ———
   const cible = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
-  if (calme || dejaVu || cible || location.hash === '#sansintro') {
-    $('#intro').hidden = true; ouvrirSalle();
-    if (cible) { const aller = () => cible.scrollIntoView({ behavior: 'instant' }); aller(); addEventListener('load', aller); }
-  }
-  else jouerIntro();
+  if (cible && cible.tagName !== 'DIALOG') { const aller = () => cible.scrollIntoView({ behavior: 'instant' }); aller(); addEventListener('load', aller); }
+
   // ——— Mosaïque des plats du jour : les photos sont réparties en colonnes, doublées pour boucler sans à-coup ———
   (function mosaique() {
     const boite = $('#mosaique'); if (!boite || calme) return;
