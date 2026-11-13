@@ -922,6 +922,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .bandeau-menu { grid-column: 1 / -1; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 24px; padding: 18px 24px; margin-bottom: 8px; border-radius: 18px; background: var(--encre); color: var(--texte-nuit); }
   .bandeau-menu b { font: 800 22px var(--f-titre); color: var(--jaune); }
   .boissons { grid-column: 1 / -1; columns: 3 260px; column-gap: 48px; }
+  .mention-alcool { column-span: all; margin: 18px 0 0; font-size: 12.5px; font-style: italic; opacity: 0.7; }
   .boissons section { break-inside: avoid; margin-bottom: 30px; }
   .boissons h3 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
   .allergenes { display: flex; gap: 12px; align-items: flex-start; margin: 34px 0 0; padding: 16px 18px; border-radius: 16px; border: 1px dashed var(--trait-creme); color: var(--doux-creme); font-size: 15px; line-height: 1.5; max-width: 720px; }
@@ -1266,6 +1267,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   .devis-bas button:hover { transform: translateY(-2px); box-shadow: 0 10px 26px -10px rgba(28, 28, 28, 0.8); }
   .devis-bas button[disabled] { opacity: 0.6; cursor: progress; transform: none; }
   .devis-bas small { flex: 1 1 220px; color: var(--doux-creme); font-size: 13.5px; line-height: 1.45; }
+  .devis-bas small a { color: inherit; font-weight: 700; }
   .devis-etat { grid-column: 1 / -1; border-radius: 16px; padding: 14px 16px; font-size: 15.5px; background: rgba(200, 50, 43, 0.1); color: #8E211B; }
   .devis-etat a { font-weight: 700; }
   .devis-etat[hidden], .devis-merci[hidden] { display: none; }
@@ -1750,6 +1752,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
             <li><span>Crème d'amaretto</span><span class="cl">4 cl</span><span class="prix">4,00 €</span></li>
             <li><span>Get 27</span><span class="cl">4 cl</span><span class="prix">4,00 €</span></li>
           </ul></section>
+          <p class="mention-alcool">L'abus d'alcool est dangereux pour la santé, à consommer avec modération.</p>
         </div>
         <footer class="pied-page"><button type="button" class="pp-prec" data-aller="4">← Desserts</button><span class="num">5</span><button type="button" class="pp-suiv" data-aller="1">Revenir aux burgers <span aria-hidden="true">↺</span></button></footer>
       </div>
@@ -1763,7 +1766,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         </div>
         <div class="livre-astuce" id="livre-astuce" aria-hidden="true"><span class="main"></span><span class="txt-doigt">Glissez la page pour la tourner</span><span class="txt-souris">Cliquez sur « Page suivante » ou sur le coin de la page</span></div>
       </div>
-      <p class="allergenes revele"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg><span><b>Allergies ou intolérances ?</b> La liste des allergènes de chaque plat est disponible sur demande : demandez-la au service, on vous renseigne avec plaisir.</span></p>
+      <p class="allergenes revele"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 7v6M12 16.5v.5"/></svg><span><b>Allergies ou intolérances ?</b> La liste des allergènes de chaque plat est disponible sur demande : demandez-la au service, on vous renseigne avec plaisir.<br><b>Prix nets, service compris</b> (TVA incluse).</span></p>
     </div>
   </section>
 
@@ -1970,7 +1973,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <p class="devis-etat" id="devis-etat" role="alert" hidden></p>
         <div class="devis-bas">
           <button type="submit" class="bouton" id="devis-envoi">Envoyer ma demande <span aria-hidden="true">→</span></button>
-          <small>Gratuit et sans engagement. Vos coordonnées servent uniquement à vous répondre.</small>
+          <small>Gratuit et sans engagement. Vos coordonnées servent uniquement à répondre à votre demande : elles ne sont ni revendues, ni utilisées pour de la publicité. <a href="https://www.doubleb-folschviller.fr/mentions-legales-doubleb/">En savoir plus</a></small>
         </div>
         <div class="devis-merci" id="devis-merci" role="status" tabindex="-1" hidden>
           <span class="surtitre">C'est envoyé</span>
@@ -2123,7 +2126,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       </div>
     </form>
     <div class="bc-merci" id="bc-merci" hidden tabindex="-1"><b>Merci, c'est bien noté !</b><p>On prépare votre bon cadeau et on revient vers vous dès que possible. Vous le réglerez et le récupérerez au restaurant, 59 avenue Foch.</p></div>
-    <p class="bc-petit">Plus simple de vive voix ? <a href="tel:+33613100503">06 13 10 05 03</a><br>Valable 1 an à partir de la date d'achat, sur place. Non remboursable, non échangeable contre des espèces.</p>
+    <p class="bc-petit">Plus simple de vive voix ? <a href="tel:+33613100503">06 13 10 05 03</a><br>Valable 1 an à partir de la date d'achat, sur place. Non remboursable, non échangeable contre des espèces.<br>Vos coordonnées servent uniquement à préparer votre bon : elles ne sont ni revendues, ni utilisées pour de la publicité. <a href="https://www.doubleb-folschviller.fr/mentions-legales-doubleb/">En savoir plus</a></p>
   </div>
 </dialog>
 
@@ -2146,7 +2149,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     <a href="#faq">Questions fréquentes</a>
     <a href="https://www.facebook.com/profile.php?id=100083662848039" target="_blank" rel="noopener">Facebook</a>
     <a href="https://www.instagram.com/double_b__57730/" target="_blank" rel="noopener">Instagram</a>
-    <a href="/mentions-legales-doubleb/">Mentions légales</a>
+    <a href="https://www.doubleb-folschviller.fr/mentions-legales-doubleb/">Mentions légales</a>
     <span>© 2026 Double B · Tous droits réservés</span>
   </div>
 </footer>
