@@ -1050,6 +1050,77 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     .bc-form { grid-template-columns: minmax(0, 1fr); padding: 16px; }
   }
 
+  /* ——— 2. Plat du jour en haut de l'accueil (rempli par semaine.json) ——— */
+  .plat-auj { display: inline-grid; grid-template-columns: auto 1fr; align-items: center; gap: 4px 14px; max-width: 100%; margin: 4px 0 26px; padding: 12px 18px 12px 12px; text-decoration: none; text-align: left;
+    background: #FFFDF8; color: var(--encre); border-radius: 6px 6px 14px 14px; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, 0.9), 0 0 40px -10px color-mix(in srgb, var(--c, #F7B32F) 70%, transparent); transform: rotate(-1.2deg); border-top: 5px solid var(--c, #F7B32F); position: relative; transition: transform 0.25s; }
+  .plat-auj:hover { transform: rotate(0) translateY(-2px); }
+  .plat-auj::before { content: ""; position: absolute; left: 50%; top: -12px; width: 26px; height: 12px; margin-left: -13px; border-radius: 4px 4px 0 0; background: linear-gradient(#D7DBDE, #9AA1A6); }
+  .plat-auj .pa-pastille { grid-row: span 2; width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: var(--c, #F7B32F); color: #fff; font: 800 11px/1 var(--f-titre); text-transform: uppercase; letter-spacing: 0.05em; text-align: center; box-shadow: 0 0 18px color-mix(in srgb, var(--c, #F7B32F) 80%, transparent); }
+  .plat-auj small { font: 700 11px var(--f-texte); letter-spacing: 0.18em; text-transform: uppercase; color: var(--c, #B57A0C); }
+  .plat-auj b { font: 800 16px/1.2 var(--f-titre); }
+  .plat-auj b .pa-prix { white-space: nowrap; color: #B57A0C; }
+  .texte-ouverture .plat-auj + .chapeau { margin-top: 0; }
+
+  /* ——— 3. Menu plein écran sur téléphone ——— */
+  .barre .ouvre-menu { display: none; }
+  #menu-tel { width: 100%; max-width: 100%; height: 100%; max-height: 100%; margin: 0; padding: 0; border: 0; background: radial-gradient(ellipse 120% 70% at 50% 0%, #22201D, #0B0A09 70%); color: var(--texte-nuit); }
+  #menu-tel::backdrop { background: #0B0A09; }
+  #menu-tel[open] { animation: menuOuvre 0.3s ease-out; }
+  @keyframes menuOuvre { from { opacity: 0; } }
+  .mt-in { min-height: 100%; display: grid; grid-template-rows: auto 1fr auto; padding: calc(16px + env(safe-area-inset-top, 0px)) var(--gouttiere-d) calc(20px + env(safe-area-inset-bottom, 0px)) var(--gouttiere-g); }
+  .mt-haut { display: flex; justify-content: space-between; align-items: center; }
+  .mt-haut .logo { width: 110px; --logo-encre: #FFF6E6; --logo-jaune: #F7B32F; }
+  .mt-fermer { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--trait-nuit); background: rgba(255, 255, 255, 0.06); color: #fff; font-size: 26px; line-height: 1; cursor: pointer; }
+  .mt-liens { display: grid; align-content: center; gap: 4px; padding-block: 20px; }
+  .mt-liens a { display: flex; align-items: baseline; gap: 12px; text-decoration: none; font: 800 clamp(28px, 8.4vw, 40px)/1.15 var(--f-titre); letter-spacing: -0.02em; color: #4A3F2C; padding: 4px 0; }
+  .mt-liens a small { font: 700 12px var(--f-texte); letter-spacing: 0.2em; color: rgba(247, 179, 47, 0.55); min-width: 24px; }
+  #menu-tel[open] .mt-liens a { animation: allumeLien 0.7s calc(0.12s + var(--i) * 0.07s) both; }
+  @keyframes allumeLien { 0% { color: #4A3F2C; text-shadow: none; } 30% { color: #FFF3D1; text-shadow: 0 0 14px #F7B32F; } 40% { color: #4A3F2C; text-shadow: none; } 55%, 100% { color: #FFF3D1; text-shadow: 0 0 6px #FFE08A, 0 0 20px rgba(247, 179, 47, 0.75); } }
+  .mt-liens a.cadeau-lien { color: #4A3F2C; }
+  #menu-tel[open] .mt-liens a.cadeau-lien { animation-name: allumeRose; }
+  @keyframes allumeRose { 0% { color: #4A3F2C; } 30% { color: #FFE6EF; text-shadow: 0 0 14px #FF6FA8; } 40% { color: #4A3F2C; text-shadow: none; } 55%, 100% { color: #FFE6EF; text-shadow: 0 0 6px #FFB8D4, 0 0 20px rgba(255, 111, 168, 0.8); } }
+  .mt-bas { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .mt-bas a { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 14px; border-radius: 99px; text-decoration: none; font: 800 15px var(--f-texte); border: 1px solid var(--trait-nuit); color: var(--texte-nuit); }
+  .mt-bas a.plein { background: var(--jaune); color: var(--encre); border-color: transparent; }
+  .mt-bas svg { width: 18px; height: 18px; }
+
+  /* ——— 5. L'ambiance suit les horaires ——— */
+  .lampe .cone, .lueur-mur { transition: opacity 1.6s ease, filter 1.6s ease; }
+  body.fourneaux-eteints .lampe .cone { opacity: 0.16 !important; }
+  body.fourneaux-eteints .lueur-mur { opacity: 0.3 !important; }
+  body.service-soir .lampe .cone { filter: saturate(1.6) hue-rotate(-8deg); }
+  body.service-soir .lueur-mur { filter: saturate(1.8) brightness(1.25); }
+  body.service-soir .ouverture h1 em { text-shadow: 0 0 34px rgba(247, 179, 47, 0.75); }
+
+  /* ——— 6. Vapeur au-dessus des plats de la mosaïque ——— */
+  .tuile { position: relative; }
+  .vapeur-plat { position: absolute; left: 18%; right: 18%; top: 4%; height: 50%; pointer-events: none; mix-blend-mode: screen; }
+  .vapeur-plat::before, .vapeur-plat::after { content: ""; position: absolute; left: 10%; bottom: 0; width: 55%; height: 60%; border-radius: 50%; background: radial-gradient(ellipse at 50% 60%, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0) 68%); opacity: 0; animation: fumeePlat 5.5s ease-out infinite; }
+  .vapeur-plat::after { left: 38%; animation-delay: 2.6s; animation-duration: 6.2s; }
+  @keyframes fumeePlat { 0% { transform: translate(0, 30%) scale(0.6, 0.8); opacity: 0; } 25% { opacity: 0.9; } 100% { transform: translate(-12%, -80%) scale(1.3, 1.6); opacity: 0; } }
+
+  /* ——— 7. Reflet de lame sur la coupe en biais des feuilles crème ——— */
+  .papier > .lame { position: absolute; left: 0; right: 0; top: 0; height: calc(var(--biais) + 8px); z-index: 3; pointer-events: none; opacity: 0;
+    clip-path: polygon(0 var(--biais), 100% 0, 100% 4px, 0 calc(var(--biais) + 4px));
+    background: linear-gradient(100deg, transparent 40%, rgba(255, 255, 255, 0.95) 48%, #F7B32F 50%, rgba(255, 255, 255, 0.8) 52%, transparent 60%) no-repeat; background-size: 250% 100%; background-position: 150% 0; }
+  .papier > .lame.brille { animation: lame 1.2s cubic-bezier(0.5, 0, 0.3, 1) forwards; }
+  @keyframes lame { 0% { opacity: 1; background-position: 150% 0; } 85% { opacity: 1; } 100% { opacity: 0; background-position: -60% 0; } }
+
+  /* ——— 8. Le macaron « Fait avec amour » (comme l'autocollant des emballages) ——— */
+  .macaron { display: block; --logo-encre: #1C1C1C; --logo-jaune: #1C1C1C; filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.45)); animation: tourneMacaron 40s linear infinite; }
+  @keyframes tourneMacaron { to { rotate: 360deg; } }
+  .mois .visuel .macaron { position: absolute; left: -22px; bottom: -22px; width: 116px; z-index: 2; }
+  .pied .macaron { position: absolute; right: max(5%, var(--gouttiere-d)); top: 54px; width: 104px; z-index: 2; }
+  @media (max-width: 700px) {
+    .barre .ouvre-menu { display: inline-grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 1.5px solid var(--encre); background: transparent; color: var(--encre); cursor: pointer; padding: 0; flex: none; }
+    .barre .ouvre-menu svg { width: 22px; height: 22px; }
+    .barre .cadre { gap: 10px; }
+    .barre .cadeau { margin-right: 0; }
+    .plat-auj { margin-inline: auto; }
+    .mois .visuel .macaron { width: 92px; left: -6px; bottom: -16px; }
+    .pied .macaron { width: 78px; top: 30px; right: 12px; }
+  }
+
   /* Bouton flottant vers le burger du mois */
   .flottant-mois { position: fixed; right: max(20px, env(safe-area-inset-right, 0px)); bottom: max(22px, env(safe-area-inset-bottom, 0px)); z-index: 70; display: inline-flex; align-items: center; gap: 10px; text-decoration: none;
     font: 800 15px var(--f-texte); color: #fff; background: var(--fond-flottant, #FF4FA0); border-radius: 99px; padding: 12px 18px 12px 14px; box-shadow: 0 10px 30px -6px var(--ombre-flottant, rgba(255, 79, 160, 0.7)), 0 0 0 1px var(--bord-flottant, rgba(255, 255, 255, 0.25));
@@ -1372,9 +1443,38 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     </nav>
     <a class="cadeau" href="#bon-cadeau" aria-label="Offrir un bon cadeau"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/><path d="M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></svg><span>Bon cadeau</span></a>
     <a class="bouton plein" href="tel:+33613100503"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg><span>Réserver</span></a>
+    <button type="button" class="ouvre-menu" id="ouvre-menu" aria-label="Ouvrir le menu" aria-controls="menu-tel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10a8 5.5 0 0 1 16 0Z"/><path d="M3 14h18"/><path d="M4 18h16a0 0 0 0 1 0 0 2 2 0 0 1-2 2H6a2 2 0 0 1-2-2Z"/></svg></button>
   </div>
 </header>
+<dialog id="menu-tel" aria-label="Menu">
+  <div class="mt-in">
+    <div class="mt-haut"><svg class="logo" viewBox="205 578 1660 682" aria-hidden="true"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg><button type="button" class="mt-fermer" aria-label="Fermer le menu">×</button></div>
+    <nav class="mt-liens" aria-label="Menu principal">
+      <a href="#mois" style="--i:0"><small>01</small>Burger du mois</a>
+      <a href="#semaine" style="--i:1"><small>02</small>La semaine</a>
+      <a href="#carte" style="--i:2"><small>03</small>La carte</a>
+      <a href="#soirees" style="--i:3"><small>04</small>Soirées</a>
+      <a href="#avis" style="--i:4"><small>05</small>Avis</a>
+      <a href="#infos" style="--i:5"><small>06</small>Horaires &amp; accès</a>
+      <a href="#bon-cadeau" class="cadeau-lien" style="--i:6"><small>07</small>Bon cadeau</a>
+      <a href="#devis" style="--i:7"><small>08</small>Devis &amp; groupes</a>
+    </nav>
+    <div class="mt-bas">
+      <a class="plein" href="tel:+33613100503"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2Z"/></svg>Appeler</a>
+      <a href="https://www.google.com/maps/search/?api=1&query=59+avenue+Foch+57730+Folschviller" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s7-6.2 7-12a7 7 0 0 0-14 0c0 5.8 7 12 7 12Z"/><circle cx="12" cy="10" r="2.6"/></svg>Itinéraire</a>
+    </div>
+  </div>
+</dialog>
 
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="macaron-sym" viewBox="0 0 200 200">
+  <circle cx="100" cy="100" r="99" fill="#F7B32F"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#1C1C1C" stroke-width="2.4" stroke-dasharray="0.1 7.2" stroke-linecap="round"/>
+  <path id="mac-haut" d="M 34 104 A 66 66 0 0 1 166 104" fill="none"/>
+  <path id="mac-bas" d="M 30 104 A 70 70 0 0 0 170 104" fill="none"/>
+  <text font-family="Bricolage Grotesque, sans-serif" font-weight="800" font-size="23" fill="#1C1C1C"><textPath href="#mac-haut" startOffset="50%" text-anchor="middle">Fait avec amour ♥</textPath></text>
+  <text font-family="DM Sans, sans-serif" font-weight="700" font-size="11.5" letter-spacing="1.2" fill="#1C1C1C"><textPath href="#mac-bas" startOffset="50%" text-anchor="middle">★ doubleb-folschviller.fr ★</textPath></text>
+  <svg x="48" y="84" width="104" height="43" viewBox="205 578 1660 682"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg>
+</symbol></svg>
 <main id="haut">
   <section class="ouverture grain">
     <div class="cadre">
@@ -1402,6 +1502,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
       <div class="texte-ouverture">
         <h1>Ici, on vient pour <em>bien manger.</em></h1>
+        <a class="plat-auj" id="plat-auj" href="#semaine" hidden><span class="pa-pastille"></span><small></small><b></b></a>
         <p class="chapeau">Plat du jour, burgers et frites maison : tout est cuisiné sur place par notre chef. Sur place ou à emporter, au 59 avenue Foch.</p>
         <div class="actions">
           <a class="bouton plein" href="#carte">Voir la carte</a>
@@ -1450,7 +1551,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         <div class="pratique-mois"><span>Tout le mois de novembre</span><span>Sur place</span><span>À emporter</span></div>
         <div class="actions"><a class="bouton plein" href="tel:+33613100503">Réserver une table</a></div>
       </div>
-      <div class="visuel revele"><img src="img/burger-du-mois-novembre.jpg" alt="Le burger du mois de novembre : pain bretzel au sésame, cervelas grillé, emmental et salade de chou blanc" width="768" height="1024"><span class="sceau">Ce mois-ci</span></div>
+      <div class="visuel revele"><svg class="macaron" viewBox="0 0 200 200" aria-hidden="true"><use href="#macaron-sym"/></svg><img src="img/burger-du-mois-novembre.jpg" alt="Le burger du mois de novembre : pain bretzel au sésame, cervelas grillé, emmental et salade de chou blanc" width="768" height="1024"><span class="sceau">Ce mois-ci</span></div>
     </div>
   </section>
 
@@ -1526,6 +1627,28 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
         bon.querySelector('.ticket-bas .prix').textContent = ferie ? 'Fermé' : (j.prix || '11,50 €');
         bon.querySelector('.ticket-bas .cachet').textContent = ferie ? 'Férié' : 'Fait maison';
       });
+      // Le plat du jour (ou celui de demain) en haut de l'accueil, seulement si semaine.json correspond bien à cette semaine
+      var MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
+      var m = /(\d{1,2})\s+([a-zéû]+)\s+(\d{4})\s*$/i.exec(d.semaine || ''); if (!m || MOIS.indexOf(m[2].toLowerCase()) < 0) return;
+      var vendredi = new Date(+m[3], MOIS.indexOf(m[2].toLowerCase()), +m[1]);
+      var maintenant = new Date(), auj = new Date(maintenant.getFullYear(), maintenant.getMonth(), maintenant.getDate());
+      var lundi = new Date(vendredi.getFullYear(), vendredi.getMonth(), vendredi.getDate() - 4);
+      var ecart = Math.round((auj - lundi) / 864e5), minutes = maintenant.getHours() * 60 + maintenant.getMinutes();
+      var COUL = ['#F08A12', '#E5483B', '#4E9F3D', '#1E9AA8', '#D9418C'], NOMJ = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi'];
+      var k = -1, quand = '';
+      if (ecart >= 0 && ecart <= 4 && minutes < 840) { k = ecart; quand = "Aujourd'hui midi"; }
+      else if (ecart >= 0 && ecart <= 3) { k = ecart + 1; quand = 'Demain midi'; }
+      else if (ecart === -1 || ecart === -2) { k = 0; quand = ecart === -1 ? 'Demain midi' : 'Lundi midi'; }
+      if (k < 0) return;
+      var j = d.jours[k]; if (!j || !j.plat || j.ferie) return;
+      var e = document.getElementById('plat-auj'); if (!e) return;
+      e.style.setProperty('--c', COUL[k]);
+      e.querySelector('.pa-pastille').textContent = NOMJ[k].slice(0, 3) + '.';
+      e.querySelector('small').textContent = quand;
+      e.querySelector('b').innerHTML = '';
+      e.querySelector('b').appendChild(document.createTextNode(j.plat + ' '));
+      var px = document.createElement('span'); px.className = 'pa-prix'; px.textContent = '· ' + (j.prix || '11,50 €'); e.querySelector('b').appendChild(px);
+      e.hidden = false;
     }).catch(function () {});
   })();
   </script>
@@ -2073,6 +2196,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
 
 <footer class="pied grain" id="pied">
   <div class="halo"></div>
+  <svg class="macaron" viewBox="0 0 200 200" aria-hidden="true"><use href="#macaron-sym"/></svg>
   <div class="caisson" id="neon-pied"><i class="vis"></i><i class="vis"></i><i class="vis"></i><i class="vis"></i><svg class="logo" viewBox="205 578 1660 682" role="img" aria-label="Double B"><use href="#logo-sym" x="205" y="578" width="1660" height="682"/></svg></div>
   <div class="filet"></div>
   <p class="adresse lumiere">59 avenue Foch · Folschviller</p>
@@ -2138,7 +2262,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
     const terminer = () => {
       if (fini) return; fini = true;
       intro.hidden = true; document.body.classList.remove('intro-en-cours');
-      try { sessionStorage.setItem('doubleb-intro', '1'); } catch (e) {}
+      try { sessionStorage.setItem('doubleb-intro', '1'); localStorage.setItem('doubleb-intro-vue', String(Date.now())); } catch (e) {}
       ouvrirSalle();
     };
     $('#passer').addEventListener('click', terminer);
@@ -2397,9 +2521,41 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
   }), { threshold: 0.45 });
   allumer.observe($('#pied')); allumer.observe($('#enseigne'));
 
+  // ——— 4. Couleur de la barre du navigateur (crème comme la barre du haut, nuit quand le menu est ouvert) ———
+  const couleurBarre = (() => { let m = document.querySelector('meta[name="theme-color"]'); if (!m) { m = document.createElement('meta'); m.name = 'theme-color'; document.head.appendChild(m); } return (c) => m.setAttribute('content', c); })();
+  couleurBarre('#F6F1E8');
+
+  // ——— 3. Menu plein écran sur téléphone ———
+  (function menuTel() {
+    const d = $('#menu-tel'), b = $('#ouvre-menu'); if (!d || !b || !d.showModal) return;
+    const fermer = () => { if (d.open) d.close(); };
+    b.addEventListener('click', () => { d.showModal(); couleurBarre('#0B0A09'); });
+    d.addEventListener('close', () => couleurBarre('#F6F1E8'));
+    $('.mt-fermer', d).addEventListener('click', fermer);
+    d.querySelectorAll('a').forEach((a) => a.addEventListener('click', fermer));
+  })();
+
+  // ——— 5. L'ambiance suit les horaires : lampe vive en service, plus chaude le soir, presque éteinte quand c'est fermé ———
+  function ambiance() {
+    const d = new Date(), m = d.getHours() * 60 + d.getMinutes(), ouvert = plagesDu(d).find(([a, b]) => m >= a && m < b);
+    document.body.classList.toggle('fourneaux-eteints', !ouvert);
+    document.body.classList.toggle('service-soir', !!ouvert && m >= 1140);
+    document.body.classList.toggle('service-midi', !!ouvert && m < 1140);
+    const et = etatDuMoment(), puce = $('span', $('#etat'));
+    puce.textContent = et.ouvert ? et.texte : et.texte.replace(/^Fermé · /, 'Les fourneaux se reposent · ');
+    ['#etat', '#etat-2'].forEach((s) => $(s).classList.toggle('ferme', !et.ouvert));
+  }
+  ambiance(); setInterval(ambiance, 60000);
+
+  // ——— 7. Un reflet de lame file le long de la coupe en biais quand une feuille crème arrive ———
+  if (!calme && 'IntersectionObserver' in window) {
+    const lames = new IntersectionObserver((es) => es.forEach((en) => { if (en.isIntersecting) { $('.lame', en.target).classList.add('brille'); lames.unobserve(en.target); } }), { rootMargin: '0px 0px -25% 0px' });
+    document.querySelectorAll('.papier').forEach((sec) => { const l = document.createElement('span'); l.className = 'lame'; l.setAttribute('aria-hidden', 'true'); sec.prepend(l); lames.observe(sec); });
+  }
+
   // ——— Lancement ———
   let dejaVu = false;
-  try { dejaVu = sessionStorage.getItem('doubleb-intro') === '1'; } catch (err) {}
+  try { dejaVu = sessionStorage.getItem('doubleb-intro') === '1' || Date.now() - Number(localStorage.getItem('doubleb-intro-vue') || 0) < 7 * 864e5; } catch (err) {}
   // Arrivée sur une section précise (ex. anciennes pages « carte » et « contact ») : pas d'intro, on y va directement
   const cible = location.hash.length > 1 ? document.getElementById(location.hash.slice(1)) : null;
   if (calme || dejaVu || cible || location.hash === '#sansintro') {
@@ -2420,7 +2576,7 @@ l0 429 -25 11 c-18 8 -106 12 -270 12 l-245 0 -16 -25z m1223 -1305 c35 -14
       for (let c = 0; c < cols; c++) {
         // Chaque colonne prend toutes les photos, décalées, pour ne jamais montrer deux fois la même côte à côte
         const liste = photos.map((_, i) => photos[(i + c * 3) % photos.length]);
-        const tuiles = liste.map((p, i) => `<figure class="tuile" style="aspect-ratio:${formes[(i + c * 2) % formes.length]}"><img src="${p.src}" alt="${p.alt}" loading="lazy"></figure>`).join('');
+        const tuiles = liste.map((p, i) => `<figure class="tuile" style="aspect-ratio:${formes[(i + c * 2) % formes.length]}"><img src="${p.src}" alt="${p.alt}" loading="lazy">${(i + c) % 2 ? '' : '<i class="vapeur-plat" aria-hidden="true"></i>'}</figure>`).join('');
         const col = document.createElement('div');
         col.className = 'colonne-defile' + (c % 2 ? ' descend' : '');
         col.style.setProperty('--duree', [52, 64, 58, 70][c] + 's');
